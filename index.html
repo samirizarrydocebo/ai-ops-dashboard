@@ -917,6 +917,7 @@
         </div>
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="showPage('overview')">Overview</button>
+            <button class="nav-tab" onclick="showPage('pipeline')">Pipeline</button>
             <button class="nav-tab" onclick="showPage('glean')">Glean platform</button>
             <button class="nav-tab" onclick="showPage('unifyapps')">UnifyApps</button>
             <button class="nav-tab" onclick="showPage('governance')">Governance</button>
@@ -1009,67 +1010,18 @@
                 </div>
             </div>
 
-            <h2 class="section-title" style="margin-top: 48px;">High-impact pipeline: ready for validation</h2>
-            <p class="section-subtitle">Strategic initiatives with modeled impact; methodology documented</p>
-
-            <div class="cards-grid">
-                <div class="card clickable" onclick="openModal('qbr-modal')">
-                    <div class="card-icon green">📊</div>
-                    <div class="card-title">Quarterly Business Review automation</div>
-                    <div class="card-metric">~1,000 accounts unserved today</div>
-                    <div class="card-description">UAT with 3-5 CSMs. Measured: 50% prep reduction achieved in testing. Target: 60% (90 min → 30 min). Feb 2026 go-live.</div>
-                    <div class="card-tags">
-                        <span class="tag">UAT</span>
-                        <span class="tag success">Testing now</span>
+            <!-- Link to Pipeline tab -->
+            <div style="margin-top: 48px; padding: 24px; background: linear-gradient(135deg, var(--docebo-navy) 0%, var(--docebo-blue) 100%); border-radius: var(--radius-lg); cursor: pointer;" onclick="document.querySelector('.nav-tab[onclick*=pipeline]').click()">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <h3 style="color: var(--docebo-white); font-family: var(--font-heading); margin-bottom: 8px;">5 high-impact projects in the pipeline</h3>
+                        <p style="color: rgba(255,255,255,0.8); font-size: 14px;">QBR automation, Blueprint generation, Handoff agents, Skills library, VOC 360 — view status, methodology, and modeled impact.</p>
                     </div>
-                </div>
-
-                <div class="card clickable" onclick="openModal('blueprint-modal')">
-                    <div class="card-icon blue">📐</div>
-                    <div class="card-title">Solution Blueprint auto-generation</div>
-                    <div class="card-metric">60-person SC/SA team</div>
-                    <div class="card-description">Automates 100+ page docs that take days. Modeled: 90% first-draft reduction, 25% turnaround reduction. March 7, 2026 target.</div>
-                    <div class="card-tags">
-                        <span class="tag">Build</span>
-                        <span class="tag">March 2026</span>
-                    </div>
-                </div>
-
-                <div class="card clickable" onclick="openModal('handoff-modal')">
-                    <div class="card-icon pink">🤝</div>
-                    <div class="card-title">Cross-functional handoff agents</div>
-                    <div class="card-metric">$6.2M modeled value</div>
-                    <div class="card-description">Formula: 14-20 hrs/week × 150 users × $55/hr. Six lifecycle agents; 3 ready for validation. AE→PS MVP complete Jan 10.</div>
-                    <div class="card-tags">
-                        <span class="tag success">3 ready</span>
-                        <span class="tag">Modeled ROI</span>
-                    </div>
-                </div>
-
-                <div class="card clickable" onclick="openModal('skills-modal')">
-                    <div class="card-icon purple">🧠</div>
-                    <div class="card-title">Enterprise skills library</div>
-                    <div class="card-metric">Organization-wide upskilling</div>
-                    <div class="card-description">4-10 core reusable AI skills (search, brand, health reports, outreach). Domain hand-off model: AI Ops builds, teams own content.</div>
-                    <div class="card-tags">
-                        <span class="tag">Planning</span>
-                        <span class="tag">2026 priority</span>
-                    </div>
-                </div>
-
-                <div class="card clickable" onclick="openModal('voc-modal')">
-                    <div class="card-icon orange">🎯</div>
-                    <div class="card-title">VOC 360: Customer Sentiment Intelligence</div>
-                    <div class="card-metric">V1 live; V2 go-live Feb 13</div>
-                    <div class="card-description">Unifies Qualtrics, Gong (100K+ calls), Salesforce, Totango into Customer Sentiment Timeline. Owner: Alison Nguyen (CX Ops).</div>
-                    <div class="card-tags">
-                        <span class="tag success">V1 Live</span>
-                        <span class="tag">V2 in UAT</span>
-                    </div>
+                    <div style="color: var(--docebo-white); font-size: 24px;">→</div>
                 </div>
             </div>
 
-            <div class="quote-block">
+            <div class="quote-block" style="margin-top: 32px;">
                 <p class="quote-text">We've been the orchestrators and facilitators that have unlocked wins for other teams; not necessarily ours. AI Ops is the function that made the AI stack real, integrated, and safe to bet on.</p>
                 <p class="quote-author">; Sam Irizarry, Director of AI Operations</p>
             </div>
@@ -1188,6 +1140,157 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pipeline Page -->
+    <div id="pipeline" class="page">
+        <section class="hero" style="padding-bottom: 32px; background: linear-gradient(135deg, var(--docebo-navy) 0%, var(--docebo-purple) 100%);">
+            <div class="hero-content">
+                <div class="hero-eyebrow">Strategic initiatives</div>
+                <h1>High-impact pipeline: ready for validation</h1>
+                <p class="hero-subtitle">5 strategic initiatives with modeled impact and documented methodology. Each project has clear ownership, timeline, and measurable outcomes.</p>
+            </div>
+        </section>
+
+        <div class="main-content">
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Projects in pipeline</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">In UAT now</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">1</div>
+                    <div class="stat-label">In build phase</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">$6.2M</div>
+                    <div class="stat-label">Top modeled value</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">Q1 2026</div>
+                    <div class="stat-label">Target launches</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Projects approaching launch</h2>
+            <p class="section-subtitle">Click any card to view detailed methodology, timeline, and expected impact</p>
+
+            <div class="cards-grid">
+                <div class="card clickable" onclick="openModal('qbr-modal')">
+                    <div class="card-icon green">📊</div>
+                    <div class="card-title">Quarterly Business Review automation</div>
+                    <div class="card-metric">~1,000 accounts unserved today</div>
+                    <div class="card-description">UAT with 3-5 CSMs. Measured: 50% prep reduction achieved in testing. Target: 60% (90 min → 30 min). Feb 2026 go-live.</div>
+                    <div class="card-tags">
+                        <span class="tag">UAT</span>
+                        <span class="tag success">Testing now</span>
+                    </div>
+                </div>
+
+                <div class="card clickable" onclick="openModal('voc-modal')">
+                    <div class="card-icon orange">🎯</div>
+                    <div class="card-title">VOC 360: Customer Sentiment Intelligence</div>
+                    <div class="card-metric">V1 live; V2 go-live Feb 13</div>
+                    <div class="card-description">Unifies Qualtrics, Gong (100K+ calls), Salesforce, Totango into Customer Sentiment Timeline. Owner: Alison Nguyen (CX Ops).</div>
+                    <div class="card-tags">
+                        <span class="tag success">V1 Live</span>
+                        <span class="tag">V2 in UAT</span>
+                    </div>
+                </div>
+
+                <div class="card clickable" onclick="openModal('blueprint-modal')">
+                    <div class="card-icon blue">📐</div>
+                    <div class="card-title">Solution Blueprint auto-generation</div>
+                    <div class="card-metric">60-person SC/SA team</div>
+                    <div class="card-description">Automates 100+ page docs that take days. Modeled: 90% first-draft reduction, 25% turnaround reduction. March 7, 2026 target.</div>
+                    <div class="card-tags">
+                        <span class="tag">Build</span>
+                        <span class="tag">March 2026</span>
+                    </div>
+                </div>
+
+                <div class="card clickable" onclick="openModal('handoff-modal')">
+                    <div class="card-icon pink">🤝</div>
+                    <div class="card-title">Cross-functional handoff agents</div>
+                    <div class="card-metric">$6.2M modeled value</div>
+                    <div class="card-description">Formula: 14-20 hrs/week × 150 users × $55/hr. Six lifecycle agents; 3 ready for validation. AE→PS MVP complete Jan 10.</div>
+                    <div class="card-tags">
+                        <span class="tag success">3 ready</span>
+                        <span class="tag">Modeled ROI</span>
+                    </div>
+                </div>
+
+                <div class="card clickable" onclick="openModal('skills-modal')">
+                    <div class="card-icon purple">🧠</div>
+                    <div class="card-title">Enterprise skills library</div>
+                    <div class="card-metric">Organization-wide upskilling</div>
+                    <div class="card-description">4-10 core reusable AI skills (search, brand, health reports, outreach). Domain hand-off model: AI Ops builds, teams own content.</div>
+                    <div class="card-tags">
+                        <span class="tag">Planning</span>
+                        <span class="tag">2026 priority</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">Pipeline status summary</h2>
+            <table class="agent-table">
+                <thead>
+                    <tr>
+                        <th>Initiative</th>
+                        <th>Owner</th>
+                        <th>Status</th>
+                        <th>Target launch</th>
+                        <th>Modeled impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="agent-name">QBR Automation</td>
+                        <td>Ashley Jordan (CS)</td>
+                        <td><span class="tag success">UAT</span></td>
+                        <td>Feb 2026</td>
+                        <td>60% prep reduction, 60% coverage increase</td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">VOC 360 V2</td>
+                        <td>Alison Nguyen (CX Ops)</td>
+                        <td><span class="tag success">UAT</span></td>
+                        <td>Feb 13, 2026</td>
+                        <td>10% renewal accuracy, 30 hrs saved</td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">Solution Blueprint</td>
+                        <td>Solutions Consulting</td>
+                        <td><span class="tag">Build</span></td>
+                        <td>March 7, 2026</td>
+                        <td>90% first-draft reduction</td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">Handoff Agents (6)</td>
+                        <td>AI Ops / RevOps</td>
+                        <td><span class="tag success">3 ready</span></td>
+                        <td>Q1-Q2 2026</td>
+                        <td>$6.2M productivity value</td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">Skills Library</td>
+                        <td>AI Ops</td>
+                        <td><span class="tag">Planning</span></td>
+                        <td>2026</td>
+                        <td>Org-wide capability uplift</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="quote-block" style="margin-top: 48px;">
+                <p class="quote-text">The next step is not whether UnifyApps works, but whether Docebo can execute fast enough to capture the full value of what has been built.</p>
+                <p class="quote-author">— UnifyApps strategic assessment, Feb 2026</p>
             </div>
         </div>
     </div>
