@@ -19,6 +19,7 @@
             --docebo-yellow-green: #E3FFAB;
             --docebo-light-purple: #DCB7FF;
             --docebo-beige: #E6DACB;
+            --docebo-green-dark: #0a5c1a;
             --neutral-50: #F6F5F2;
             --neutral-100: #EBE6DD;
             --neutral-200: #E1DBD2;
@@ -43,6 +44,24 @@
             background: var(--neutral-50);
             color: var(--docebo-black);
             line-height: 1.6;
+        }
+
+        /* Skip Link (Accessibility) */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--docebo-blue);
+            color: var(--docebo-white);
+            padding: 8px 16px;
+            z-index: 10000;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0 0 var(--radius-sm) 0;
+        }
+
+        .skip-link:focus {
+            top: 0;
         }
 
         /* Navigation */
@@ -315,7 +334,7 @@
             color: var(--neutral-600);
         }
 
-        .tag.success { background: rgba(84, 250, 119, 0.2); color: #0a5c1a; }
+        .tag.success { background: rgba(84, 250, 119, 0.2); color: var(--docebo-green-dark); }
         .tag.live { background: rgba(0, 87, 255, 0.1); color: var(--docebo-blue); }
 
         /* Stats Bar */
@@ -914,10 +933,15 @@
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-logo">
-            docebo <span>AI Operations</span>
+            <svg width="110" height="24" viewBox="0 0 110 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="0" y="18" fill="white" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="20">docebo</text>
+            </svg>
+            <span>AI Operations</span>
         </div>
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="showPage('overview')">Overview</button>
@@ -929,6 +953,7 @@
         </div>
     </nav>
 
+    <main id="main">
     <!-- Overview Page -->
     <div id="overview" class="page active">
         <!-- Hero -->
@@ -1975,6 +2000,7 @@
             </div>
         </div>
     </div>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
