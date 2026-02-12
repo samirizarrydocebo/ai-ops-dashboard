@@ -1056,6 +1056,17 @@
                         <span class="tag">2026 priority</span>
                     </div>
                 </div>
+
+                <div class="card clickable" onclick="openModal('voc-modal')">
+                    <div class="card-icon orange">🎯</div>
+                    <div class="card-title">VOC 360: Customer Sentiment Intelligence</div>
+                    <div class="card-metric">V1 live; V2 go-live Feb 13</div>
+                    <div class="card-description">Unifies Qualtrics, Gong (100K+ calls), Salesforce, Totango into Customer Sentiment Timeline. Owner: Alison Nguyen (CX Ops).</div>
+                    <div class="card-tags">
+                        <span class="tag success">V1 Live</span>
+                        <span class="tag">V2 in UAT</span>
+                    </div>
+                </div>
             </div>
 
             <div class="quote-block">
@@ -2477,6 +2488,96 @@
                 <div class="modal-quote">
                     <p>"The goal is to make every team a builder, not just a consumer of AI tools."</p>
                     <cite>AI Operations strategy, Feb 2026</cite>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: VOC 360 Deep Dive -->
+    <div id="voc-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('voc-modal')">×</button>
+            <div class="modal-header">
+                <h2>VOC 360: Customer Sentiment Intelligence</h2>
+                <p>AI-powered Voice of Customer platform unifying fragmented feedback</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">100K+</div>
+                        <div class="modal-stat-label">Gong calls to analyze</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">6+</div>
+                        <div class="modal-stat-label">Data sources unified</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">V1 Live</div>
+                        <div class="modal-stat-label">Dec 24, 2025</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">Feb 13</div>
+                        <div class="modal-stat-label">V2 target go-live</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Project owner</h3>
+                    <p><strong>Alison Nguyen</strong>, Manager, CX Operations</p>
+                    <p style="font-size: 13px; color: var(--neutral-600);">Leading VOC vision since Oct 2025; built Phase 1 ML categorization; driving multi-phase expansion</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Data sources being unified</h3>
+                    <ul>
+                        <li><strong>Qualtrics:</strong> NPS, CSAT, onboarding, pulse, churn surveys</li>
+                        <li><strong>Gong:</strong> 100K+ customer call transcripts (2025)</li>
+                        <li><strong>Salesforce:</strong> Renewal notes, loss notes, opportunity data</li>
+                        <li><strong>Totango:</strong> Account health and engagement data</li>
+                        <li><strong>Zendesk:</strong> Support ticket sentiment and escalations</li>
+                        <li><strong>Ideas Portal:</strong> Product feedback and enhancement requests</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Core capability: Customer Sentiment Timeline</h3>
+                    <p>A living model tracking how customer sentiment and priorities evolve across the lifecycle—from onboarding through renewal. Each touchpoint contributes to a unified understanding.</p>
+                </div>
+
+                <div class="roi-highlight">
+                    <div class="roi-highlight-title">Expected outcomes (modeled)</div>
+                    <div class="roi-highlight-formula">
+                        <div style="margin-bottom: 8px;"><strong>10%</strong> increase in renewal forecast accuracy</div>
+                        <div style="margin-bottom: 8px;"><strong>30 hours</strong> saved on data correlation per cycle</div>
+                        <div style="margin-bottom: 8px;"><strong>15%</strong> boost in cross-sell revenue identification</div>
+                        <div><strong>Earlier churn prediction</strong> with proactive intervention triggers</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Implementation phases</h3>
+                    <ul>
+                        <li><strong>Phase 1 (Completed Q3 2025):</strong> ML categorization of NPS comments in Qualtrics</li>
+                        <li><strong>Phase 2 (Current):</strong> Integrated sentiment modeling + timeline foundation</li>
+                        <li><strong>Phase 3:</strong> Multi-source expansion (Gong, Zendesk, Community)</li>
+                        <li><strong>Phase 4:</strong> Predictive insights and proactive signal detection</li>
+                        <li><strong>Phase 5:</strong> Intelligent automation and continuous learning</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Current status</h3>
+                    <ul>
+                        <li><strong>VOC V1:</strong> Live since Dec 24, 2025 (Qualtrics + NPS-related Gong calls)</li>
+                        <li><strong>VOC V2:</strong> In UAT; blocked on Gong data volume (100K+ calls)</li>
+                        <li><strong>Blocker:</strong> Awaiting cloud migration to Docebo AWS (~4 weeks post-security approval)</li>
+                        <li><strong>Target:</strong> VOC Analytics Dashboard v1.0 go-live Feb 13, 2026</li>
+                    </ul>
+                </div>
+
+                <div class="modal-quote">
+                    <p>"This initiative is critical to improving product adoption, customer retention, and enabling a customer-driven product roadmap. The long-term goal is to build a Customer Sentiment Timeline that serves as the foundation for predictive insights and proactive engagement."</p>
+                    <cite>Alison Nguyen, VOC Executive Brief</cite>
                 </div>
             </div>
         </div>
