@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Operations: From pilots to GTM infrastructure | Aug 2025 - Feb 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --docebo-blue: #0057FF;
+            --docebo-black: #2A2923;
+            --docebo-white: #FFFFFF;
+            --docebo-dark: #131E29;
+            --docebo-light-blue: #4C8DFF;
+            --docebo-navy: #0033A0;
+            --docebo-pink: #FF5DD8;
+            --docebo-green: #54FA77;
+            --docebo-purple: #7E2EE9;
+            --docebo-yellow-green: #E3FFAB;
+            --docebo-light-purple: #DCB7FF;
+            --docebo-beige: #E6DACB;
+            --neutral-50: #F6F5F2;
+            --neutral-100: #EBE6DD;
+            --neutral-200: #E1DBD2;
+            --neutral-400: #807B74;
+            --neutral-600: #56534E;
+            --neutral-900: #2A2923;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--neutral-50);
+            color: var(--docebo-black);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--docebo-dark);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            color: var(--docebo-white);
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo span {
+            color: var(--docebo-light-blue);
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-tab {
+            background: transparent;
+            border: none;
+            color: var(--neutral-400);
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-tab:hover {
+            color: var(--docebo-white);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-tab.active {
+            background: var(--docebo-blue);
+            color: var(--docebo-white);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--docebo-blue) 0%, var(--docebo-navy) 100%);
+            color: var(--docebo-white);
+            padding: 60px 48px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-eyebrow {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--docebo-yellow-green);
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        /* KPI Strip */
+        .kpi-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .kpi-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            font-family: var(--font-heading);
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .kpi-change {
+            font-size: 13px;
+            margin-top: 8px;
+            color: var(--docebo-green);
+            font-weight: 600;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 48px;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--docebo-black);
+            margin-bottom: 24px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--neutral-600);
+            margin-bottom: 32px;
+            max-width: 600px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .card {
+            background: var(--docebo-white);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 32px rgba(0, 87, 255, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .card-icon.blue { background: rgba(0, 87, 255, 0.1); }
+        .card-icon.pink { background: rgba(255, 93, 216, 0.1); }
+        .card-icon.green { background: rgba(84, 250, 119, 0.1); }
+        .card-icon.purple { background: rgba(126, 46, 233, 0.1); }
+
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--docebo-black);
+        }
+
+        .card-metric {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--docebo-blue);
+            margin-bottom: 12px;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: var(--neutral-600);
+            line-height: 1.6;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .tag {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: var(--neutral-100);
+            color: var(--neutral-600);
+        }
+
+        .tag.success { background: rgba(84, 250, 119, 0.2); color: #0a5c1a; }
+        .tag.live { background: rgba(0, 87, 255, 0.1); color: var(--docebo-blue); }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: var(--docebo-dark);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+
+        .stat-item {
+            text-align: center;
+            color: var(--docebo-white);
+        }
+
+        .stat-value {
+            font-family: var(--font-heading);
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--docebo-green);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--docebo-blue), var(--docebo-purple));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 32px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--docebo-blue);
+            border: 3px solid var(--docebo-white);
+            box-shadow: 0 0 0 3px var(--docebo-blue);
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--docebo-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 14px;
+            color: var(--neutral-600);
+        }
+
+        /* Agent Table */
+        .agent-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--docebo-white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .agent-table thead {
+            background: var(--docebo-dark);
+            color: var(--docebo-white);
+        }
+
+        .agent-table th {
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .agent-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--neutral-200);
+            font-size: 14px;
+        }
+
+        .agent-table tbody tr:hover {
+            background: var(--neutral-50);
+        }
+
+        .agent-name {
+            font-weight: 600;
+            color: var(--docebo-black);
+        }
+
+        .agent-users {
+            color: var(--docebo-blue);
+            font-weight: 600;
+        }
+
+        .agent-runs {
+            font-family: var(--font-heading);
+            font-weight: 700;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: var(--docebo-beige);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            margin: 48px 0;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            font-family: var(--font-heading);
+            font-size: 120px;
+            color: var(--docebo-blue);
+            opacity: 0.2;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 20px;
+            font-style: italic;
+            color: var(--docebo-black);
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .quote-author {
+            margin-top: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--neutral-600);
+        }
+
+        /* Progress Bars */
+        .progress-item {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--docebo-black);
+        }
+
+        .progress-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--docebo-blue);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--neutral-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.8s ease-out;
+        }
+
+        .progress-fill.blue { background: var(--docebo-blue); }
+        .progress-fill.green { background: var(--docebo-green); }
+        .progress-fill.purple { background: var(--docebo-purple); }
+        .progress-fill.pink { background: var(--docebo-pink); }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .team-card {
+            background: var(--docebo-white);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--docebo-blue), var(--docebo-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--docebo-white);
+        }
+
+        .team-name {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .team-role {
+            font-size: 14px;
+            color: var(--neutral-600);
+            margin-bottom: 12px;
+        }
+
+        .team-focus {
+            font-size: 12px;
+            color: var(--docebo-blue);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--docebo-dark);
+            color: var(--docebo-white);
+            padding: 32px 48px;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        /* Two Column Layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Pill Navigation */
+        .pill-nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .pill {
+            background: var(--docebo-white);
+            border: 2px solid var(--neutral-200);
+            border-radius: 24px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pill:hover {
+            border-color: var(--docebo-blue);
+            color: var(--docebo-blue);
+        }
+
+        .pill.active {
+            background: var(--docebo-blue);
+            border-color: var(--docebo-blue);
+            color: var(--docebo-white);
+        }
+
+        /* Impact Metric */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .impact-item {
+            background: var(--docebo-white);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            border-left: 4px solid var(--docebo-blue);
+        }
+
+        .impact-value {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--docebo-blue);
+        }
+
+        .impact-label {
+            font-size: 13px;
+            color: var(--neutral-600);
+            margin-top: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .nav-tabs {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero {
+                padding: 40px 24px;
+            }
+            .main-content {
+                padding: 24px;
+            }
+            .kpi-strip {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-logo">
+            docebo <span>AI Operations</span>
+        </div>
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showPage('overview')">Overview</button>
+            <button class="nav-tab" onclick="showPage('glean')">Glean platform</button>
+            <button class="nav-tab" onclick="showPage('unifyapps')">UnifyApps</button>
+            <button class="nav-tab" onclick="showPage('governance')">Governance</button>
+            <button class="nav-tab" onclick="showPage('team')">The team</button>
+        </div>
+    </nav>
+
+    <!-- Overview Page -->
+    <div id="overview" class="page active">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-eyebrow">August 2025 - February 2026</div>
+                <h1>From pilots to GTM infrastructure</h1>
+                <p class="hero-subtitle">In six months, AI Ops evolved from experiments to the operating system for GTM intelligence and automation; orchestrating wins for Marketing, Sales, CS, and RevOps.</p>
+
+                <div class="kpi-strip">
+                    <div class="kpi-card">
+                        <div class="kpi-label">Glean monthly users</div>
+                        <div class="kpi-value">600+</div>
+                        <div class="kpi-change">70% company coverage</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Custom AI agents</div>
+                        <div class="kpi-value">140+</div>
+                        <div class="kpi-change">180+ monthly agent users</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">UnifyApps applications</div>
+                        <div class="kpi-value">4</div>
+                        <div class="kpi-change">Core GTM apps live</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Zapier workflows</div>
+                        <div class="kpi-value">50+</div>
+                        <div class="kpi-change">88k credits used in 2 months</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h2 class="section-title">Flagship wins</h2>
+            <p class="section-subtitle">Four key achievements that transformed how Docebo operates</p>
+
+            <div class="cards-grid">
+                <div class="card" onclick="showPage('glean')">
+                    <div class="card-icon blue">🔍</div>
+                    <div class="card-title">Glean: GTM's AI teammate</div>
+                    <div class="card-metric">69% WAU/MAU stickiness</div>
+                    <div class="card-description">Enterprise knowledge platform with 80%+ adoption in CS, AE, AM, Support, PM, and PMM. The Product FAQ agent achieved 93% reduction in search time.</div>
+                    <div class="card-tags">
+                        <span class="tag live">Live</span>
+                        <span class="tag">Enterprise search</span>
+                        <span class="tag">AI agents</span>
+                    </div>
+                </div>
+
+                <div class="card" onclick="showPage('unifyapps')">
+                    <div class="card-icon pink">📊</div>
+                    <div class="card-title">Audience Insights AI</div>
+                    <div class="card-metric">4,000+ demo calls analyzed</div>
+                    <div class="card-description">Daily-refreshed VOC cockpit for Marketing. Modeled $3.3M incremental pipeline from AI-informed tests.</div>
+                    <div class="card-tags">
+                        <span class="tag live">Live</span>
+                        <span class="tag">Marketing</span>
+                        <span class="tag">Voice of customer</span>
+                    </div>
+                </div>
+
+                <div class="card" onclick="showPage('unifyapps')">
+                    <div class="card-icon green">📈</div>
+                    <div class="card-title">Churn analysis and Digital CS</div>
+                    <div class="card-metric">~95% classification accuracy</div>
+                    <div class="card-description">~200 lost opps/month auto-classified. Digital BR enables coverage of ~1,000 previously underserved accounts.</div>
+                    <div class="card-tags">
+                        <span class="tag live">Live</span>
+                        <span class="tag">Customer success</span>
+                        <span class="tag">RevOps</span>
+                    </div>
+                </div>
+
+                <div class="card" onclick="showPage('governance')">
+                    <div class="card-icon purple">⚙️</div>
+                    <div class="card-title">Operating model and automation</div>
+                    <div class="card-metric">20+ AI projects governed</div>
+                    <div class="card-description">Executive steering committee, weekly syncs, daily sprints. Clear swimlanes between AI Ops, RevOps, and Enablement.</div>
+                    <div class="card-tags">
+                        <span class="tag success">Operational</span>
+                        <span class="tag">Governance</span>
+                        <span class="tag">Zapier</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <p class="quote-text">We've been the orchestrators and facilitators that have unlocked wins for other teams; not necessarily ours. AI Ops is the function that made the AI stack real, integrated, and safe to bet on.</p>
+                <p class="quote-author">; Sam Irizarry, Director of AI Operations</p>
+            </div>
+
+            <div class="two-col">
+                <div>
+                    <h2 class="section-title">Journey timeline</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">August 2025</div>
+                            <div class="timeline-title">AI Ops formally launches</div>
+                            <div class="timeline-desc">Team founded with 2 headcount. Core platforms identified: Glean, UnifyApps, Zapier, Granola.</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Q3 2025</div>
+                            <div class="timeline-title">Platform foundations</div>
+                            <div class="timeline-desc">Glean re-implementation complete. UnifyApps $150K contract signed. Zendesk AI support deployed (46% tickets AI-accelerated).</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Q4 2025</div>
+                            <div class="timeline-title">Scale and adoption</div>
+                            <div class="timeline-desc">4 core UnifyApps launched. Agent Builder Cohort certified 11 builders. Innovation Showcase with $5K prize pool.</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Q1 2026</div>
+                            <div class="timeline-title">Operationalizing AI</div>
+                            <div class="timeline-desc">Executive Steering Committee established. RROM integration. Giuseppe joins team. 9 active projects on track.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="section-title">Key adoption metrics</h2>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">CX department adoption</span>
+                            <span class="progress-value">100%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill blue" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Sales AE adoption</span>
+                            <span class="progress-value">100%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill green" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Support adoption</span>
+                            <span class="progress-value">97%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill purple" style="width: 97%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Professional Services</span>
+                            <span class="progress-value">95%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill pink" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Sales Engineering</span>
+                            <span class="progress-value">95%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill blue" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Glean Page -->
+    <div id="glean" class="page">
+        <section class="hero" style="padding-bottom: 32px;">
+            <div class="hero-content">
+                <div class="hero-eyebrow">Platform spotlight</div>
+                <h1>Glean: enterprise knowledge and agent platform</h1>
+                <p class="hero-subtitle">From pilot to core GTM infrastructure that 70% of employees use, with a growing ecosystem of revenue-tied agents.</p>
+            </div>
+        </section>
+
+        <div class="main-content">
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value">600+</div>
+                    <div class="stat-label">Monthly active users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">420</div>
+                    <div class="stat-label">Weekly active users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">69%</div>
+                    <div class="stat-label">WAU/MAU stickiness</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">140+</div>
+                    <div class="stat-label">Custom agents</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">69K+</div>
+                    <div class="stat-label">AI interactions</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Top performing agents</h2>
+            <p class="section-subtitle">Agents embedded in repeatable, high-leverage workflows across GTM</p>
+
+            <table class="agent-table">
+                <thead>
+                    <tr>
+                        <th>Agent name</th>
+                        <th>Primary teams</th>
+                        <th>Users</th>
+                        <th>Runs (30 days)</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="agent-name">Product FAQ Agent</td>
+                        <td>R&D, Renewals, Product</td>
+                        <td class="agent-users">57</td>
+                        <td class="agent-runs">246</td>
+                        <td><span class="tag success">93% search time reduction</span></td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">RFP Response Chatbot</td>
+                        <td>GTM, Enablement</td>
+                        <td class="agent-users">7</td>
+                        <td class="agent-runs">549</td>
+                        <td><span class="tag success">High-volume automation</span></td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">Outbounding Prompt</td>
+                        <td>Sales AE, BDR</td>
+                        <td class="agent-users">33</td>
+                        <td class="agent-runs">170</td>
+                        <td><span class="tag live">Outreach acceleration</span></td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">Cybersecurity Q&A</td>
+                        <td>InfoSec, HR, Partners</td>
+                        <td class="agent-users">9</td>
+                        <td class="agent-runs">101</td>
+                        <td><span class="tag live">Cross-functional security</span></td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">Demo Prep Agent</td>
+                        <td>Sales Engineering, R&D</td>
+                        <td class="agent-users">14</td>
+                        <td class="agent-runs">74</td>
+                        <td><span class="tag live">Pre-call optimization</span></td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">Renewal Plan Generator</td>
+                        <td>CX, CSM</td>
+                        <td class="agent-users">18</td>
+                        <td class="agent-runs">67</td>
+                        <td><span class="tag success">Renewal strategy</span></td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">Transition Readiness Agent</td>
+                        <td>Customer Experience</td>
+                        <td class="agent-users">22</td>
+                        <td class="agent-runs">42</td>
+                        <td><span class="tag live">Lifecycle management</span></td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">Account Growth Plan</td>
+                        <td>Sales AM</td>
+                        <td class="agent-users">21</td>
+                        <td class="agent-runs">42</td>
+                        <td><span class="tag live">Expansion strategy</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="quote-block" style="margin-top: 48px;">
+                <p class="quote-text">I use this daily. It is my go-to resource for voice of customer. It bridges the gap between raw data and actionable insight.</p>
+                <p class="quote-author">; Marketing team member on Audience Insights</p>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">Agent Builder Champions Program</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon green">🎓</div>
+                    <div class="card-title">Certified builders</div>
+                    <div class="card-metric">11</div>
+                    <div class="card-description">Internal champions trained to build production-ready agents, scaling AI capability beyond the AI Ops team.</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon blue">🚀</div>
+                    <div class="card-title">Production agents</div>
+                    <div class="card-metric">11+</div>
+                    <div class="card-description">Agents built by cohort graduates now in active use across business teams.</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon purple">📈</div>
+                    <div class="card-title">CX adoption rate</div>
+                    <div class="card-metric">86%</div>
+                    <div class="card-description">Customer Experience team leading adoption with consistent weekly engagement.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UnifyApps Page -->
+    <div id="unifyapps" class="page">
+        <section class="hero" style="padding-bottom: 32px;">
+            <div class="hero-content">
+                <div class="hero-eyebrow">Platform spotlight</div>
+                <h1>UnifyApps: AI intelligence portal for GTM</h1>
+                <p class="hero-subtitle">Custom AI applications built on the "Ask Docebo AI" platform, turning raw data from 20+ systems into actionable intelligence.</p>
+            </div>
+        </section>
+
+        <div class="main-content">
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value">$150K</div>
+                    <div class="stat-label">Platform investment</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">Core apps live</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">FT contractors</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">14+</div>
+                    <div class="stat-label">Active use cases</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">$3.3M</div>
+                    <div class="stat-label">Modeled pipeline impact</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Core applications</h2>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon pink">🎯</div>
+                    <div class="card-title">Audience Insights AI</div>
+                    <div class="card-metric">4,000+ calls analyzed</div>
+                    <div class="card-description">Analyzes demo calls via Gong to produce deep-dive insights on topics, pains, and competitors. Used daily by Marketing.</div>
+                    <div class="card-tags">
+                        <span class="tag live">Live</span>
+                        <span class="tag success">Daily use</span>
+                    </div>
+                    <div class="impact-grid" style="margin-top: 16px;">
+                        <div class="impact-item">
+                            <div class="impact-value">50%</div>
+                            <div class="impact-label">Research time reduction</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-value">40%</div>
+                            <div class="impact-label">Faster messaging</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon green">📉</div>
+                    <div class="card-title">Churn Analysis AI</div>
+                    <div class="card-metric">~200 opps/month</div>
+                    <div class="card-description">Auto-classifies lost opportunities with ~95% accuracy, writing standardized churn reasons into Salesforce.</div>
+                    <div class="card-tags">
+                        <span class="tag live">Live</span>
+                        <span class="tag">Salesforce integrated</span>
+                    </div>
+                    <div class="impact-grid" style="margin-top: 16px;">
+                        <div class="impact-item">
+                            <div class="impact-value">40%</div>
+                            <div class="impact-label">Churn pattern reduction</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-value">30%</div>
+                            <div class="impact-label">Unknown reasons decrease</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon blue">📋</div>
+                    <div class="card-title">Digital BR v2.0</div>
+                    <div class="card-metric">1,000+ accounts enabled</div>
+                    <div class="card-description">Auto-generates QBR decks from Snowflake, Totango, Gong, Salesforce, and Qualtrics. Serving previously underserved accounts.</div>
+                    <div class="card-tags">
+                        <span class="tag">UAT</span>
+                        <span class="tag">Go-live Feb 2026</span>
+                    </div>
+                    <div class="impact-grid" style="margin-top: 16px;">
+                        <div class="impact-item">
+                            <div class="impact-value">60%</div>
+                            <div class="impact-label">QBR prep time reduction</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-value">60%</div>
+                            <div class="impact-label">Account coverage increase</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon purple">🔬</div>
+                    <div class="card-title">Account Research</div>
+                    <div class="card-metric">18K accounts monitored</div>
+                    <div class="card-description">AI-powered account briefs combining Salesforce, web data, 10-K reports, and LinkedIn to accelerate prospect research.</div>
+                    <div class="card-tags">
+                        <span class="tag live">MVP Live</span>
+                        <span class="tag">Sales</span>
+                    </div>
+                    <div class="impact-grid" style="margin-top: 16px;">
+                        <div class="impact-item">
+                            <div class="impact-value">40%</div>
+                            <div class="impact-label">Research hours reduction</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-value">3x</div>
+                            <div class="impact-label">Faster GTM planning</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">2026 roadmap highlights</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-title">VOC and Customer 360</div>
+                    <div class="card-description">Multi-phase plan bringing together NPS, CSAT, Gong, Totango, SFDC, Zendesk, and Ideas into unified customer intelligence.</div>
+                    <div class="card-tags"><span class="tag">In progress</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Sales Handoff Agent</div>
+                    <div class="card-description">AE+SC to PS handoff automation, extracting insights from Gong, SFDC, and Slack for standardized project handoffs.</div>
+                    <div class="card-tags"><span class="tag">Q1 2026</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Competitive Intelligence</div>
+                    <div class="card-description">AI engine tracking competitor mentions to assess threat levels and surface upsell opportunities.</div>
+                    <div class="card-tags"><span class="tag">Planned</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Governance Page -->
+    <div id="governance" class="page">
+        <section class="hero" style="padding-bottom: 32px;">
+            <div class="hero-content">
+                <div class="hero-eyebrow">Operating model</div>
+                <h1>Governance and enablement</h1>
+                <p class="hero-subtitle">Professionalizing how AI and GTM ops get run with clear intake, capacity planning, and executive alignment.</p>
+            </div>
+        </section>
+
+        <div class="main-content">
+            <div class="two-col">
+                <div>
+                    <h2 class="section-title">Governance structure</h2>
+                    <div class="cards-grid" style="grid-template-columns: 1fr;">
+                        <div class="card">
+                            <div class="card-icon blue">👥</div>
+                            <div class="card-title">Executive Steering Committee</div>
+                            <div class="card-description">Monthly 60-minute sessions for exec-level prioritization and trade-offs. Aligns AI investments with company OKRs.</div>
+                            <div class="card-tags"><span class="tag success">Active</span><span class="tag">Monthly</span></div>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon purple">🔄</div>
+                            <div class="card-title">Weekly SFDC/BT/AI Sync</div>
+                            <div class="card-description">Cross-functional alignment between AI Ops, Salesforce team, and Business Technology on shared initiatives.</div>
+                            <div class="card-tags"><span class="tag success">Active</span><span class="tag">Weekly</span></div>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon green">⚡</div>
+                            <div class="card-title">Daily UnifyApps Sprints</div>
+                            <div class="card-description">Two FTE project leads + PM on vendor side. Sam Adams acts as internal product owner, SME, and solution expert.</div>
+                            <div class="card-tags"><span class="tag success">Active</span><span class="tag">Daily</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="section-title">Capacity model</h2>
+                    <p class="section-subtitle">UnifyApps engineering operates two development pods in parallel</p>
+
+                    <div class="card" style="margin-bottom: 24px;">
+                        <div class="card-title">Quarterly capacity: 4-5 use cases</div>
+                        <div class="card-description" style="margin-top: 12px;">
+                            <strong>Sizing framework:</strong><br>
+                            • Small (4 weeks): 1-2-1 discovery-build-UAT<br>
+                            • Medium (5 weeks): 1-3-1<br>
+                            • Large (8 weeks): 2-4-2<br>
+                            • XL (10 weeks): 2-5-3<br>
+                            • Experimental: Rapid prototyping for "fail fast" validation
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Role boundaries</div>
+                        <div class="card-description" style="margin-top: 12px;">
+                            <strong>AI Ops/SFDC:</strong> Tooling decisions, technical design, integration, AI governance, telemetry<br><br>
+                            <strong>RevOps:</strong> Process and KPI ownership<br><br>
+                            <strong>Enablement:</strong> Adoption, training, and feedback loops
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">Zapier: force multiplier for automation</h2>
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value">50+</div>
+                    <div class="stat-label">Workflows in production</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">88K</div>
+                    <div class="stat-label">Credits used (2 months)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">600K</div>
+                    <div class="stat-label">Total credits available</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">40+</div>
+                    <div class="stat-label">Bootcamp attendees</div>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon green">🎓</div>
+                    <div class="card-title">Zapier AI Bootcamp</div>
+                    <div class="card-description">December 4, 2025: 2.5-hour hands-on workshop teaching employees to build AI-powered automations. Recorded for company-wide access.</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon blue">📚</div>
+                    <div class="card-title">Internal AI Hub</div>
+                    <div class="card-description">Centralized resource for all AI tools, POCs, and pilots. Reduced repetitive questions to AI Ops team by 40%.</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon pink">🏆</div>
+                    <div class="card-title">Innovation Showcase</div>
+                    <div class="card-description">Company-wide competition with $5,000 prize pool. Celebrating practical AI tools and automations built by employees.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Page -->
+    <div id="team" class="page">
+        <section class="hero" style="padding-bottom: 32px;">
+            <div class="hero-content">
+                <div class="hero-eyebrow">The people</div>
+                <h1>AI Operations team</h1>
+                <p class="hero-subtitle">A small team that went from individual contributor to full team operation in four months, creating a culture of AI experimentation organization-wide.</p>
+            </div>
+        </section>
+
+        <div class="main-content">
+            <h2 class="section-title">Core team</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">SI</div>
+                    <div class="team-name">Sam Irizarry</div>
+                    <div class="team-role">Director, AI Operations & Business Technology</div>
+                    <div class="team-focus">Strategy, executive alignment, cross-functional orchestration</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">SA</div>
+                    <div class="team-name">Samuel Adams</div>
+                    <div class="team-role">Senior AI Solutions Consultant</div>
+                    <div class="team-focus">UnifyApps product owner, solution architecture, SME</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">GB</div>
+                    <div class="team-name">Giuseppe Bonanno</div>
+                    <div class="team-role">AI Solutions Engineer</div>
+                    <div class="team-focus">Full-stack development, agent building, integrations</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">RN</div>
+                    <div class="team-name">Rachael Ni</div>
+                    <div class="team-role">AI Ops Intern</div>
+                    <div class="team-focus">Enablement, content, Innovation Showcase, Hackathon</div>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">Extended ecosystem</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-title">UnifyApps team</div>
+                    <div class="card-metric">6 FTEs</div>
+                    <div class="card-description">Full-time contractors working on Docebo projects. Daily sprint planning with formal development processes.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Agent Builder Champions</div>
+                    <div class="card-metric">11 certified</div>
+                    <div class="card-description">Internal champions trained to build production-ready agents across business teams.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Salesforce/BizTech team</div>
+                    <div class="card-metric">6 members</div>
+                    <div class="card-description">Canada and Italy based team supporting SFDC platform, Revenue Cloud, and Agentforce initiatives.</div>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <p class="quote-text">In 4 months we went from 1 person to a full team operation. We made Docebians comfortable with AI tools rather than scared of them. 90% of agent usage is now built by revenue people solving their own operational pain points.</p>
+                <p class="quote-author">; AI Operations Charter discussion, December 2025</p>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">What's next</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon blue">📈</div>
+                    <div class="card-title">Scale Glean and agents</div>
+                    <div class="card-description">Push to 80%+ adoption in GTM, double usage of top agents, expand certified builder cohorts.</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon green">🎯</div>
+                    <div class="card-title">Operationalize Digital CS and VOC</div>
+                    <div class="card-description">Move Digital BR/One-Pager and VOC dashboards from UAT to scaled programs, tied to GRR/NRR metrics.</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon purple">💡</div>
+                    <div class="card-title">Skills Signal Intelligence</div>
+                    <div class="card-description">Deliver back-test and dashboards that put a dollar figure on skills-platform demand from customer calls.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">docebo</div>
+        <p class="footer-text">AI Operations | From pilots to GTM infrastructure | August 2025 - February 2026</p>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Deactivate all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+
+            // Activate corresponding tab
+            event.target.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Animate progress bars on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressFills = document.querySelectorAll('.progress-fill');
+            progressFills.forEach(fill => {
+                const width = fill.style.width;
+                fill.style.width = '0';
+                setTimeout(() => {
+                    fill.style.width = width;
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
