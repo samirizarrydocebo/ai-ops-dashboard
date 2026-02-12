@@ -661,6 +661,226 @@
             margin-top: 4px;
         }
 
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(19, 30, 41, 0.85);
+            z-index: 2000;
+            padding: 40px;
+            overflow-y: auto;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .modal {
+            background: var(--docebo-white);
+            border-radius: var(--radius-lg);
+            max-width: 900px;
+            width: 100%;
+            margin: 40px auto;
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--docebo-blue) 0%, var(--docebo-navy) 100%);
+            color: var(--docebo-white);
+            padding: 32px 40px;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+
+        .modal-header h2 {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .modal-header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .modal-body {
+            padding: 40px;
+        }
+
+        .modal-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .modal-stat {
+            background: var(--neutral-50);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .modal-stat-value {
+            font-family: var(--font-heading);
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--docebo-blue);
+        }
+
+        .modal-stat-label {
+            font-size: 13px;
+            color: var(--neutral-600);
+            margin-top: 4px;
+        }
+
+        .modal-section {
+            margin-bottom: 32px;
+        }
+
+        .modal-section h3 {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--docebo-black);
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-section li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            color: var(--neutral-600);
+            font-size: 15px;
+        }
+
+        .modal-section li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--docebo-blue);
+            font-weight: 600;
+        }
+
+        .modal-quote {
+            background: var(--docebo-beige);
+            border-radius: var(--radius-md);
+            padding: 24px 32px;
+            margin: 24px 0;
+            position: relative;
+        }
+
+        .modal-quote::before {
+            content: '"';
+            font-family: var(--font-heading);
+            font-size: 60px;
+            color: var(--docebo-blue);
+            opacity: 0.3;
+            position: absolute;
+            top: -10px;
+            left: 16px;
+            line-height: 1;
+        }
+
+        .modal-quote p {
+            font-style: italic;
+            font-size: 16px;
+            color: var(--docebo-black);
+            position: relative;
+            z-index: 1;
+        }
+
+        .modal-quote cite {
+            display: block;
+            margin-top: 12px;
+            font-size: 14px;
+            font-style: normal;
+            color: var(--neutral-600);
+            font-weight: 500;
+        }
+
+        .roi-highlight {
+            background: linear-gradient(135deg, var(--docebo-green) 0%, #1EB83F 100%);
+            color: var(--docebo-dark);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            margin: 16px 0;
+        }
+
+        .roi-highlight-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+
+        .roi-highlight-value {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .card.clickable {
+            cursor: pointer;
+        }
+
+        .card.clickable::after {
+            content: 'Click for details →';
+            display: block;
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--docebo-blue);
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .card.clickable:hover::after {
+            opacity: 1;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .nav {
@@ -679,6 +899,12 @@
             }
             .kpi-strip {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            .modal-overlay {
+                padding: 20px;
+            }
+            .modal-body {
+                padding: 24px;
             }
         }
     </style>
@@ -710,13 +936,13 @@
                 <div class="kpi-strip">
                     <div class="kpi-card">
                         <div class="kpi-label">Glean monthly users</div>
-                        <div class="kpi-value">600+</div>
-                        <div class="kpi-change">70% company coverage</div>
+                        <div class="kpi-value">610</div>
+                        <div class="kpi-change">87% company coverage</div>
                     </div>
                     <div class="kpi-card">
-                        <div class="kpi-label">Custom AI agents</div>
-                        <div class="kpi-value">140+</div>
-                        <div class="kpi-change">180+ monthly agent users</div>
+                        <div class="kpi-label">Shared AI agents</div>
+                        <div class="kpi-value">209</div>
+                        <div class="kpi-change">207 monthly agent users</div>
                     </div>
                     <div class="kpi-card">
                         <div class="kpi-label">UnifyApps applications</div>
@@ -724,9 +950,9 @@
                         <div class="kpi-change">Core GTM apps live</div>
                     </div>
                     <div class="kpi-card">
-                        <div class="kpi-label">Zapier workflows</div>
-                        <div class="kpi-value">50+</div>
-                        <div class="kpi-change">88k credits used in 2 months</div>
+                        <div class="kpi-label">Zapier automations</div>
+                        <div class="kpi-value">44</div>
+                        <div class="kpi-change">121K+ tasks automated</div>
                     </div>
                 </div>
             </div>
@@ -734,55 +960,100 @@
 
         <!-- Main Content -->
         <div class="main-content">
-            <h2 class="section-title">Flagship wins</h2>
-            <p class="section-subtitle">Four key achievements that transformed how Docebo operates</p>
+            <h2 class="section-title">Flagship wins: live and delivering value</h2>
+            <p class="section-subtitle">Production systems with measured adoption and verified impact</p>
 
             <div class="cards-grid">
-                <div class="card" onclick="showPage('glean')">
+                <div class="card clickable" onclick="openModal('glean-modal')">
                     <div class="card-icon blue">🔍</div>
                     <div class="card-title">Glean: GTM's AI teammate</div>
-                    <div class="card-metric">69% WAU/MAU stickiness</div>
-                    <div class="card-description">Enterprise knowledge platform with 80%+ adoption in CS, AE, AM, Support, PM, and PMM. The Product FAQ agent achieved 93% reduction in search time.</div>
+                    <div class="card-metric">610 MAU, 81% stickiness</div>
+                    <div class="card-description">Enterprise knowledge platform with 87% coverage. Measured: 250K+ AI interactions, 209 shared agents, 10,608 agent runs in 6 months.</div>
                     <div class="card-tags">
                         <span class="tag live">Live</span>
-                        <span class="tag">Enterprise search</span>
-                        <span class="tag">AI agents</span>
+                        <span class="tag success">Measured</span>
                     </div>
                 </div>
 
-                <div class="card" onclick="showPage('unifyapps')">
+                <div class="card clickable" onclick="openModal('audience-modal')">
                     <div class="card-icon pink">📊</div>
                     <div class="card-title">Audience Insights AI</div>
-                    <div class="card-metric">4,000+ demo calls analyzed</div>
-                    <div class="card-description">Daily-refreshed VOC cockpit for Marketing. Modeled $3.3M incremental pipeline from AI-informed tests.</div>
+                    <div class="card-metric">4,000+ calls analyzed daily</div>
+                    <div class="card-description">Marketing's primary VOC tool. Measured: daily Gong refresh. Modeled: $3.3M pipeline (15% uplift × 442 SQO sample).</div>
                     <div class="card-tags">
                         <span class="tag live">Live</span>
-                        <span class="tag">Marketing</span>
-                        <span class="tag">Voice of customer</span>
+                        <span class="tag">Modeled ROI</span>
                     </div>
                 </div>
 
-                <div class="card" onclick="showPage('unifyapps')">
+                <div class="card clickable" onclick="openModal('churn-modal')">
                     <div class="card-icon green">📈</div>
-                    <div class="card-title">Churn analysis and Digital CS</div>
-                    <div class="card-metric">~95% classification accuracy</div>
-                    <div class="card-description">~200 lost opps/month auto-classified. Digital BR enables coverage of ~1,000 previously underserved accounts.</div>
+                    <div class="card-title">Churn Analysis AI</div>
+                    <div class="card-metric">~200 opps/month, ~95% accuracy</div>
+                    <div class="card-description">Measured: auto-classifies closed-lost from 4-6 data sources, writes standardized reasons to Salesforce. Live since Sept 15, 2025.</div>
                     <div class="card-tags">
                         <span class="tag live">Live</span>
-                        <span class="tag">Customer success</span>
-                        <span class="tag">RevOps</span>
+                        <span class="tag success">Measured</span>
                     </div>
                 </div>
 
-                <div class="card" onclick="showPage('governance')">
-                    <div class="card-icon purple">⚙️</div>
-                    <div class="card-title">Operating model and automation</div>
-                    <div class="card-metric">20+ AI projects governed</div>
-                    <div class="card-description">Executive steering committee, weekly syncs, daily sprints. Clear swimlanes between AI Ops, RevOps, and Enablement.</div>
+                <div class="card clickable" onclick="openModal('granola-modal')">
+                    <div class="card-icon purple">📝</div>
+                    <div class="card-title">Granola meeting intelligence</div>
+                    <div class="card-metric">97% satisfaction, 1983% ROI</div>
+                    <div class="card-description">Measured: 210 users × 10 meetings/week × 20 min saved = 17,500 hrs/year. At $75/hr = $1.3M value vs $63K cost.</div>
                     <div class="card-tags">
-                        <span class="tag success">Operational</span>
-                        <span class="tag">Governance</span>
-                        <span class="tag">Zapier</span>
+                        <span class="tag live">Live</span>
+                        <span class="tag success">Calculated ROI</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">High-impact pipeline: ready for validation</h2>
+            <p class="section-subtitle">Strategic initiatives with modeled impact; methodology documented</p>
+
+            <div class="cards-grid">
+                <div class="card clickable" onclick="openModal('qbr-modal')">
+                    <div class="card-icon green">📊</div>
+                    <div class="card-title">Quarterly Business Review automation</div>
+                    <div class="card-metric">~1,000 accounts unserved today</div>
+                    <div class="card-description">UAT with 3-5 CSMs. Measured: 50% prep reduction achieved in testing. Target: 60% (90 min → 30 min). Feb 2026 go-live.</div>
+                    <div class="card-tags">
+                        <span class="tag">UAT</span>
+                        <span class="tag success">Testing now</span>
+                    </div>
+                </div>
+
+                <div class="card clickable" onclick="openModal('blueprint-modal')">
+                    <div class="card-icon blue">📐</div>
+                    <div class="card-title">Solution Blueprint auto-generation</div>
+                    <div class="card-metric">60-person SC/SA team</div>
+                    <div class="card-description">Automates 100+ page docs that take days. Modeled: 90% first-draft reduction, 25% turnaround reduction. March 7, 2026 target.</div>
+                    <div class="card-tags">
+                        <span class="tag">Build</span>
+                        <span class="tag">March 2026</span>
+                    </div>
+                </div>
+
+                <div class="card clickable" onclick="openModal('handoff-modal')">
+                    <div class="card-icon pink">🤝</div>
+                    <div class="card-title">Cross-functional handoff agents</div>
+                    <div class="card-metric">$6.2M modeled value</div>
+                    <div class="card-description">Formula: 14-20 hrs/week × 150 users × $55/hr. Six lifecycle agents; 3 ready for validation. AE→PS MVP complete Jan 10.</div>
+                    <div class="card-tags">
+                        <span class="tag success">3 ready</span>
+                        <span class="tag">Modeled ROI</span>
+                    </div>
+                </div>
+
+                <div class="card clickable" onclick="openModal('skills-modal')">
+                    <div class="card-icon purple">🧠</div>
+                    <div class="card-title">Enterprise skills library</div>
+                    <div class="card-metric">Organization-wide upskilling</div>
+                    <div class="card-description">4-10 core reusable AI skills (search, brand, health reports, outreach). Domain hand-off model: AI Ops builds, teams own content.</div>
+                    <div class="card-tags">
+                        <span class="tag">Planning</span>
+                        <span class="tag">2026 priority</span>
                     </div>
                 </div>
             </div>
@@ -790,6 +1061,31 @@
             <div class="quote-block">
                 <p class="quote-text">We've been the orchestrators and facilitators that have unlocked wins for other teams; not necessarily ours. AI Ops is the function that made the AI stack real, integrated, and safe to bet on.</p>
                 <p class="quote-author">; Sam Irizarry, Director of AI Operations</p>
+            </div>
+
+            <!-- Additional testimonials grid -->
+            <h2 class="section-title" style="margin-top: 48px;">What teams are saying</h2>
+            <div class="cards-grid" style="margin-bottom: 32px;">
+                <div class="card" style="background: var(--docebo-beige); border: none;">
+                    <div class="card-description" style="font-style: italic; font-size: 15px; margin-bottom: 12px;">"I use this daily. It is my go-to resource for voice of customer. It bridges the gap between raw data and actionable insight."</div>
+                    <div style="font-size: 13px; font-weight: 600; color: var(--docebo-blue);">Amanda Aschoff, Marketing</div>
+                    <div style="font-size: 12px; color: var(--neutral-600);">On Audience Insights AI</div>
+                </div>
+                <div class="card" style="background: var(--docebo-beige); border: none;">
+                    <div class="card-description" style="font-style: italic; font-size: 15px; margin-bottom: 12px;">"It helped me answer a question on a call in real-time. That would have taken roughly 30 minutes before. Straight fire."</div>
+                    <div style="font-size: 13px; font-weight: 600; color: var(--docebo-blue);">Sales Rep, Product FAQ Pilot</div>
+                    <div style="font-size: 12px; color: var(--neutral-600);">94% task success, 100 NPS</div>
+                </div>
+                <div class="card" style="background: var(--docebo-beige); border: none;">
+                    <div class="card-description" style="font-style: italic; font-size: 15px; margin-bottom: 12px;">"I spend so much of my time in meetings; this has changed my ability to review notes and ensure I don't miss anything. I can ask 'what are my action items' and it grabs everything."</div>
+                    <div style="font-size: 13px; font-weight: 600; color: var(--docebo-blue);">Granola Pilot Participant</div>
+                    <div style="font-size: 12px; color: var(--neutral-600);">97% user satisfaction</div>
+                </div>
+                <div class="card" style="background: var(--docebo-beige); border: none;">
+                    <div class="card-description" style="font-style: italic; font-size: 15px; margin-bottom: 12px;">"Every Monday, we share three big rocks with Marketing. I always use Granola to help me define mine; I just reference last week's meeting notes so I don't have to rely on memory."</div>
+                    <div style="font-size: 13px; font-weight: 600; color: var(--docebo-blue);">Marketing Team Member</div>
+                    <div style="font-size: 12px; color: var(--neutral-600);">On Granola meeting intelligence</div>
+                </div>
             </div>
 
             <div class="two-col">
@@ -820,50 +1116,64 @@
                 </div>
 
                 <div>
-                    <h2 class="section-title">Key adoption metrics</h2>
-                    <div class="progress-item">
-                        <div class="progress-header">
-                            <span class="progress-label">CX department adoption</span>
-                            <span class="progress-value">100%</span>
+                    <h2 class="section-title">Impact metrics: measured vs modeled</h2>
+
+                    <p style="font-size: 13px; color: var(--neutral-600); margin-bottom: 16px; font-style: italic;">Measured = from telemetry/usage data. Modeled = calculated projections (methodology documented).</p>
+
+                    <div style="background: var(--docebo-white); border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px; border: 1px solid var(--neutral-200);">
+                        <div style="font-size: 12px; font-weight: 600; color: var(--docebo-green); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">Measured (verified)</div>
+                        <div class="progress-item" style="margin-bottom: 12px;">
+                            <div class="progress-header">
+                                <span class="progress-label">Zendesk: tickets AI-accelerated</span>
+                                <span class="progress-value">46%</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill green" style="width: 46%"></div></div>
                         </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill blue" style="width: 100%"></div>
+                        <div class="progress-item" style="margin-bottom: 12px;">
+                            <div class="progress-header">
+                                <span class="progress-label">Zendesk: time-to-resolution (56h→44h)</span>
+                                <span class="progress-value">21% faster</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill green" style="width: 21%"></div></div>
                         </div>
-                    </div>
-                    <div class="progress-item">
-                        <div class="progress-header">
-                            <span class="progress-label">Sales AE adoption</span>
-                            <span class="progress-value">100%</span>
+                        <div class="progress-item" style="margin-bottom: 12px;">
+                            <div class="progress-header">
+                                <span class="progress-label">Churn AI: classification accuracy</span>
+                                <span class="progress-value">~95%</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill green" style="width: 95%"></div></div>
                         </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill green" style="width: 100%"></div>
-                        </div>
-                    </div>
-                    <div class="progress-item">
-                        <div class="progress-header">
-                            <span class="progress-label">Support adoption</span>
-                            <span class="progress-value">97%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill purple" style="width: 97%"></div>
-                        </div>
-                    </div>
-                    <div class="progress-item">
-                        <div class="progress-header">
-                            <span class="progress-label">Professional Services</span>
-                            <span class="progress-value">95%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill pink" style="width: 95%"></div>
+                        <div class="progress-item" style="margin-bottom: 0;">
+                            <div class="progress-header">
+                                <span class="progress-label">QBR prep reduction (UAT testing)</span>
+                                <span class="progress-value">50%</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill green" style="width: 50%"></div></div>
                         </div>
                     </div>
-                    <div class="progress-item">
-                        <div class="progress-header">
-                            <span class="progress-label">Sales Engineering</span>
-                            <span class="progress-value">95%</span>
+
+                    <div style="background: var(--docebo-white); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--neutral-200);">
+                        <div style="font-size: 12px; font-weight: 600; color: var(--docebo-blue); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">Calculated (with methodology)</div>
+                        <div class="progress-item" style="margin-bottom: 12px;">
+                            <div class="progress-header">
+                                <span class="progress-label">Granola ROI (17.5K hrs × $75/hr ÷ $63K)</span>
+                                <span class="progress-value">1983%</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill blue" style="width: 100%"></div></div>
                         </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill blue" style="width: 95%"></div>
+                        <div class="progress-item" style="margin-bottom: 12px;">
+                            <div class="progress-header">
+                                <span class="progress-label">Product FAQ: search time reduction</span>
+                                <span class="progress-value">93%</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill blue" style="width: 93%"></div></div>
+                        </div>
+                        <div class="progress-item" style="margin-bottom: 0;">
+                            <div class="progress-header">
+                                <span class="progress-label">Handoffs: modeled value (14-20h×150×$55)</span>
+                                <span class="progress-value">$6.2M/yr</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill blue" style="width: 62%"></div></div>
                         </div>
                     </div>
                 </div>
@@ -877,30 +1187,30 @@
             <div class="hero-content">
                 <div class="hero-eyebrow">Platform spotlight</div>
                 <h1>Glean: enterprise knowledge and agent platform</h1>
-                <p class="hero-subtitle">From pilot to core GTM infrastructure that 70% of employees use, with a growing ecosystem of revenue-tied agents.</p>
+                <p class="hero-subtitle">From pilot to core GTM infrastructure with 87% coverage and 81% stickiness, driving 250K+ AI interactions across the organization.</p>
             </div>
         </section>
 
         <div class="main-content">
             <div class="stats-bar">
                 <div class="stat-item">
-                    <div class="stat-value">600+</div>
+                    <div class="stat-value">610</div>
                     <div class="stat-label">Monthly active users</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">420</div>
+                    <div class="stat-value">506</div>
                     <div class="stat-label">Weekly active users</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">69%</div>
+                    <div class="stat-value">81%</div>
                     <div class="stat-label">WAU/MAU stickiness</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">140+</div>
-                    <div class="stat-label">Custom agents</div>
+                    <div class="stat-value">209</div>
+                    <div class="stat-label">Shared agents</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">69K+</div>
+                    <div class="stat-value">250K+</div>
                     <div class="stat-label">AI interactions</div>
                 </div>
             </div>
@@ -914,7 +1224,7 @@
                         <th>Agent name</th>
                         <th>Primary teams</th>
                         <th>Users</th>
-                        <th>Runs (30 days)</th>
+                        <th>Runs (6 mo)</th>
                         <th>Impact</th>
                     </tr>
                 </thead>
@@ -922,86 +1232,152 @@
                     <tr>
                         <td class="agent-name">Product FAQ Agent</td>
                         <td>R&D, Renewals, Product</td>
-                        <td class="agent-users">57</td>
-                        <td class="agent-runs">246</td>
-                        <td><span class="tag success">93% search time reduction</span></td>
+                        <td class="agent-users">124</td>
+                        <td class="agent-runs">931</td>
+                        <td><span class="tag success">Most users</span></td>
                     </tr>
                     <tr>
-                        <td class="agent-name">RFP Response Chatbot</td>
-                        <td>GTM, Enablement</td>
-                        <td class="agent-users">7</td>
-                        <td class="agent-runs">549</td>
-                        <td><span class="tag success">High-volume automation</span></td>
+                        <td class="agent-name">REACH Scoring & Summary</td>
+                        <td>Sales, CX</td>
+                        <td class="agent-users">39</td>
+                        <td class="agent-runs">744</td>
+                        <td><span class="tag success">Account intelligence</span></td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">Next Step Helper</td>
+                        <td>Sales, CX</td>
+                        <td class="agent-users">33</td>
+                        <td class="agent-runs">687</td>
+                        <td><span class="tag success">Deal guidance</span></td>
                     </tr>
                     <tr>
                         <td class="agent-name">Outbounding Prompt</td>
                         <td>Sales AE, BDR</td>
-                        <td class="agent-users">33</td>
-                        <td class="agent-runs">170</td>
+                        <td class="agent-users">61</td>
+                        <td class="agent-runs">575</td>
                         <td><span class="tag live">Outreach acceleration</span></td>
-                    </tr>
-                    <tr>
-                        <td class="agent-name">Cybersecurity Q&A</td>
-                        <td>InfoSec, HR, Partners</td>
-                        <td class="agent-users">9</td>
-                        <td class="agent-runs">101</td>
-                        <td><span class="tag live">Cross-functional security</span></td>
-                    </tr>
-                    <tr>
-                        <td class="agent-name">Demo Prep Agent</td>
-                        <td>Sales Engineering, R&D</td>
-                        <td class="agent-users">14</td>
-                        <td class="agent-runs">74</td>
-                        <td><span class="tag live">Pre-call optimization</span></td>
                     </tr>
                     <tr>
                         <td class="agent-name">Renewal Plan Generator</td>
                         <td>CX, CSM</td>
-                        <td class="agent-users">18</td>
-                        <td class="agent-runs">67</td>
+                        <td class="agent-users">48</td>
+                        <td class="agent-runs">562</td>
                         <td><span class="tag success">Renewal strategy</span></td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">Demo Prep Agent</td>
+                        <td>Sales Engineering</td>
+                        <td class="agent-users">27</td>
+                        <td class="agent-runs">253</td>
+                        <td><span class="tag live">Pre-call optimization</span></td>
+                    </tr>
+                    <tr>
+                        <td class="agent-name">Intelligent Reminders</td>
+                        <td>Sales, CX</td>
+                        <td class="agent-users">72</td>
+                        <td class="agent-runs">145</td>
+                        <td><span class="tag live">Task automation</span></td>
                     </tr>
                     <tr>
                         <td class="agent-name">Transition Readiness Agent</td>
                         <td>Customer Experience</td>
-                        <td class="agent-users">22</td>
-                        <td class="agent-runs">42</td>
+                        <td class="agent-users">32</td>
+                        <td class="agent-runs">109</td>
                         <td><span class="tag live">Lifecycle management</span></td>
-                    </tr>
-                    <tr>
-                        <td class="agent-name">Account Growth Plan</td>
-                        <td>Sales AM</td>
-                        <td class="agent-users">21</td>
-                        <td class="agent-runs">42</td>
-                        <td><span class="tag live">Expansion strategy</span></td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="quote-block" style="margin-top: 48px;">
-                <p class="quote-text">I use this daily. It is my go-to resource for voice of customer. It bridges the gap between raw data and actionable insight.</p>
-                <p class="quote-author">; Marketing team member on Audience Insights</p>
+                <p class="quote-text">The agent helped me answer a question on a call in real-time. It would have likely taken about 30 minutes to find or source this answer from a human. Straight fire.</p>
+                <p class="quote-author">- Product FAQ Agent user feedback (94% task success, 96% grounding accuracy, 100 NPS)</p>
             </div>
 
-            <h2 class="section-title" style="margin-top: 48px;">Agent Builder Champions Program</h2>
+            <!-- Additional Glean testimonials -->
+            <div class="cards-grid" style="margin-top: 24px;">
+                <div class="card" style="background: var(--docebo-beige); border: none;">
+                    <div class="card-description" style="font-style: italic; font-size: 15px; margin-bottom: 12px;">"5-9 hours per week saved for power users in CS, Sales, and Support. This isn't just efficiency; it's capacity we've created for higher-value work."</div>
+                    <div style="font-size: 13px; font-weight: 600; color: var(--docebo-blue);">Glean ROI Analysis</div>
+                    <div style="font-size: 12px; color: var(--neutral-600);">Based on usage telemetry</div>
+                </div>
+                <div class="card" style="background: var(--docebo-beige); border: none;">
+                    <div class="card-description" style="font-style: italic; font-size: 15px; margin-bottom: 12px;">"87% of users report that Glean makes them feel more effective at their job. The shift from 'searching' to 'asking' has fundamentally changed how teams access knowledge."</div>
+                    <div style="font-size: 13px; font-weight: 600; color: var(--docebo-blue);">Glean Adoption Survey</div>
+                    <div style="font-size: 12px; color: var(--neutral-600);">Q4 2025 results</div>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">Platform health and adoption</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon green">🎓</div>
+                    <div class="card-title">Company coverage</div>
+                    <div class="card-metric">87%</div>
+                    <div class="card-description">855 of 988 employees signed up. 71% activity rate among those who know about Glean.</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon blue">🚀</div>
+                    <div class="card-title">Agent runs (6 months)</div>
+                    <div class="card-metric">10,608</div>
+                    <div class="card-description">207 monthly active agent users driving automation across 209 shared agents.</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon purple">📈</div>
+                    <div class="card-title">CX department</div>
+                    <div class="card-metric">98% adoption</div>
+                    <div class="card-description">50 users, 2,844 agent runs. Top agent: Renewal Plan Generator.</div>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">Agent Builder Cohort Program</h2>
+            <p class="section-subtitle">5-week certification program training domain experts to build production-ready Glean agents</p>
             <div class="cards-grid">
                 <div class="card">
                     <div class="card-icon green">🎓</div>
                     <div class="card-title">Certified builders</div>
                     <div class="card-metric">11</div>
-                    <div class="card-description">Internal champions trained to build production-ready agents, scaling AI capability beyond the AI Ops team.</div>
+                    <div class="card-description">Cohort 1 graduates from Support, SE, CS, Sales, Marketing, Product, RevOps, and Enablement. 74 total sign-ups across cohorts.</div>
                 </div>
                 <div class="card">
-                    <div class="card-icon blue">🚀</div>
-                    <div class="card-title">Production agents</div>
-                    <div class="card-metric">11+</div>
-                    <div class="card-description">Agents built by cohort graduates now in active use across business teams.</div>
+                    <div class="card-icon blue">📊</div>
+                    <div class="card-title">Skill uplift</div>
+                    <div class="card-metric">+28.9%</div>
+                    <div class="card-description">Average improvement in AI competencies. +40.5% in "ability to build agents" and +35% in platform familiarity.</div>
                 </div>
                 <div class="card">
-                    <div class="card-icon purple">📈</div>
-                    <div class="card-title">CX adoption rate</div>
-                    <div class="card-metric">86%</div>
-                    <div class="card-description">Customer Experience team leading adoption with consistent weekly engagement.</div>
+                    <div class="card-icon pink">⭐</div>
+                    <div class="card-title">Program NPS</div>
+                    <div class="card-metric">9.73</div>
+                    <div class="card-description">Driven by clarity of structure, hands-on work, and real business use cases with peer collaboration.</div>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <p class="quote-text">Stop Searching, Start Selling: The Product FAQ Agent reduces search time by 93% - that's ~2 hours saved per week! 600 runs by 90 users with 100 NPS.</p>
+                <p class="quote-author">- Natalie Yamakami, Revenue Enablement - Certified Glean Agent Builder</p>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">How teams use agents</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-title">Customer Experience (CX)</div>
+                    <div class="card-metric">41 users, 616 runs</div>
+                    <div class="card-description">Top agent: Transition Readiness Agent. Using agents for structured customer lifecycle workflows—transition readiness, renewal planning, and health narratives.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Sales Engineering</div>
+                    <div class="card-metric">21 users, 704 runs</div>
+                    <div class="card-description">Top agent: Demo Prep Agent. Agents firmly embedded in pre-call/demo workflow, turning fragmented info into demo briefs.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Sales AE + AM</div>
+                    <div class="card-metric">59 users, 463 runs</div>
+                    <div class="card-description">AEs use Outbounding Prompt for high-frequency content; AMs use Account Growth Plan (REACH) for strategic expansion.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Professional Services</div>
+                    <div class="card-metric">27 users, 153 runs</div>
+                    <div class="card-description">Top agent: Migration Master Questions. Agents standardize discovery/migration questions and project briefs.</div>
                 </div>
             </div>
         </div>
@@ -1012,46 +1388,46 @@
         <section class="hero" style="padding-bottom: 32px;">
             <div class="hero-content">
                 <div class="hero-eyebrow">Platform spotlight</div>
-                <h1>UnifyApps: AI intelligence portal for GTM</h1>
-                <p class="hero-subtitle">Custom AI applications built on the "Ask Docebo AI" platform, turning raw data from 20+ systems into actionable intelligence.</p>
+                <h1>UnifyApps: From experiment to GTM operating system</h1>
+                <p class="hero-subtitle">In under 9 months, transformed from unpaid pilot to production platform powering GTM intelligence. MSA finalized Jan 2026, migrating to Docebo AWS.</p>
             </div>
         </section>
 
         <div class="main-content">
             <div class="stats-bar">
                 <div class="stat-item">
-                    <div class="stat-value">$150K</div>
-                    <div class="stat-label">Platform investment</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">4</div>
-                    <div class="stat-label">Core apps live</div>
+                    <div class="stat-value">$280-300K</div>
+                    <div class="stat-label">Annual investment</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-value">6</div>
-                    <div class="stat-label">FT contractors</div>
+                    <div class="stat-label">Apps live</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">14+</div>
-                    <div class="stat-label">Active use cases</div>
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">Apps in UAT</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">$3.3M</div>
-                    <div class="stat-label">Modeled pipeline impact</div>
+                    <div class="stat-value">$2M</div>
+                    <div class="stat-label">Forecasted ARR (Audience Insights)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">$15.4M</div>
+                    <div class="stat-label">Modeled productivity value</div>
                 </div>
             </div>
 
-            <h2 class="section-title">Core applications</h2>
+            <h2 class="section-title">Live applications (6)</h2>
 
             <div class="cards-grid">
                 <div class="card">
                     <div class="card-icon pink">🎯</div>
                     <div class="card-title">Audience Insights AI</div>
-                    <div class="card-metric">4,000+ calls analyzed</div>
-                    <div class="card-description">Analyzes demo calls via Gong to produce deep-dive insights on topics, pains, and competitors. Used daily by Marketing.</div>
+                    <div class="card-metric">$2M forecasted ARR</div>
+                    <div class="card-description">Marketing's primary research tool. Analyzes 4,000+ demo calls via Gong, producing daily-refreshed voice-of-customer cockpit. $3M pipeline forecast in 6 months.</div>
                     <div class="card-tags">
                         <span class="tag live">Live</span>
-                        <span class="tag success">Daily use</span>
+                        <span class="tag success">Crown jewel</span>
                     </div>
                     <div class="impact-grid" style="margin-top: 16px;">
                         <div class="impact-item">
@@ -1059,8 +1435,8 @@
                             <div class="impact-label">Research time reduction</div>
                         </div>
                         <div class="impact-item">
-                            <div class="impact-value">40%</div>
-                            <div class="impact-label">Faster messaging</div>
+                            <div class="impact-value">45%</div>
+                            <div class="impact-label">Faster competitor reaction</div>
                         </div>
                     </div>
                 </div>
@@ -1068,83 +1444,229 @@
                 <div class="card">
                     <div class="card-icon green">📉</div>
                     <div class="card-title">Churn Analysis AI</div>
-                    <div class="card-metric">~200 opps/month</div>
-                    <div class="card-description">Auto-classifies lost opportunities with ~95% accuracy, writing standardized churn reasons into Salesforce.</div>
+                    <div class="card-metric">~200 opps/month at ~95% accuracy</div>
+                    <div class="card-description">Deployed Sept 15, 2025. Triggers on closed-lost, pulls from 4-6 sources (SFDC, Gong, Snowflake, Zendesk, Slack, email), auto-writes standardized reasons to Salesforce.</div>
                     <div class="card-tags">
                         <span class="tag live">Live</span>
                         <span class="tag">Salesforce integrated</span>
                     </div>
                     <div class="impact-grid" style="margin-top: 16px;">
                         <div class="impact-item">
-                            <div class="impact-value">40%</div>
-                            <div class="impact-label">Churn pattern reduction</div>
+                            <div class="impact-value">4-6</div>
+                            <div class="impact-label">Data sources per analysis</div>
                         </div>
                         <div class="impact-item">
-                            <div class="impact-value">30%</div>
-                            <div class="impact-label">Unknown reasons decrease</div>
+                            <div class="impact-value">~95%</div>
+                            <div class="impact-label">Classification accuracy</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-icon blue">📋</div>
-                    <div class="card-title">Digital BR v2.0</div>
-                    <div class="card-metric">1,000+ accounts enabled</div>
-                    <div class="card-description">Auto-generates QBR decks from Snowflake, Totango, Gong, Salesforce, and Qualtrics. Serving previously underserved accounts.</div>
+                    <div class="card-icon blue">👔</div>
+                    <div class="card-title">Leadership Engagement Tracker</div>
+                    <div class="card-metric">Fully operational</div>
+                    <div class="card-description">Tracks executive sponsorship and engagement signals across accounts to identify deals at risk of slippage.</div>
                     <div class="card-tags">
-                        <span class="tag">UAT</span>
-                        <span class="tag">Go-live Feb 2026</span>
+                        <span class="tag live">Live</span>
+                        <span class="tag">Sales</span>
                     </div>
                     <div class="impact-grid" style="margin-top: 16px;">
                         <div class="impact-item">
-                            <div class="impact-value">60%</div>
-                            <div class="impact-label">QBR prep time reduction</div>
+                            <div class="impact-value">10%</div>
+                            <div class="impact-label">Deal slippage decrease</div>
                         </div>
                         <div class="impact-item">
-                            <div class="impact-value">60%</div>
-                            <div class="impact-label">Account coverage increase</div>
+                            <div class="impact-value">25%</div>
+                            <div class="impact-label">Exec sponsorship increase</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-icon purple">🔬</div>
-                    <div class="card-title">Account Research</div>
-                    <div class="card-metric">18K accounts monitored</div>
-                    <div class="card-description">AI-powered account briefs combining Salesforce, web data, 10-K reports, and LinkedIn to accelerate prospect research.</div>
+                    <div class="card-title">Market Research</div>
+                    <div class="card-metric">MVP shipped</div>
+                    <div class="card-description">External market intelligence monitoring. Note: Account Research (UC04) paused after 15-min processing time blocked adoption; being rebuilt as "Dynamic Playbook Builder."</div>
                     <div class="card-tags">
-                        <span class="tag live">MVP Live</span>
+                        <span class="tag">MVP Live</span>
                         <span class="tag">Sales</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon orange">📊</div>
+                    <div class="card-title">VOC 360 V1</div>
+                    <div class="card-metric">Live Dec 24, 2025</div>
+                    <div class="card-description">Phase 1 NPS ML categorization complete. CEO Alessio requested verbatim quote features now being scoped for migration rebuild.</div>
+                    <div class="card-tags">
+                        <span class="tag live">Live</span>
+                        <span class="tag">Customer success</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-block" style="margin-top: 32px;">
+                <p class="quote-text">I use this daily. It is my go-to resource for voice of customer. It bridges the gap between raw data and actionable insight.</p>
+                <p class="quote-author">- Marketing stakeholder on Audience Insights AI</p>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">In UAT (4) - Q1 2026 launches</h2>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon blue">📋</div>
+                    <div class="card-title">Digital Business Review</div>
+                    <div class="card-metric">Testing with 3-5 CSMs</div>
+                    <div class="card-description">Auto-generates QBR decks from SFDC, Gong, Snowflake, Totango, Qualtrics. ~1,000 unassigned accounts currently receive no structured reviews. Feb 2026 go-live target.</div>
+                    <div class="card-tags">
+                        <span class="tag">UAT</span>
+                        <span class="tag">Feb 2026</span>
                     </div>
                     <div class="impact-grid" style="margin-top: 16px;">
                         <div class="impact-item">
-                            <div class="impact-value">40%</div>
-                            <div class="impact-label">Research hours reduction</div>
+                            <div class="impact-value">60%</div>
+                            <div class="impact-label">QBR prep reduction (target)</div>
                         </div>
                         <div class="impact-item">
-                            <div class="impact-value">3x</div>
-                            <div class="impact-label">Faster GTM planning</div>
+                            <div class="impact-value">50%</div>
+                            <div class="impact-label">Already achieved in testing</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon blue">📄</div>
+                    <div class="card-title">One-Pager Digital BR</div>
+                    <div class="card-metric">Companion to Digital BR</div>
+                    <div class="card-description">Condensed account summary for quick reviews. Targets 60% increase in account coverage for foundational and commercial accounts.</div>
+                    <div class="card-tags">
+                        <span class="tag">UAT</span>
+                        <span class="tag">Feb 2026</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon green">⚔️</div>
+                    <div class="card-title">Competitive Intelligence Dashboard</div>
+                    <div class="card-metric">11 rounds of feedback addressed</div>
+                    <div class="card-description">AI engine tracking competitor mentions to assess threat levels. Awaiting final signoff for launch.</div>
+                    <div class="card-tags">
+                        <span class="tag">UAT</span>
+                        <span class="tag">Awaiting signoff</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon orange">📊</div>
+                    <div class="card-title">VOC 360 Full Version</div>
+                    <div class="card-metric">28 of 32 feedback items addressed</div>
+                    <div class="card-description">Multi-source customer intelligence combining NPS, CSAT, Gong, Totango, SFDC, Zendesk. Being rebuilt during cloud migration.</div>
+                    <div class="card-tags">
+                        <span class="tag">UAT</span>
+                        <span class="tag">Migration rebuild</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">In development - High-value pipeline</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon purple">🤝</div>
+                    <div class="card-title">Cross-functional Handoff Agents</div>
+                    <div class="card-metric">$6.2M modeled annual value</div>
+                    <div class="card-description">Six agents spanning full lifecycle: Mktg→BD, BD→AE, AE→SC, AE→PS, PS→CSM, CSM→AM. Addresses finding that reps spend ~50% time on manual data/context tasks.</div>
+                    <div class="card-tags">
+                        <span class="tag">Build</span>
+                        <span class="tag success">3 ready for validation</span>
+                    </div>
+                    <div class="impact-grid" style="margin-top: 16px;">
+                        <div class="impact-item">
+                            <div class="impact-value">83%</div>
+                            <div class="impact-label">SOW creation reduction</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-value">80%</div>
+                            <div class="impact-label">Call prep reduction</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon blue">📝</div>
+                    <div class="card-title">AE-to-PS Handoff Agent</div>
+                    <div class="card-metric">MVP completed Jan 10, 2026</div>
+                    <div class="card-description">11-step automated workflow: searches SFDC, reads Gong transcripts, pulls Drive artifacts and Slack threads, synthesizes into structured Implementation Handoff document.</div>
+                    <div class="card-tags">
+                        <span class="tag success">MVP Complete</span>
+                        <span class="tag">Show & Tell delivered</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon green">📐</div>
+                    <div class="card-title">Solution Blueprint Generation Agent</div>
+                    <div class="card-metric">March 7, 2026 go-live</div>
+                    <div class="card-description">Targets 60-person SC/SA team (28 SCs + 32 SAs). Automates 100+ page blueprint documents that currently take multiple days to produce.</div>
+                    <div class="card-tags">
+                        <span class="tag">Build</span>
+                        <span class="tag">March 2026</span>
+                    </div>
+                    <div class="impact-grid" style="margin-top: 16px;">
+                        <div class="impact-item">
+                            <div class="impact-value">90%</div>
+                            <div class="impact-label">First-draft time reduction</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-value">25%</div>
+                            <div class="impact-label">Overall turnaround reduction</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <h2 class="section-title" style="margin-top: 48px;">2026 roadmap highlights</h2>
+            <h2 class="section-title" style="margin-top: 48px;">Investment breakdown</h2>
             <div class="cards-grid">
                 <div class="card">
-                    <div class="card-title">VOC and Customer 360</div>
-                    <div class="card-description">Multi-phase plan bringing together NPS, CSAT, Gong, Totango, SFDC, Zendesk, and Ideas into unified customer intelligence.</div>
-                    <div class="card-tags"><span class="tag">In progress</span></div>
+                    <div class="card-title">UnifyApps Enterprise License</div>
+                    <div class="card-metric">$150K/year</div>
+                    <div class="card-description">Unlimited users and applications. MSA finalized January 2026 after 9 months of unpaid work.</div>
                 </div>
                 <div class="card">
-                    <div class="card-title">Sales Handoff Agent</div>
-                    <div class="card-description">AE+SC to PS handoff automation, extracting insights from Gong, SFDC, and Slack for standardized project handoffs.</div>
-                    <div class="card-tags"><span class="tag">Q1 2026</span></div>
+                    <div class="card-title">UnifyApps dedicated resources</div>
+                    <div class="card-metric">2 specialists</div>
+                    <div class="card-description">Two dedicated senior specialists running daily 7:00 AM EST sprints. Samuel Adams serves as internal product owner and SME for all builds.</div>
                 </div>
                 <div class="card">
-                    <div class="card-title">Competitive Intelligence</div>
-                    <div class="card-description">AI engine tracking competitor mentions to assess threat levels and surface upsell opportunities.</div>
-                    <div class="card-tags"><span class="tag">Planned</span></div>
+                    <div class="card-title">AWS + Anthropic Infrastructure</div>
+                    <div class="card-metric">$80-100K/year</div>
+                    <div class="card-description">Platform migrating to Docebo's AWS environment (approved Jan 30, 2026). Gives Docebo full control.</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Tool Consolidation Savings</div>
+                    <div class="card-metric">~$300K/year</div>
+                    <div class="card-description">Pingboard, Totango, and Tableau functionality shifting into UnifyApps and Glean.</div>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 48px;">Two-lane AI strategy</h2>
+            <p class="section-subtitle">UnifyApps = few, complex, shared apps; everything else lives in tools you already use</p>
+            <div class="cards-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="card">
+                    <div class="card-icon purple">🏗️</div>
+                    <div class="card-title">Lane 1: Platform AI (UnifyApps)</div>
+                    <div class="card-description">Multi-system, bespoke applications requiring deep data integration from Salesforce, Gong, Snowflake, Zendesk, Totango, Qualtrics, and Slack. The kind of apps no single tool can handle alone.</div>
+                    <div class="card-tags">
+                        <span class="tag">High complexity</span>
+                        <span class="tag">4-5 use cases/quarter</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon blue">⚡</div>
+                    <div class="card-title">Lane 2: Self-serve AI (Glean + Zapier)</div>
+                    <div class="card-description">Lighter automation and knowledge retrieval. Glean (610 MAU, 209 agents) for enterprise search and agents. Zapier (50+ workflows) for cross-app automation.</div>
+                    <div class="card-tags">
+                        <span class="tag">Self-serve</span>
+                        <span class="tag">Scalable</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1156,58 +1678,61 @@
             <div class="hero-content">
                 <div class="hero-eyebrow">Operating model</div>
                 <h1>Governance and enablement</h1>
-                <p class="hero-subtitle">Professionalizing how AI and GTM ops get run with clear intake, capacity planning, and executive alignment.</p>
+                <p class="hero-subtitle">Three-tier governance structure established January 2026, reflecting transition from experimental to operational.</p>
             </div>
         </section>
 
         <div class="main-content">
             <div class="two-col">
                 <div>
-                    <h2 class="section-title">Governance structure</h2>
+                    <h2 class="section-title">Three-tier governance (Jan 2026)</h2>
                     <div class="cards-grid" style="grid-template-columns: 1fr;">
                         <div class="card">
                             <div class="card-icon blue">👥</div>
-                            <div class="card-title">Executive Steering Committee</div>
-                            <div class="card-description">Monthly 60-minute sessions for exec-level prioritization and trade-offs. Aligns AI investments with company OKRs.</div>
+                            <div class="card-title">Monthly SF & AI Executive Steering</div>
+                            <div class="card-description">First meeting Jan 14, 2026. Attended by CIO Nitin Chopra, CRO Mark Kosoglow, Sr Director IT Marco Bettineschi, and AI Ops leads. Owns prioritization, trade-offs, capacity guardrails. Makes quarterly decisions on 2-3 UnifyApps use cases.</div>
                             <div class="card-tags"><span class="tag success">Active</span><span class="tag">Monthly</span></div>
                         </div>
                         <div class="card">
                             <div class="card-icon purple">🔄</div>
-                            <div class="card-title">Weekly SFDC/BT/AI Sync</div>
-                            <div class="card-description">Cross-functional alignment between AI Ops, Salesforce team, and Business Technology on shared initiatives.</div>
+                            <div class="card-title">Weekly AI Initiative Steering</div>
+                            <div class="card-description">Inaugurated Jan 16, 2026. Cross-functional group including Marketing, CS, Sales Enablement, and RevOps. Manages project status, blockers, and alignment.</div>
                             <div class="card-tags"><span class="tag success">Active</span><span class="tag">Weekly</span></div>
                         </div>
                         <div class="card">
                             <div class="card-icon green">⚡</div>
-                            <div class="card-title">Daily UnifyApps Sprints</div>
-                            <div class="card-description">Two FTE project leads + PM on vendor side. Sam Adams acts as internal product owner, SME, and solution expert.</div>
-                            <div class="card-tags"><span class="tag success">Active</span><span class="tag">Daily</span></div>
+                            <div class="card-title">Daily UnifyApps Sprint Calls</div>
+                            <div class="card-description">Ongoing since mid-2025. Samuel Adams serves as internal product owner/SME, running 7:00 AM EST syncs with full UnifyApps development team.</div>
+                            <div class="card-tags"><span class="tag success">Active</span><span class="tag">Daily 7am EST</span></div>
                         </div>
                     </div>
                 </div>
 
                 <div>
                     <h2 class="section-title">Capacity model</h2>
-                    <p class="section-subtitle">UnifyApps engineering operates two development pods in parallel</p>
+                    <p class="section-subtitle">~20 use cases per year at full capacity</p>
 
                     <div class="card" style="margin-bottom: 24px;">
-                        <div class="card-title">Quarterly capacity: 4-5 use cases</div>
+                        <div class="card-title">Quarterly throughput: 4-5 use cases</div>
                         <div class="card-description" style="margin-top: 12px;">
-                            <strong>Sizing framework:</strong><br>
-                            • Small (4 weeks): 1-2-1 discovery-build-UAT<br>
-                            • Medium (5 weeks): 1-3-1<br>
-                            • Large (8 weeks): 2-4-2<br>
-                            • XL (10 weeks): 2-5-3<br>
-                            • Experimental: Rapid prototyping for "fail fast" validation
+                            <strong>T-shirt sizing framework:</strong><br>
+                            • Small (4-5 weeks)<br>
+                            • Medium (5-7 weeks)<br>
+                            • Large (8-9 weeks)<br>
+                            • XL (10+ weeks)<br><br>
+                            Roughly 1 Large + 3 Medium + 1 Small per quarter
                         </div>
                     </div>
 
                     <div class="card">
-                        <div class="card-title">Role boundaries</div>
+                        <div class="card-title">Formal intake process</div>
                         <div class="card-description" style="margin-top: 12px;">
-                            <strong>AI Ops/SFDC:</strong> Tooling decisions, technical design, integration, AI governance, telemetry<br><br>
-                            <strong>RevOps:</strong> Process and KPI ownership<br><br>
-                            <strong>Enablement:</strong> Adoption, training, and feedback loops
+                            <strong>2-day SLA</strong> for consultative assessment<br><br>
+                            Determines whether request belongs in:<br>
+                            • UnifyApps (complex, multi-system)<br>
+                            • Glean (knowledge, agents)<br>
+                            • Zapier (workflow automation)<br><br>
+                            Prevents scope creep, ensures highest-value work prioritized
                         </div>
                     </div>
                 </div>
@@ -1216,16 +1741,16 @@
             <h2 class="section-title" style="margin-top: 48px;">Zapier: force multiplier for automation</h2>
             <div class="stats-bar">
                 <div class="stat-item">
-                    <div class="stat-value">50+</div>
-                    <div class="stat-label">Workflows in production</div>
+                    <div class="stat-value">44</div>
+                    <div class="stat-label">Active zaps</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">88K</div>
-                    <div class="stat-label">Credits used (2 months)</div>
+                    <div class="stat-value">121K+</div>
+                    <div class="stat-label">Tasks automated</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">600K</div>
-                    <div class="stat-label">Total credits available</div>
+                    <div class="stat-value">14%</div>
+                    <div class="stat-label">Credit utilization</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-value">40+</div>
@@ -1270,39 +1795,54 @@
                     <div class="team-avatar">SI</div>
                     <div class="team-name">Sam Irizarry</div>
                     <div class="team-role">Director, AI Operations & Business Technology</div>
-                    <div class="team-focus">Strategy, executive alignment, cross-functional orchestration</div>
+                    <div class="team-focus">Leads combined AI Ops + Salesforce organization (8+ people)</div>
+                    <div style="margin-top: 12px; font-size: 13px; color: var(--neutral-600); text-align: left;">
+                        <strong>Accountable for:</strong><br>
+                        • AI strategy, governance, and tooling stack<br>
+                        • Salesforce platform direction and GTM initiatives<br>
+                        • Executive alignment and steering forums<br>
+                        • Bridge between OPS-IT, RevOps, Sales, and Product
+                    </div>
                 </div>
                 <div class="team-card">
                     <div class="team-avatar">SA</div>
                     <div class="team-name">Samuel Adams</div>
-                    <div class="team-role">Senior AI Solutions Consultant</div>
-                    <div class="team-focus">UnifyApps product owner, solution architecture, SME</div>
+                    <div class="team-role">AI Operations Lead (Technical)</div>
+                    <div class="team-focus">Day-to-day technical lead for AI Ops</div>
+                    <div style="margin-top: 12px; font-size: 13px; color: var(--neutral-600); text-align: left;">
+                        <strong>Owns:</strong><br>
+                        • AI Ops operating model (intake, sizing, lifecycle)<br>
+                        • Complex builds: handoff agents, Audience Insights<br>
+                        • Partner management with UnifyApps and Glean<br>
+                        • UnifyApps internal product owner/SME
+                    </div>
                 </div>
                 <div class="team-card">
                     <div class="team-avatar">GB</div>
                     <div class="team-name">Giuseppe Bonanno</div>
                     <div class="team-role">AI Solutions Engineer</div>
-                    <div class="team-focus">Full-stack development, agent building, integrations</div>
-                </div>
-                <div class="team-card">
-                    <div class="team-avatar">RN</div>
-                    <div class="team-name">Rachael Ni</div>
-                    <div class="team-role">AI Ops Intern</div>
-                    <div class="team-focus">Enablement, content, Innovation Showcase, Hackathon</div>
+                    <div class="team-focus">Full-stack development, skills library, dashboards</div>
+                    <div style="margin-top: 12px; font-size: 13px; color: var(--neutral-600); text-align: left;">
+                        <strong>Building:</strong><br>
+                        • Simple/medium-complexity applications<br>
+                        • Enterprise skills library and MCPs<br>
+                        • Script and skill libraries for agents<br>
+                        • Vercel/Next.js web interfaces
+                    </div>
                 </div>
             </div>
 
             <h2 class="section-title" style="margin-top: 48px;">Extended ecosystem</h2>
             <div class="cards-grid">
                 <div class="card">
-                    <div class="card-title">UnifyApps team</div>
-                    <div class="card-metric">6 FTEs</div>
-                    <div class="card-description">Full-time contractors working on Docebo projects. Daily sprint planning with formal development processes.</div>
+                    <div class="card-title">UnifyApps dedicated resources</div>
+                    <div class="card-metric">2 FTEs</div>
+                    <div class="card-description">Two dedicated senior specialists running daily 7:00 AM EST sprints. Samuel Adams serves as internal product owner/SME.</div>
                 </div>
                 <div class="card">
                     <div class="card-title">Agent Builder Champions</div>
                     <div class="card-metric">11 certified</div>
-                    <div class="card-description">Internal champions trained to build production-ready agents across business teams.</div>
+                    <div class="card-description">Internal champions trained to build production-ready agents across business teams. 74 total sign-ups across cohorts.</div>
                 </div>
                 <div class="card">
                     <div class="card-title">Salesforce/BizTech team</div>
@@ -1316,23 +1856,98 @@
                 <p class="quote-author">; AI Operations Charter discussion, December 2025</p>
             </div>
 
-            <h2 class="section-title" style="margin-top: 48px;">What's next</h2>
+            <h2 class="section-title" style="margin-top: 48px;">High-impact projects on the horizon</h2>
+            <p class="section-subtitle">Strategic initiatives targeting significant business transformation</p>
+
             <div class="cards-grid">
-                <div class="card">
-                    <div class="card-icon blue">📈</div>
-                    <div class="card-title">Scale Glean and agents</div>
-                    <div class="card-description">Push to 80%+ adoption in GTM, double usage of top agents, expand certified builder cohorts.</div>
+                <div class="card" style="border-left: 4px solid var(--docebo-green);">
+                    <div class="card-icon green">📊</div>
+                    <div class="card-title">Quarterly Business Review automation</div>
+                    <div class="card-metric">60% prep time reduction</div>
+                    <div class="card-description">Auto-generates QBR decks from Snowflake, Totango, Gong, Salesforce, and Qualtrics. Currently ~1,000 accounts receive no structured reviews. Target: 90 minutes down to under 30 minutes prep time.</div>
+                    <div class="card-tags">
+                        <span class="tag">UAT</span>
+                        <span class="tag success">Feb 2026 go-live</span>
+                    </div>
+                    <div class="impact-grid" style="margin-top: 16px;">
+                        <div class="impact-item">
+                            <div class="impact-value">60%</div>
+                            <div class="impact-label">Coverage increase target</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-value">25%</div>
+                            <div class="impact-label">Post-QBR CSAT uplift</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <div class="card-icon green">🎯</div>
-                    <div class="card-title">Operationalize Digital CS and VOC</div>
-                    <div class="card-description">Move Digital BR/One-Pager and VOC dashboards from UAT to scaled programs, tied to GRR/NRR metrics.</div>
+
+                <div class="card" style="border-left: 4px solid var(--docebo-blue);">
+                    <div class="card-icon blue">📐</div>
+                    <div class="card-title">Solution Blueprint auto-generation</div>
+                    <div class="card-metric">90% first-draft reduction</div>
+                    <div class="card-description">Targets 60-person SC/SA team (28 SCs + 32 SAs). Automates 100+ page blueprint documents that currently take multiple days to produce. March 7, 2026 go-live target.</div>
+                    <div class="card-tags">
+                        <span class="tag">Build</span>
+                        <span class="tag">March 2026</span>
+                    </div>
+                    <div class="impact-grid" style="margin-top: 16px;">
+                        <div class="impact-item">
+                            <div class="impact-value">60</div>
+                            <div class="impact-label">SC/SA team members</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-value">25%</div>
+                            <div class="impact-label">Turnaround reduction</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <div class="card-icon purple">💡</div>
-                    <div class="card-title">Skills Signal Intelligence</div>
-                    <div class="card-description">Deliver back-test and dashboards that put a dollar figure on skills-platform demand from customer calls.</div>
+
+                <div class="card" style="border-left: 4px solid var(--docebo-purple);">
+                    <div class="card-icon purple">🤝</div>
+                    <div class="card-title">Cross-functional handoff agents</div>
+                    <div class="card-metric">$6.2M modeled annual value</div>
+                    <div class="card-description">Six agents spanning full lifecycle: Mktg→BD, BD→AE, AE→SC, AE→PS, PS→CSM, CSM→AM. Addresses finding that reps spend ~50% time on manual data/context tasks.</div>
+                    <div class="card-tags">
+                        <span class="tag success">3 ready for validation</span>
+                        <span class="tag">Q1-Q2 2026</span>
+                    </div>
+                    <div class="impact-grid" style="margin-top: 16px;">
+                        <div class="impact-item">
+                            <div class="impact-value">83%</div>
+                            <div class="impact-label">SOW creation reduction</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-value">80%</div>
+                            <div class="impact-label">Call prep reduction</div>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="card" style="border-left: 4px solid var(--docebo-pink);">
+                    <div class="card-icon pink">🧠</div>
+                    <div class="card-title">Enterprise skills library</div>
+                    <div class="card-metric">Upskill the organization</div>
+                    <div class="card-description">Core, reusable AI "skills" (prompt + logic packages): Enterprise Search tuned to Docebo, brand guidelines, health reports, risk summaries, outreach drafts. Users invoke powerful workflows via simple commands.</div>
+                    <div class="card-tags">
+                        <span class="tag">Planning</span>
+                        <span class="tag">2026 priority</span>
+                    </div>
+                    <div class="impact-grid" style="margin-top: 16px;">
+                        <div class="impact-item">
+                            <div class="impact-value">4-10</div>
+                            <div class="impact-label">Core skills (Phase 1)</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-value">Domain</div>
+                            <div class="impact-label">Hand-off model</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-block" style="margin-top: 32px;">
+                <p class="quote-text">The goal is to make every team a builder, not just a consumer of AI tools. AI Ops builds the first 4-10 generic skills, then transitions ownership to domain experts who obsess over content and accuracy.</p>
+                <p class="quote-author">; AI Operations strategy, Feb 2026</p>
             </div>
         </div>
     </div>
@@ -1342,6 +1957,594 @@
         <div class="footer-logo">docebo</div>
         <p class="footer-text">AI Operations | From pilots to GTM infrastructure | August 2025 - February 2026</p>
     </footer>
+
+    <!-- Modal: Glean Deep Dive -->
+    <div id="glean-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('glean-modal')">×</button>
+            <div class="modal-header">
+                <h2>Glean: GTM's AI teammate</h2>
+                <p>Enterprise knowledge platform driving assistant-first workflows across the organization</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">610</div>
+                        <div class="modal-stat-label">Monthly active users</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">87%</div>
+                        <div class="modal-stat-label">Company coverage</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">81%</div>
+                        <div class="modal-stat-label">WAU/MAU stickiness</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">209</div>
+                        <div class="modal-stat-label">Shared agents</div>
+                    </div>
+                </div>
+
+                <div class="roi-highlight">
+                    <div class="roi-highlight-title">Projected annual value</div>
+                    <div class="roi-highlight-value">$2.2M across time savings and capacity creation</div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Behavior shift: assistant-first workflows</h3>
+                    <ul>
+                        <li>5 AI-assisted chats per week vs. 2.7 keyword searches; employees now ask questions, not search keywords</li>
+                        <li>19+ FTE-equivalent capacity created in Customer Success alone</li>
+                        <li>62% of users report saving 5-60 minutes per day</li>
+                        <li>30-75 minute reductions in call and QBR preparation time</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Top performing agents</h3>
+                    <ul>
+                        <li><strong>Product FAQ Agent</strong>: 931 runs by 124 users; 93% search time reduction</li>
+                        <li><strong>REACH Scoring</strong>: 744 runs by 39 users; account intelligence for Sales and CX</li>
+                        <li><strong>Next Step Helper</strong>: 687 runs by 33 users; deal guidance for GTM</li>
+                        <li><strong>Renewal Plan Generator</strong>: 562 runs by 48 users; renewal strategy for CSMs</li>
+                    </ul>
+                </div>
+
+                <div class="modal-quote">
+                    <p>"Stop Searching, Start Selling: The Product FAQ Agent reduces search time by 93% - that's ~2 hours saved per week! 600 runs by 90 users with 100 NPS."</p>
+                    <cite>Natalie Yamakami, Revenue Enablement - Certified Glean Agent Builder</cite>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Agent Builder Certification Program</h3>
+                    <ul>
+                        <li>22 participants trained, 11 certified builders, 11+ production agents shipped</li>
+                        <li>74 total sign-ups across cohorts (Support, Solutions Engineering, CS, Sales, Marketing)</li>
+                        <li>28.9% average skill uplift across AI competencies; +40.5% in "ability to build agents"</li>
+                        <li>Program NPS: 9.73 / 10</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Audience Insights Deep Dive -->
+    <div id="audience-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('audience-modal')">×</button>
+            <div class="modal-header">
+                <h2>Audience Insights AI</h2>
+                <p>Marketing's primary research tool for voice-of-customer intelligence</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">4,000+</div>
+                        <div class="modal-stat-label">Demo calls analyzed</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">$2M</div>
+                        <div class="modal-stat-label">Forecasted ARR</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">Daily</div>
+                        <div class="modal-stat-label">Data refresh</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">$3.3M</div>
+                        <div class="modal-stat-label">Modeled pipeline uplift</div>
+                    </div>
+                </div>
+
+                <div class="roi-highlight">
+                    <div class="roi-highlight-title">Pipeline impact modeling</div>
+                    <div class="roi-highlight-value">$3.3M incremental pipeline (15% uplift on 442-SQO sample); upside to $9.05M at scale</div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Target outcomes</h3>
+                    <ul>
+                        <li>50% reduction in pre-meeting research time</li>
+                        <li>40% faster time-to-market for new messaging</li>
+                        <li>45% faster reaction to competitive mentions</li>
+                        <li>Three-layer deep-dive analysis with AI agent for ad-hoc queries</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>How it works</h3>
+                    <ul>
+                        <li>Analyzes 4,000+ demo calls recorded in Gong since January 2024</li>
+                        <li>Identifies buyer pain points, competitive mentions, and messaging opportunities</li>
+                        <li>Produces daily-refreshed voice-of-customer cockpit for Marketing</li>
+                        <li>Deep integration with Gong, Salesforce, and campaign systems</li>
+                    </ul>
+                </div>
+
+                <div class="modal-quote">
+                    <p>"I use this daily. It is my go-to resource for voice of customer. It bridges the gap between raw data and actionable insight."</p>
+                    <cite>Amanda Aschoff, Marketing</cite>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Churn Analysis Deep Dive -->
+    <div id="churn-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('churn-modal')">×</button>
+            <div class="modal-header">
+                <h2>Churn Analysis AI</h2>
+                <p>Automated lost-opportunity classification with Salesforce integration</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~200</div>
+                        <div class="modal-stat-label">Opportunities/month</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~95%</div>
+                        <div class="modal-stat-label">Classification accuracy</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">4-6</div>
+                        <div class="modal-stat-label">Data sources per analysis</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">40%</div>
+                        <div class="modal-stat-label">Reduction in recurring patterns</div>
+                    </div>
+                </div>
+
+                <div class="roi-highlight">
+                    <div class="roi-highlight-title">Business impact</div>
+                    <div class="roi-highlight-value">40% reduction in recurring churn patterns; systematically explains loss reasons to improve GRR</div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>How it works</h3>
+                    <ul>
+                        <li>Triggers on closed-lost opportunities in Salesforce</li>
+                        <li>Pulls context from 4-6 sources: SFDC, Gong transcripts, Zendesk tickets, Slack threads, email, Snowflake</li>
+                        <li>Auto-writes standardized churn reasons back into Salesforce</li>
+                        <li>Companion Glean agent layers narrative context for leadership analysis</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Deployed</h3>
+                    <ul>
+                        <li>Live since September 15, 2025</li>
+                        <li>Feeds both macro-level trend analysis and micro-level account review</li>
+                        <li>Standardizes loss categorization across all GTM teams</li>
+                        <li>Enables data-driven retention strategy development</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Granola Deep Dive -->
+    <div id="granola-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('granola-modal')">×</button>
+            <div class="modal-header">
+                <h2>Granola: meeting intelligence at scale</h2>
+                <p>AI-powered meeting notepad with local processing for privacy</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">300+</div>
+                        <div class="modal-stat-label">Sign-ups</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">210</div>
+                        <div class="modal-stat-label">Licensed users</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">97%</div>
+                        <div class="modal-stat-label">User satisfaction</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">1983%</div>
+                        <div class="modal-stat-label">Calculated ROI</div>
+                    </div>
+                </div>
+
+                <div class="roi-highlight">
+                    <div class="roi-highlight-title">ROI calculation (verified methodology)</div>
+                    <div class="roi-highlight-value">$1.3M productivity value ÷ $63K annual cost = 1983% ROI</div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>The math (from impact report)</h3>
+                    <ul>
+                        <li><strong>Users:</strong> 210 licensed users</li>
+                        <li><strong>Meeting frequency:</strong> 10 meetings per week average</li>
+                        <li><strong>Time saved:</strong> 20 minutes per meeting</li>
+                        <li><strong>Annual hours:</strong> 210 × 10 × 20 min × 52 weeks = 17,500 hours/year</li>
+                        <li><strong>Loaded cost:</strong> $75/hour (standard HR calculation)</li>
+                        <li><strong>Productivity value:</strong> 17,500 × $75 = $1.3M annually</li>
+                        <li><strong>Annual cost:</strong> 210 licenses × $25/user/month × 12 = $63,000</li>
+                        <li><strong>Payback period:</strong> Under 1 month</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Cross-functional adoption (measured)</h3>
+                    <ul>
+                        <li><strong>HR:</strong> Interview documentation and candidate tracking</li>
+                        <li><strong>Sales:</strong> Customer call follow-ups and action items</li>
+                        <li><strong>CS:</strong> Client interaction tracking and handoff notes</li>
+                        <li><strong>Product:</strong> Sprint discussions and decision logging</li>
+                        <li><strong>All teams:</strong> Cross-functional meetings and knowledge sharing</li>
+                    </ul>
+                </div>
+
+                <div class="modal-quote">
+                    <p>"I spend so much of my time in meetings; this has changed my ability to review notes and ensure I don't miss anything. I can ask 'what are my action items' and it grabs everything."</p>
+                    <cite>Granola pilot participant</cite>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: QBR Deep Dive -->
+    <div id="qbr-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('qbr-modal')">×</button>
+            <div class="modal-header">
+                <h2>Quarterly Business Review automation</h2>
+                <p>Digital BR and One-Pager for scalable customer engagement</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~1,000</div>
+                        <div class="modal-stat-label">Accounts unserved today</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">50%</div>
+                        <div class="modal-stat-label">Prep reduction (achieved in UAT)</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">60%</div>
+                        <div class="modal-stat-label">Target prep reduction</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">Feb 2026</div>
+                        <div class="modal-stat-label">Go-live target</div>
+                    </div>
+                </div>
+
+                <div class="roi-highlight">
+                    <div class="roi-highlight-title">Modeled impact (from UAIP business case)</div>
+                    <div class="roi-highlight-value">2-3 points GRR improvement + $1.5M expansion pipeline at scale</div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Current status</h3>
+                    <ul>
+                        <li><strong>UAT:</strong> Testing with 3-5 CSMs</li>
+                        <li><strong>Achieved:</strong> 50% prep time reduction in testing</li>
+                        <li><strong>Blocker:</strong> Data accuracy below 50% threshold; focused on quality before rollout</li>
+                        <li><strong>Target:</strong> 90 minutes → under 30 minutes prep time</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Business case (why this matters)</h3>
+                    <ul>
+                        <li><strong>Problem:</strong> ~1,000 commercial and foundational accounts receive zero structured business reviews</li>
+                        <li><strong>Root cause:</strong> CSMs spend 60-90 minutes manually prepping each QBR</li>
+                        <li><strong>Solution:</strong> Auto-generate decks from Salesforce, Gong, Snowflake, Totango, Qualtrics</li>
+                        <li><strong>Modeled outcome:</strong> 60% increase in account coverage, 20% faster time-to-value</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Note on modeling</h3>
+                    <ul>
+                        <li>GRR and pipeline projections are scenario-based models, not validated actuals</li>
+                        <li>Finance validation of these models has not been completed</li>
+                        <li>50% prep reduction is measured in UAT; other targets are projections</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Blueprint Deep Dive -->
+    <div id="blueprint-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('blueprint-modal')">×</button>
+            <div class="modal-header">
+                <h2>Solution Blueprint auto-generation</h2>
+                <p>Automating 100+ page technical documents for SC/SA teams</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">60</div>
+                        <div class="modal-stat-label">SC/SA team members</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">100+</div>
+                        <div class="modal-stat-label">Pages per blueprint</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">90%</div>
+                        <div class="modal-stat-label">First-draft reduction (target)</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">Mar 7</div>
+                        <div class="modal-stat-label">2026 go-live</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Target team</h3>
+                    <ul>
+                        <li><strong>Solutions Consultants:</strong> 28 team members</li>
+                        <li><strong>Solutions Architects:</strong> 32 team members</li>
+                        <li><strong>Current process:</strong> Multiple days to produce detailed solution blueprints</li>
+                        <li><strong>Output:</strong> 100+ page technical documents per engagement</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Timeline (from BRD)</h3>
+                    <ul>
+                        <li><strong>BRD completed:</strong> January 2026</li>
+                        <li><strong>Backend config:</strong> Through January 31</li>
+                        <li><strong>Frontend config:</strong> Through February 7</li>
+                        <li><strong>Target go-live:</strong> March 7, 2026</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Projected impact</h3>
+                    <ul>
+                        <li><strong>First-draft time:</strong> 90% reduction (modeled)</li>
+                        <li><strong>Overall turnaround:</strong> 25% reduction (modeled)</li>
+                        <li>Note: These are projections based on process analysis, not measured outcomes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Handoff Agents Deep Dive -->
+    <div id="handoff-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('handoff-modal')">×</button>
+            <div class="modal-header">
+                <h2>Cross-functional handoff agents</h2>
+                <p>Six agents spanning the full customer lifecycle</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">$6.2M</div>
+                        <div class="modal-stat-label">Modeled annual value</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">6</div>
+                        <div class="modal-stat-label">Lifecycle agents</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">3</div>
+                        <div class="modal-stat-label">Ready for validation</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~50%</div>
+                        <div class="modal-stat-label">Rep time on manual tasks</div>
+                    </div>
+                </div>
+
+                <div class="roi-highlight">
+                    <div class="roi-highlight-title">Value model formula (from 2026 budget)</div>
+                    <div class="roi-highlight-value">14-20 hours/week returned × 150 users × $55/hour = $6.2M annually</div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>The six lifecycle agents</h3>
+                    <ul>
+                        <li><strong>Marketing → BD:</strong> Lead qualification and context transfer</li>
+                        <li><strong>BD → AE:</strong> Opportunity handoff brief</li>
+                        <li><strong>AE → SC:</strong> Technical requirements handoff</li>
+                        <li><strong>AE → PS:</strong> Implementation handoff (MVP complete Jan 10, 2026)</li>
+                        <li><strong>PS → CSM:</strong> Go-live handoff</li>
+                        <li><strong>CSM → AM:</strong> Expansion opportunity handoff</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>AE→PS agent (furthest along)</h3>
+                    <ul>
+                        <li><strong>Status:</strong> MVP complete, Show & Tell delivered Jan 10, 2026</li>
+                        <li><strong>Process:</strong> 11-step automated workflow</li>
+                        <li><strong>Sources:</strong> Salesforce, Gong transcripts, Google Drive, Slack threads</li>
+                        <li><strong>Output:</strong> Structured Implementation Handoff document auto-saved to project folders</li>
+                        <li><strong>Testing:</strong> 4-5 output variations tested with PS champion</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Efficiency targets (from UAIP PRD)</h3>
+                    <ul>
+                        <li><strong>SOW creation:</strong> 30 min → 5 min (83% reduction)</li>
+                        <li><strong>RFP responses:</strong> 40 hrs/week → 12 hrs (70% reduction)</li>
+                        <li><strong>Call preparation:</strong> 15 min → 3 min (80% reduction)</li>
+                        <li><strong>Overall CAC target:</strong> 20% reduction</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Note on modeling</h3>
+                    <ul>
+                        <li>$6.2M figure is from 2026 budget modeling, not validated actuals</li>
+                        <li>Efficiency percentages are targets based on process analysis</li>
+                        <li>AE→PS MVP is complete; other agents are in various stages</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Skills Library Deep Dive -->
+    <div id="skills-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('skills-modal')">×</button>
+            <div class="modal-header">
+                <h2>Enterprise skills library</h2>
+                <p>Reusable AI capabilities for organization-wide upskilling</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">4-10</div>
+                        <div class="modal-stat-label">Core skills (Phase 1)</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">Domain</div>
+                        <div class="modal-stat-label">Hand-off model</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">2026</div>
+                        <div class="modal-stat-label">Priority initiative</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">Planning</div>
+                        <div class="modal-stat-label">Current status</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>What is a "skill"?</h3>
+                    <ul>
+                        <li>Reusable AI capabilities (prompt + logic packages) that agents can call</li>
+                        <li>Users invoke powerful workflows via simple commands</li>
+                        <li>No need to be expert prompt engineers</li>
+                        <li>Skills chain multiple steps (e.g., "run health report", "summarize risk drivers", "draft outreach")</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Planned core skills</h3>
+                    <ul>
+                        <li><strong>Enterprise Search:</strong> Tuned to Docebo's stack and values</li>
+                        <li><strong>Brand Guidelines:</strong> Marketing-approved messaging and tone</li>
+                        <li><strong>Health Report:</strong> Customer health scoring and narratives</li>
+                        <li><strong>Risk Summary:</strong> Account risk identification and drivers</li>
+                        <li><strong>Outreach Drafts:</strong> Personalized customer communications</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Domain hand-off model</h3>
+                    <ul>
+                        <li><strong>Phase 1:</strong> AI Ops builds the first 4-10 generic skills</li>
+                        <li><strong>Phase 2:</strong> Ownership transitions to domain experts (Brand, CS, Product)</li>
+                        <li><strong>Ongoing:</strong> Domain teams obsess over content and accuracy</li>
+                        <li><strong>AI Ops role:</strong> Maintains underlying infrastructure and patterns</li>
+                    </ul>
+                </div>
+
+                <div class="modal-quote">
+                    <p>"The goal is to make every team a builder, not just a consumer of AI tools."</p>
+                    <cite>AI Operations strategy, Feb 2026</cite>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Operating Model Deep Dive -->
+    <div id="ops-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('ops-modal')">×</button>
+            <div class="modal-header">
+                <h2>Operating model and automation</h2>
+                <p>Professionalized governance structure for AI and GTM operations</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">20+</div>
+                        <div class="modal-stat-label">AI projects governed</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">44</div>
+                        <div class="modal-stat-label">Active Zapier zaps</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">121K+</div>
+                        <div class="modal-stat-label">Tasks automated</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">4-5</div>
+                        <div class="modal-stat-label">Use cases per quarter</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Three-tier governance (established Jan 2026)</h3>
+                    <ul>
+                        <li><strong>Monthly Executive Steering</strong>: CIO, CRO, Sr Director IT, AI Ops leads; prioritization and budget decisions</li>
+                        <li><strong>Weekly AI Initiative Steering</strong>: Cross-functional group (Marketing, CS, Sales Enablement, RevOps); project status and blockers</li>
+                        <li><strong>Daily UnifyApps Sprint Calls</strong>: 7:00 AM EST syncs with full development team; Samuel Adams as internal product owner</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Capacity and intake model</h3>
+                    <ul>
+                        <li>T-shirt sizing: Small (4-5 weeks), Medium (5-7 weeks), Large (8-9 weeks), XL (10+ weeks)</li>
+                        <li>~20 use cases per year at full capacity</li>
+                        <li>2-day SLA for consultative assessment on new requests</li>
+                        <li>Rev Team SFxAI Project Inventory tracks all AI projects with status and ownership</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Role boundaries (clear swimlanes)</h3>
+                    <ul>
+                        <li><strong>AI Ops/SFDC</strong>: Tooling decisions, technical design, integration, AI governance, telemetry</li>
+                        <li><strong>RevOps</strong>: Process and KPI ownership</li>
+                        <li><strong>Enablement</strong>: Adoption, training, and feedback loops</li>
+                    </ul>
+                </div>
+
+                <div class="modal-quote">
+                    <p>"In 4 months we went from 1 person to a full team operation. We made Docebians comfortable with AI tools rather than scared of them. 90% of agent usage is now built by revenue people solving their own operational pain points."</p>
+                    <cite>AI Operations Charter discussion, December 2025</cite>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         function showPage(pageId) {
@@ -1364,6 +2567,34 @@
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnOverlay(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
+        });
 
         // Animate progress bars on page load
         document.addEventListener('DOMContentLoaded', function() {
