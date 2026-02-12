@@ -13,6 +13,8 @@ AI Ops/
 ├── AI-Ops-Dashboard.html    # Main dashboard (primary file to edit)
 ├── index.html               # GitHub Pages entry point (synced copy)
 ├── CLAUDE.md                # This file
+├── docebo-brand-audit.skill.md  # Brand compliance audit skill
+├── docebo-brand-system.skill    # Brand system reference (ZIP)
 ├── .gitignore
 ├── docs/                    # Source documentation and research
 │   ├── AI Ops Wins.md
@@ -123,6 +125,13 @@ Before making visual changes, review: `docebo-brand-system-extracted/docebo-bran
 - **Data-driven** - Always include methodology and sources
 - **Active voice** - "We built" not "It was built"
 
+### Writing Rules (Strict)
+
+- **No em dashes (—)** - Use semicolons, commas, or periods instead
+- **Banned AI-speak words** - "leverage", "delve", "navigate", "realm", "embark", "utilize", "synergy", "robust"
+- **Sentence case only** - Never Title Case for headings
+- **Oxford comma** - Always use it
+
 ## Adding New Content
 
 ### New Metric Card
@@ -168,6 +177,7 @@ Before making visual changes, review: `docebo-brand-system-extracted/docebo-bran
 ### Primary Research Tools
 
 - **Glean MCP** - Search internal Docebo documentation via `mcp__claude_ai_Glean_MCP__search`
+- **Slack MCP** - Get team profile photos via `mcp__claude_ai_Slack__slack_search_users`
 - **Local docs/** folder - Contains exported documentation and metrics
 
 ### Key Metrics Sources
@@ -177,6 +187,14 @@ Before making visual changes, review: `docebo-brand-system-extracted/docebo-bran
 | Glean MAU/WAU | AI Ops Wins.md, Glean dashboard screenshots |
 | UnifyApps apps | UnifyApps at Docebo PDF, internal roadmap |
 | Accuracy claims | Must specify which application (e.g., "Churn Analysis AI: ~95%") |
+
+## Brand Audit
+
+Run `docebo-brand-audit.skill.md` to check compliance:
+- Colors: Phoenix palette only, no arbitrary hex values
+- Typography: Space Grotesk headings, Inter body
+- Voice: No em dashes, no AI-speak words
+- Accessibility: Focus states, alt text, contrast ratios
 
 ## Common Tasks
 
@@ -247,3 +265,4 @@ git push origin main
 - **No dependencies** - Only Google Fonts CDN
 - **Single branch** - All work on `main`
 - **Auto-deploy** - Push triggers GitHub Pages update
+- **Skill files** - `.skill` = ZIP archive, `.skill.md` = plain markdown
