@@ -30,44 +30,85 @@
     "horizons": 3
   },
   "stakeholders": {
-    "theFootballAssociation": [
-      {
-        "name": "Scott Peacock",
-        "title": "Executive Sponsor",
-        "role": "Executive Sponsor",
-        "source": "Totango, Gong"
-      },
-      {
-        "name": "Nick Baker",
-        "title": "Senior Lead Learning Design",
-        "role": "Champion",
-        "source": "Gong"
-      },
-      {
-        "name": "Amre Basama",
-        "title": "Senior Project Manager",
-        "role": "Technical",
-        "source": "Gong"
-      },
-      {
-        "name": "Lynne McGeady",
-        "title": "Stakeholder",
-        "role": "User",
-        "source": "Gong"
-      }
-    ],
-    "docebo": [
-      {
+    "accountTeam": {
+      "description": "Internal Docebo employees assigned to this account",
+      "accountManager": {
         "name": "Robert Embrack",
-        "title": "Account Manager",
-        "source": "Salesforce, Totango"
+        "email": "robert.embrack@docebo.com",
+        "title": "Account Manager, Mid-Market",
+        "source": "Totango",
+        "validated": true,
+        "validationMethod": "Glean Employee Search confirmed Docebo employee"
       },
-      {
+      "customerSuccessManager": {
         "name": "Martin Nowak",
-        "title": "Customer Success Manager",
-        "source": "Totango"
+        "email": "martin.nowak@docebo.com",
+        "title": "Senior Customer Success Manager",
+        "source": "Totango",
+        "validated": true,
+        "validationMethod": "Glean Employee Search confirmed Docebo employee"
+      },
+      "executiveSponsor": {
+        "name": "Scott Peacock",
+        "email": "scott.peacock@docebo.com",
+        "title": "SVP, Product",
+        "source": "Totango",
+        "validated": true,
+        "validationMethod": "Glean Employee Search confirmed Docebo employee",
+        "note": "Internal Docebo executive (ES program) - NOT a customer stakeholder"
       }
-    ]
+    },
+    "customerContacts": {
+      "description": "External customer stakeholders at The Football Association",
+      "contacts": [
+        {
+          "name": "Nick Baker",
+          "title": "Education Development Manager",
+          "email": "nick.baker@thefa.com",
+          "role": "Champion",
+          "source": "Salesforce, Gong",
+          "validated": true,
+          "validationMethod": "Salesforce Contact record, Glean employee search (not found = external)"
+        },
+        {
+          "name": "Lynne McGeady",
+          "title": "Delivery Manager",
+          "email": "lynne.mcgeady@thefa.com",
+          "role": "Technical",
+          "source": "Salesforce, Gong",
+          "validated": true,
+          "validationMethod": "Salesforce Contact record"
+        },
+        {
+          "name": "Michael Antrobus",
+          "title": "Learning, Development & Evaluation Manager",
+          "email": "michael.antrobus@thefa.com",
+          "role": "Champion",
+          "source": "Salesforce",
+          "validated": true,
+          "validationMethod": "Salesforce Contact record"
+        },
+        {
+          "name": "Gary Bye",
+          "title": "Safeguarding Manager",
+          "email": "gary.bye@thefa.com",
+          "role": "Technical",
+          "source": "Salesforce",
+          "validated": true,
+          "validationMethod": "Salesforce Contact record",
+          "note": "Key contact for safeguarding requirements"
+        },
+        {
+          "name": "Emma Davidson",
+          "title": "Regional Learning Delivery Lead",
+          "email": "emma.davidson2@thefa.com",
+          "role": "User",
+          "source": "Salesforce",
+          "validated": true,
+          "validationMethod": "Salesforce Contact record"
+        }
+      ]
+    }
   },
   "signals": {
     "positive": [

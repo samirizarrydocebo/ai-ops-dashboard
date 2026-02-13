@@ -13,9 +13,15 @@ AI Ops/
 ├── AI-Ops-Dashboard.html    # Main dashboard (primary file to edit)
 ├── index.html               # GitHub Pages entry point (synced copy)
 ├── CLAUDE.md                # This file
+├── account-intelligence-canvas.skill.md  # Account canvas generator skill
+├── buyer-signal-canvas.skill.md # Buyer signal triangulation canvas skill
 ├── docebo-brand-audit.skill.md  # Brand compliance audit skill
 ├── docebo-brand-system.skill    # Brand system reference (ZIP)
 ├── .gitignore
+├── account-canvases/        # Generated account intelligence canvases
+│   ├── {account}-canvas.html               # Base HTML canvas
+│   ├── {account}-buyer-signals-canvas.html # Buyer signal triangulation canvas
+│   └── {account}-canvas-data.json          # Raw data for incremental updates
 ├── docs/                    # Source documentation and research
 │   ├── AI Ops Wins.md
 │   ├── UnifyApps at Docebo...pdf
@@ -195,6 +201,80 @@ Run `docebo-brand-audit.skill.md` to check compliance:
 - Typography: Space Grotesk headings, Inter body
 - Voice: No em dashes, no AI-speak words
 - Accessibility: Focus states, alt text, contrast ratios
+
+## Account Intelligence Canvas
+
+Generate comprehensive account intelligence reports using `account-intelligence-canvas.skill.md`.
+
+### Usage
+
+```bash
+# Generate full canvas for an account
+/account-intelligence-canvas Google
+
+# Account names with spaces
+/account-intelligence-canvas "Palo Alto Networks"
+
+# Options
+/account-intelligence-canvas Honeywell --full      # Force full refresh
+/account-intelligence-canvas Google --pipeline     # Update pipeline only
+/account-intelligence-canvas Google --signals      # Update signals only
+```
+
+### Data Sources Queried
+
+| Source | Data Retrieved |
+|--------|----------------|
+| Salesforce | Account details, ARR, opportunities, contacts |
+| Slack | Account channel discussions, team signals |
+| Gong (via Glean) | Call transcripts, stakeholder quotes |
+| Totango (via Glean) | Health scores, objectives, REACH data |
+| Qualtrics (via Glean) | NPS scores, survey responses |
+
+### Output Files
+
+Generated canvases are saved to `account-canvases/`:
+- `{account-slug}-canvas.html` - Visual HTML canvas
+- `{account-slug}-canvas-data.json` - Raw data for incremental updates
+
+### Signal Categories
+
+- **Positive signals**: Renewal confirmations, champion engagement, expansion mentions
+- **Risk signals**: Budget cuts, champion departures, competitor mentions, low NPS
+- **Expansion opportunities**: New use cases, department expansion, high utilization
+
+## Buyer Signal Triangulation Canvas
+
+Generate buyer signal canvases with expansion, upsell, and cross-sell scoring using `buyer-signal-canvas.skill.md`. Extends the base account canvas with FIRE propensity scoring, REACH framework, whitespace analysis, and corporate family cross-sell mapping.
+
+### Usage
+
+```bash
+# Full buyer signal canvas
+/buyer-signal-canvas Google
+
+# Options
+/buyer-signal-canvas Google --full           # Full refresh
+/buyer-signal-canvas Google --signals        # Update signals only
+/buyer-signal-canvas Google --whitespace     # Update whitespace + cross-sell
+/buyer-signal-canvas Google --cross-sell     # Corporate family mapping only
+```
+
+### Scoring Models
+
+| Model | Purpose | Scale |
+|-------|---------|-------|
+| FIRE Score | Propensity to expand | 0-100 (Fit + Intent + Recency + Engagement) |
+| REACH Score | Expansion readiness (CS to AM handoff) | 1-5 (Relationships, Engagement, Actions, Customer Value, Horizons) |
+| Signal Confidence | Triangulation strength | 35-95% (based on confirming source count) |
+
+### Output (5-tab HTML)
+
+1. **Overview**: FIRE gauge, REACH grid, signals with source badges
+2. **Buyer signal triangulation**: Confidence-scored signals, 3-source rule
+3. **Whitespace + cross-sell**: Product gaps, corporate family tree, TAM sizing
+4. **Pipeline + team**: Deal types (upsell/expansion/renewal), stakeholder annotations
+5. **Expansion playbook**: Upsell, cross-sell, retention plays with GTM owner mapping
 
 ## Common Tasks
 
