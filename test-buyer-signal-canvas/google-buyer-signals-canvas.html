@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Account Intelligence | Docebo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Primary */
+            --docebo-blue: #0057FF;
+            --docebo-black: #2A2923;
+            --docebo-white: #FFFFFF;
+            --docebo-dark: #131E29;
+
+            /* Secondary */
+            --docebo-light-blue: #4C8DFF;
+            --docebo-navy: #0033A0;
+
+            /* Accents */
+            --docebo-pink: #FF5DD8;
+            --docebo-green: #54FA77;
+            --docebo-purple: #7E2EE9;
+            --docebo-yellow-green: #E3FFAB;
+            --docebo-beige: #E6DACB;
+
+            /* Neutrals */
+            --neutral-50: #F6F5F2;
+            --neutral-100: #EBE6DD;
+            --neutral-200: #E1DBD2;
+            --neutral-400: #807B74;
+            --neutral-600: #56534E;
+            --neutral-900: #2A2923;
+
+            /* Typography */
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            /* Spacing */
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--neutral-50);
+            color: var(--docebo-black);
+            line-height: 1.5;
+        }
+
+        .canvas {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px;
+            background: var(--docebo-white);
+            min-height: 100vh;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-md);
+            padding: 4px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--neutral-600);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover { background: var(--neutral-200); }
+        .tab-btn.active {
+            background: var(--docebo-blue);
+            color: var(--docebo-white);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--docebo-blue) 0%, var(--docebo-navy) 100%);
+            color: var(--docebo-white);
+            padding: 24px 32px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .header-left p { font-size: 14px; opacity: 0.9; }
+
+        .header-right { text-align: right; }
+
+        .arr-value {
+            font-family: var(--font-heading);
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .arr-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+        }
+
+        .header-metrics {
+            display: flex;
+            gap: 24px;
+            align-items: flex-end;
+        }
+
+        .header-metric {
+            text-align: right;
+        }
+
+        .header-metric-value {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .header-metric-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            opacity: 0.7;
+        }
+
+        /* Status Pills */
+        .status-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--docebo-white);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-md);
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .status-indicator.green { background: var(--docebo-green); }
+        .status-indicator.yellow { background: #FFB800; }
+        .status-indicator.red { background: #FF4D4D; }
+        .status-indicator.blue { background: var(--docebo-blue); }
+
+        .status-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--neutral-600);
+        }
+
+        .status-value { font-weight: 600; font-size: 14px; }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+        /* Cards */
+        .card {
+            background: var(--docebo-white);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-md);
+            padding: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .card-icon.blue { background: rgba(0, 87, 255, 0.1); }
+        .card-icon.green { background: rgba(84, 250, 119, 0.2); }
+        .card-icon.purple { background: rgba(126, 46, 233, 0.1); }
+        .card-icon.pink { background: rgba(255, 93, 216, 0.1); }
+        .card-icon.navy { background: rgba(0, 51, 160, 0.1); }
+
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--neutral-600);
+        }
+
+        /* Signal List */
+        .signal-list { list-style: none; }
+
+        .signal-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--neutral-100);
+            font-size: 13px;
+        }
+
+        .signal-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+        .signal-icon { font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+        .signal-text { flex: 1; }
+        .signal-text strong { color: var(--docebo-black); }
+
+        .signal-source {
+            font-size: 11px;
+            color: var(--neutral-400);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Source Badges */
+        .source-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .source-badge.gong { background: rgba(126, 46, 233, 0.12); color: #6B21A8; }
+        .source-badge.sfdc { background: rgba(0, 87, 255, 0.1); color: #0057FF; }
+        .source-badge.totango { background: rgba(84, 250, 119, 0.2); color: #15803D; }
+        .source-badge.slack { background: rgba(255, 93, 216, 0.1); color: #DB2777; }
+        .source-badge.qualtrics { background: rgba(255, 184, 0, 0.15); color: #B88600; }
+        .source-badge.nps { background: rgba(255, 184, 0, 0.15); color: #B88600; }
+
+        /* Pipeline Table */
+        .pipeline-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+        .pipeline-table th {
+            text-align: left;
+            padding: 8px 12px;
+            background: var(--neutral-50);
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--neutral-600);
+            border-radius: var(--radius-sm);
+        }
+
+        .pipeline-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--neutral-100);
+        }
+
+        .pipeline-table tr:last-child td { border-bottom: none; }
+
+        .amount {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--docebo-blue);
+        }
+
+        .stage-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .stage-badge.building { background: rgba(0, 87, 255, 0.1); color: var(--docebo-blue); }
+        .stage-badge.evaluation { background: rgba(255, 184, 0, 0.15); color: #B88600; }
+        .stage-badge.won { background: rgba(84, 250, 119, 0.2); color: #1A8F3C; }
+        .stage-badge.lost { background: rgba(255, 77, 77, 0.1); color: #CC3D3D; }
+
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-sm);
+        }
+
+        .team-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--docebo-blue);
+            color: var(--docebo-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .team-info { flex: 1; }
+        .team-name { font-weight: 600; font-size: 13px; }
+        .team-role { font-size: 11px; color: var(--neutral-600); }
+
+        /* Quote Box */
+        .quote-box {
+            background: var(--docebo-beige);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin-top: 12px;
+        }
+
+        .quote-text {
+            font-style: italic;
+            font-size: 13px;
+            color: var(--docebo-black);
+            margin-bottom: 8px;
+        }
+
+        .quote-source {
+            font-size: 11px;
+            color: var(--neutral-600);
+            font-weight: 600;
+        }
+
+        /* ============================
+           BUYER SIGNAL TRIANGULATION
+           ============================ */
+
+        /* FIRE Score Gauge */
+        .fire-score-container {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 20px;
+        }
+
+        .fire-gauge {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0;
+        }
+
+        .fire-gauge svg {
+            transform: rotate(-90deg);
+            width: 120px;
+            height: 120px;
+        }
+
+        .fire-gauge-bg {
+            fill: none;
+            stroke: var(--neutral-100);
+            stroke-width: 10;
+        }
+
+        .fire-gauge-fill {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .fire-gauge-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .fire-gauge-number {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--docebo-black);
+        }
+
+        .fire-gauge-sub {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--neutral-600);
+        }
+
+        .fire-breakdown {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .fire-metric {
+            padding: 10px 14px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-sm);
+        }
+
+        .fire-metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .fire-metric-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--neutral-600);
+        }
+
+        .fire-metric-score {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .fire-bar {
+            height: 4px;
+            background: var(--neutral-200);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .fire-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.8s ease;
+        }
+
+        /* REACH Framework */
+        .reach-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .reach-item {
+            text-align: center;
+            padding: 14px 8px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-sm);
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .reach-item.high { border-color: var(--docebo-green); }
+        .reach-item.medium { border-color: #FFB800; }
+        .reach-item.low { border-color: #FF4D4D; }
+
+        .reach-letter {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .reach-item.high .reach-letter { color: #15803D; }
+        .reach-item.medium .reach-letter { color: #B88600; }
+        .reach-item.low .reach-letter { color: #CC3D3D; }
+
+        .reach-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--neutral-600);
+            margin-top: 4px;
+        }
+
+        .reach-score {
+            font-family: var(--font-heading);
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        /* Whitespace Table */
+        .whitespace-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+        .whitespace-table th {
+            text-align: left;
+            padding: 8px 12px;
+            background: var(--neutral-50);
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--neutral-600);
+        }
+
+        .whitespace-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--neutral-100);
+            vertical-align: top;
+        }
+
+        .whitespace-table tr:last-child td { border-bottom: none; }
+
+        .ws-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .ws-status.owned { background: rgba(84, 250, 119, 0.2); color: #15803D; }
+        .ws-status.opportunity { background: rgba(0, 87, 255, 0.1); color: var(--docebo-blue); }
+        .ws-status.not-fit { background: var(--neutral-100); color: var(--neutral-600); }
+
+        /* Signal Strength Meter */
+        .signal-strength {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+        }
+
+        .signal-bar {
+            width: 4px;
+            border-radius: 2px;
+            background: var(--neutral-200);
+        }
+
+        .signal-bar.active.high { background: var(--docebo-green); }
+        .signal-bar.active.medium { background: #FFB800; }
+        .signal-bar.active.low { background: #FF4D4D; }
+
+        /* Corporate Family Tree */
+        .family-tree {
+            padding: 0;
+        }
+
+        .family-entity {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--neutral-100);
+            font-size: 13px;
+        }
+
+        .family-entity:last-child { border-bottom: none; }
+
+        .family-connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 24px;
+            flex-shrink: 0;
+        }
+
+        .family-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid var(--docebo-blue);
+            background: var(--docebo-white);
+        }
+
+        .family-dot.parent {
+            background: var(--docebo-blue);
+        }
+
+        .family-dot.child {
+            width: 8px;
+            height: 8px;
+        }
+
+        .family-line {
+            width: 2px;
+            height: 16px;
+            background: var(--neutral-200);
+        }
+
+        .family-info { flex: 1; }
+        .family-name { font-weight: 600; }
+        .family-detail { font-size: 11px; color: var(--neutral-600); margin-top: 2px; }
+
+        .family-status {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 12px;
+        }
+
+        .family-status.customer { background: rgba(84, 250, 119, 0.2); color: #15803D; }
+        .family-status.prospect { background: rgba(0, 87, 255, 0.1); color: var(--docebo-blue); }
+        .family-status.unknown { background: var(--neutral-100); color: var(--neutral-600); }
+
+        /* Triangulation Matrix */
+        .tri-matrix {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .tri-signal {
+            display: flex;
+            gap: 16px;
+            padding: 14px 16px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid transparent;
+        }
+
+        .tri-signal.strong { border-left-color: var(--docebo-green); }
+        .tri-signal.moderate { border-left-color: #FFB800; }
+        .tri-signal.weak { border-left-color: #FF4D4D; }
+
+        .tri-signal-main { flex: 1; }
+
+        .tri-signal-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .tri-signal-desc {
+            font-size: 12px;
+            color: var(--neutral-600);
+            margin-bottom: 8px;
+        }
+
+        .tri-sources {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tri-confidence {
+            text-align: right;
+            min-width: 80px;
+        }
+
+        .tri-confidence-value {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .tri-confidence-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--neutral-600);
+        }
+
+        /* Actions Section */
+        .actions-section {
+            background: var(--docebo-dark);
+            color: var(--docebo-white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .actions-header {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .action-column h4 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--docebo-light-blue);
+            margin-bottom: 12px;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .action-number {
+            width: 20px;
+            height: 20px;
+            background: var(--docebo-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .action-tag {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-left: 4px;
+        }
+
+        .action-tag.upsell { background: rgba(0, 87, 255, 0.3); }
+        .action-tag.cross-sell { background: rgba(126, 46, 233, 0.3); }
+        .action-tag.retention { background: rgba(84, 250, 119, 0.3); }
+        .action-tag.expansion { background: rgba(255, 184, 0, 0.3); }
+
+        /* Methodology Callout */
+        .methodology-box {
+            background: var(--neutral-50);
+            border: 1px dashed var(--neutral-200);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--neutral-600);
+        }
+
+        .methodology-box strong {
+            color: var(--docebo-black);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .methodology-box p { margin-top: 6px; line-height: 1.6; }
+
+        /* Footer */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid var(--neutral-200);
+            font-size: 11px;
+            color: var(--neutral-400);
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--docebo-blue);
+            font-size: 14px;
+        }
+
+        /* Section Divider */
+        .section-label {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--docebo-black);
+            margin: 28px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--neutral-100);
+        }
+
+        /* Responsive */
+        @media print {
+            body { background: white; }
+            .canvas { padding: 20px; max-width: 100%; }
+            .tab-nav { display: none; }
+            .tab-content { display: block !important; }
+        }
+
+        @media (max-width: 900px) {
+            .grid, .grid-2, .grid-4 { grid-template-columns: 1fr; }
+            .actions-grid { grid-template-columns: 1fr; }
+            .reach-grid { grid-template-columns: repeat(5, 1fr); font-size: 10px; }
+            .fire-score-container { flex-direction: column; }
+            .header { flex-direction: column; gap: 16px; }
+            .header-metrics { justify-content: flex-start; }
+            .team-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <h1>Google</h1>
+                <p>Account intelligence canvas | Feb 12, 2026</p>
+            </div>
+            <div class="header-metrics">
+                <div class="header-metric">
+                    <div class="header-metric-label">FIRE Score</div>
+                    <div class="header-metric-value">78/100</div>
+                </div>
+                <div class="header-metric">
+                    <div class="header-metric-label">REACH</div>
+                    <div class="header-metric-value">4/5</div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="arr-label">Current ARR</div>
+                    <div class="arr-value">$3.48M</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="showTab('overview')">Overview</button>
+            <button class="tab-btn" onclick="showTab('signals')">Buyer signal triangulation</button>
+            <button class="tab-btn" onclick="showTab('whitespace')">Whitespace + cross-sell</button>
+            <button class="tab-btn" onclick="showTab('pipeline')">Pipeline + team</button>
+            <button class="tab-btn" onclick="showTab('playbook')">Expansion playbook</button>
+        </div>
+
+        <!-- ==================== TAB 1: OVERVIEW ==================== -->
+        <div id="overview" class="tab-content active">
+
+            <!-- Status Row -->
+            <div class="status-row">
+                <div class="status-pill">
+                    <span class="status-indicator yellow"></span>
+                    <div>
+                        <div class="status-label">Overall sentiment</div>
+                        <div class="status-value">Cautiously positive</div>
+                    </div>
+                </div>
+                <div class="status-pill">
+                    <span class="status-indicator green"></span>
+                    <div>
+                        <div class="status-label">Churn risk</div>
+                        <div class="status-value">Low</div>
+                    </div>
+                </div>
+                <div class="status-pill">
+                    <span class="status-indicator green"></span>
+                    <div>
+                        <div class="status-label">Expansion potential</div>
+                        <div class="status-value">High ($800K+ pipeline)</div>
+                    </div>
+                </div>
+                <div class="status-pill">
+                    <span class="status-indicator yellow"></span>
+                    <div>
+                        <div class="status-label">Account health</div>
+                        <div class="status-value">Yellow</div>
+                    </div>
+                </div>
+                <div class="status-pill">
+                    <span class="status-indicator blue"></span>
+                    <div>
+                        <div class="status-label">FIRE propensity</div>
+                        <div class="status-value">78 / 100</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FIRE Score + REACH -->
+            <div class="grid grid-2">
+                <!-- FIRE Propensity Score -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon blue">F</div>
+                        <div class="card-title">FIRE propensity-to-expand score</div>
+                    </div>
+                    <div class="fire-score-container">
+                        <div class="fire-gauge">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="fire-gauge-bg" cx="60" cy="60" r="50"/>
+                                <circle class="fire-gauge-fill" cx="60" cy="60" r="50"
+                                    stroke="var(--docebo-blue)"
+                                    stroke-dasharray="314"
+                                    stroke-dashoffset="69"/>
+                            </svg>
+                            <div class="fire-gauge-label">
+                                <div class="fire-gauge-number">78</div>
+                                <div class="fire-gauge-sub">of 100</div>
+                            </div>
+                        </div>
+                        <div class="fire-breakdown">
+                            <div class="fire-metric">
+                                <div class="fire-metric-header">
+                                    <span class="fire-metric-label">F - Fit</span>
+                                    <span class="fire-metric-score" style="color: #15803D;">9/10</span>
+                                </div>
+                                <div class="fire-bar"><div class="fire-bar-fill" style="width: 90%; background: var(--docebo-green);"></div></div>
+                            </div>
+                            <div class="fire-metric">
+                                <div class="fire-metric-header">
+                                    <span class="fire-metric-label">I - Intent</span>
+                                    <span class="fire-metric-score" style="color: #B88600;">7/10</span>
+                                </div>
+                                <div class="fire-bar"><div class="fire-bar-fill" style="width: 70%; background: #FFB800;"></div></div>
+                            </div>
+                            <div class="fire-metric">
+                                <div class="fire-metric-header">
+                                    <span class="fire-metric-label">R - Recency</span>
+                                    <span class="fire-metric-score" style="color: #15803D;">8/10</span>
+                                </div>
+                                <div class="fire-bar"><div class="fire-bar-fill" style="width: 80%; background: var(--docebo-green);"></div></div>
+                            </div>
+                            <div class="fire-metric">
+                                <div class="fire-metric-header">
+                                    <span class="fire-metric-label">E - Engagement</span>
+                                    <span class="fire-metric-score" style="color: #B88600;">7/10</span>
+                                </div>
+                                <div class="fire-bar"><div class="fire-bar-fill" style="width: 70%; background: #FFB800;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="methodology-box">
+                        <strong>FIRE methodology</strong>
+                        <p><strong>Fit</strong> (ICP match, AUP utilization, product breadth) + <strong>Intent</strong> (Gong call signals, feature requests, event attendance) + <strong>Recency</strong> (last executive engagement, last expansion conversation) + <strong>Engagement</strong> (MAU trends, support ticket sentiment, NPS score). Each factor weighted 25% and scored 1-10 from correlated data sources.</p>
+                    </div>
+                </div>
+
+                <!-- REACH Framework -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon green">R</div>
+                        <div class="card-title">REACH expansion readiness (CS to AM handoff)</div>
+                    </div>
+                    <div class="reach-grid">
+                        <div class="reach-item high">
+                            <div class="reach-letter">R</div>
+                            <div class="reach-label">Relationships</div>
+                            <div class="reach-score">5/5</div>
+                        </div>
+                        <div class="reach-item medium">
+                            <div class="reach-letter">E</div>
+                            <div class="reach-label">Engagement</div>
+                            <div class="reach-score">3/5</div>
+                        </div>
+                        <div class="reach-item high">
+                            <div class="reach-letter">A</div>
+                            <div class="reach-label">Actions</div>
+                            <div class="reach-score">4/5</div>
+                        </div>
+                        <div class="reach-item high">
+                            <div class="reach-letter">C</div>
+                            <div class="reach-label">Cust. value</div>
+                            <div class="reach-score">5/5</div>
+                        </div>
+                        <div class="reach-item medium">
+                            <div class="reach-letter">H</div>
+                            <div class="reach-label">Horizons</div>
+                            <div class="reach-score">3/5</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <ul class="signal-list">
+                            <li class="signal-item">
+                                <span class="signal-icon">+</span>
+                                <div class="signal-text">
+                                    <strong>Relationships:</strong> CTO exec sponsor active, multiple stakeholder threads, 3-year TAM relationship built
+                                    <div class="signal-source"><span class="source-badge totango">Totango</span> <span class="source-badge gong">Gong</span></div>
+                                </div>
+                            </li>
+                            <li class="signal-item">
+                                <span class="signal-icon">!</span>
+                                <div class="signal-text">
+                                    <strong>Engagement:</strong> Platform usage steady but not growing; Daniel's team budget pressure creates engagement friction
+                                    <div class="signal-source"><span class="source-badge totango">Totango</span> <span class="source-badge gong">Gong</span></div>
+                                </div>
+                            </li>
+                            <li class="signal-item">
+                                <span class="signal-icon">+</span>
+                                <div class="signal-text">
+                                    <strong>Horizons:</strong> PeopleDev expansion ($791K) in progress, but 2 deals closed lost signal mixed strategic commitment
+                                    <div class="signal-source"><span class="source-badge sfdc">SFDC</span> <span class="source-badge slack">Slack</span></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="methodology-box">
+                        <strong>REACH framework (from GTM model)</strong>
+                        <p>CS qualifies accounts for AM handoff using REACH. A score of 4+ out of 5 indicates expansion readiness. Google scores 4/5 overall; strong on Relationships, Customer Value, and Actions. Engagement and Horizons need attention before multi-year push.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Signal Grid -->
+            <div class="grid">
+                <!-- Positive Signals -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon green">+</div>
+                        <div class="card-title">Positive signals</div>
+                    </div>
+                    <ul class="signal-list">
+                        <li class="signal-item">
+                            <span class="signal-icon">&#10003;</span>
+                            <div class="signal-text">
+                                <strong>Design project confirmed</strong> with GuyKat partnership
+                                <div class="signal-source"><span class="source-badge slack">Slack</span> #account-team-google, Feb 10</div>
+                            </div>
+                        </li>
+                        <li class="signal-item">
+                            <span class="signal-icon">&#127919;</span>
+                            <div class="signal-text">
+                                <strong>Multi-year renewal</strong> strategy now active
+                                <div class="signal-source"><span class="source-badge gong">Gong</span> James Yearwood, Feb 10</div>
+                            </div>
+                        </li>
+                        <li class="signal-item">
+                            <span class="signal-icon">&#128084;</span>
+                            <div class="signal-text">
+                                <strong>CTO exec sponsor</strong> actively engaged in calls
+                                <div class="signal-source"><span class="source-badge gong">Gong</span> Riccardo La Rosa, ongoing</div>
+                            </div>
+                        </li>
+                        <li class="signal-item">
+                            <span class="signal-icon">&#128176;</span>
+                            <div class="signal-text">
+                                <strong>2026 renewal won</strong> at $2.89M
+                                <div class="signal-source"><span class="source-badge sfdc">SFDC</span> Dec 2025</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Risk Signals -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon pink">!</div>
+                        <div class="card-title">Risk signals</div>
+                    </div>
+                    <ul class="signal-list">
+                        <li class="signal-item">
+                            <span class="signal-icon">&#10060;</span>
+                            <div class="signal-text">
+                                <strong>2 deals closed lost</strong> in Q1 (Shopping $88K, Mastery $61K)
+                                <div class="signal-source"><span class="source-badge sfdc">SFDC</span> Jan-Feb 2026</div>
+                            </div>
+                        </li>
+                        <li class="signal-item">
+                            <span class="signal-icon">&#9888;&#65039;</span>
+                            <div class="signal-text">
+                                <strong>Budget pressure</strong> on Daniel's team; may redirect spend internally
+                                <div class="signal-source"><span class="source-badge gong">Gong</span> Feb 4</div>
+                            </div>
+                        </li>
+                        <li class="signal-item">
+                            <span class="signal-icon">&#128260;</span>
+                            <div class="signal-text">
+                                <strong>New leadership</strong> Phil West recently joined as Director
+                                <div class="signal-source"><span class="source-badge totango">Totango</span> Jan 2026</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="quote-box">
+                        <div class="quote-text">"Daniel's team is usually the first one to get chopped... all he sees is if there's a hint he has to take care of this, he's going to fight tooth and nail."</div>
+                        <div class="quote-source">Nick Pothier, TAM <span class="source-badge gong" style="margin-left: 6px;">Gong</span></div>
+                    </div>
+                </div>
+
+                <!-- Expansion Opportunities -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon blue">&#8599;</div>
+                        <div class="card-title">Expansion opportunities</div>
+                    </div>
+                    <ul class="signal-list">
+                        <li class="signal-item">
+                            <span class="signal-icon">&#128640;</span>
+                            <div class="signal-text">
+                                <strong>PeopleDev expansion</strong> $791K in Solution Building
+                                <div class="signal-source"><span class="source-badge sfdc">SFDC</span> Skills platform for Googlers</div>
+                            </div>
+                        </li>
+                        <li class="signal-item">
+                            <span class="signal-icon">&#127760;</span>
+                            <div class="signal-text">
+                                <strong>Microsite consolidation</strong> Google considering moving to Docebo
+                                <div class="signal-source"><span class="source-badge gong">Gong</span> <span class="source-badge slack">Slack</span> Emerging</div>
+                            </div>
+                        </li>
+                        <li class="signal-item">
+                            <span class="signal-icon">&#129504;</span>
+                            <div class="signal-text">
+                                <strong>365Talents integration</strong> Skills taxonomy partnership
+                                <div class="signal-source"><span class="source-badge gong">Gong</span> Discovery, Feb 6</div>
+                            </div>
+                        </li>
+                        <li class="signal-item">
+                            <span class="signal-icon">&#128197;</span>
+                            <div class="signal-text">
+                                <strong>Multi-year commitment</strong> Target: 3-year renewal
+                                <div class="signal-source"><span class="source-badge sfdc">SFDC</span> Strategic goal, Q4 2026</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Strategic Goal Banner -->
+            <div class="card" style="background: linear-gradient(135deg, var(--docebo-navy) 0%, var(--docebo-dark) 100%); color: white;">
+                <div class="card-header">
+                    <div class="card-icon" style="background: rgba(255,255,255,0.2);">&#127919;</div>
+                    <div class="card-title" style="color: var(--docebo-light-blue);">Strategic goal (from Totango)</div>
+                </div>
+                <p style="font-size: 15px; line-height: 1.6;">"Consolidate multiple learning tools (Degreed, custom landing pages, internal tools) into a single, intuitive Docebo platform"</p>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 2: BUYER SIGNAL TRIANGULATION ==================== -->
+        <div id="signals" class="tab-content">
+
+            <div class="section-label">Triangulated buying signals</div>
+            <p style="font-size: 13px; color: var(--neutral-600); margin-bottom: 20px;">Signals correlated across 3+ data sources to validate buying intent. Higher confidence = more sources confirming the signal.</p>
+
+            <div class="tri-matrix">
+                <!-- Signal 1: Platform Consolidation -->
+                <div class="tri-signal strong">
+                    <div class="tri-signal-main">
+                        <div class="tri-signal-title">Platform consolidation intent</div>
+                        <div class="tri-signal-desc">Google actively evaluating replacing Degreed, custom landing pages, and internal tools with Docebo. Mentioned in exec calls, strategic goal in Totango, and discussed in Slack account channel.</div>
+                        <div class="tri-sources">
+                            <span class="source-badge gong">Gong</span>
+                            <span class="source-badge totango">Totango</span>
+                            <span class="source-badge slack">Slack</span>
+                            <span class="source-badge sfdc">SFDC</span>
+                        </div>
+                    </div>
+                    <div class="tri-confidence">
+                        <div class="tri-confidence-value" style="color: #15803D;">92%</div>
+                        <div class="tri-confidence-label">Confidence</div>
+                    </div>
+                </div>
+
+                <!-- Signal 2: Skills/Taxonomy Pain -->
+                <div class="tri-signal strong">
+                    <div class="tri-signal-main">
+                        <div class="tri-signal-title">Skills taxonomy pain point</div>
+                        <div class="tri-signal-desc">Google has acute skills taxonomy challenge. 365Talents discovery call (Feb 6) confirmed interest. PeopleDev expansion ($791K) directly tied to skills platform for Googlers. Tarun Arora (HR Engineering) engaged.</div>
+                        <div class="tri-sources">
+                            <span class="source-badge gong">Gong</span>
+                            <span class="source-badge sfdc">SFDC</span>
+                            <span class="source-badge totango">Totango</span>
+                        </div>
+                    </div>
+                    <div class="tri-confidence">
+                        <div class="tri-confidence-value" style="color: #15803D;">88%</div>
+                        <div class="tri-confidence-label">Confidence</div>
+                    </div>
+                </div>
+
+                <!-- Signal 3: Multi-Year Lock-in -->
+                <div class="tri-signal moderate">
+                    <div class="tri-signal-main">
+                        <div class="tri-signal-title">Multi-year deal appetite</div>
+                        <div class="tri-signal-desc">Strategy contingent on GuyKat design project success. James Yearwood confirmed multi-year push is next step after design validation. CTO sponsor supportive, but new Director (Phil West) is untested variable.</div>
+                        <div class="tri-sources">
+                            <span class="source-badge gong">Gong</span>
+                            <span class="source-badge slack">Slack</span>
+                        </div>
+                    </div>
+                    <div class="tri-confidence">
+                        <div class="tri-confidence-value" style="color: #B88600;">72%</div>
+                        <div class="tri-confidence-label">Confidence</div>
+                    </div>
+                </div>
+
+                <!-- Signal 4: Budget Reallocation Risk -->
+                <div class="tri-signal moderate">
+                    <div class="tri-signal-main">
+                        <div class="tri-signal-title">Budget reallocation pressure</div>
+                        <div class="tri-signal-desc">Daniel Makiyama's team faces internal budget pressure. Two deals closed lost in Q1 ($88K Shopping, $61K Mastery) suggest tightening. TAM Nick Pothier flags Daniel as defensive about budget threats.</div>
+                        <div class="tri-sources">
+                            <span class="source-badge gong">Gong</span>
+                            <span class="source-badge sfdc">SFDC</span>
+                        </div>
+                    </div>
+                    <div class="tri-confidence">
+                        <div class="tri-confidence-value" style="color: #B88600;">68%</div>
+                        <div class="tri-confidence-label">Confidence</div>
+                    </div>
+                </div>
+
+                <!-- Signal 5: New Stakeholder -->
+                <div class="tri-signal weak">
+                    <div class="tri-signal-main">
+                        <div class="tri-signal-title">New decision-maker influence shift</div>
+                        <div class="tri-signal-desc">Phil West joined as Director, Learning Platform. Unknown stance on Docebo. Could accelerate or derail expansion depending on alignment. No Gong call data yet.</div>
+                        <div class="tri-sources">
+                            <span class="source-badge totango">Totango</span>
+                        </div>
+                    </div>
+                    <div class="tri-confidence">
+                        <div class="tri-confidence-value" style="color: #CC3D3D;">35%</div>
+                        <div class="tri-confidence-label">Confidence</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Industry Best Practices -->
+            <div class="section-label">Industry formulas for signal triangulation</div>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon blue">1</div>
+                        <div class="card-title">The 3-source rule</div>
+                    </div>
+                    <p style="font-size: 13px; margin-bottom: 12px;">A buying signal is only actionable when confirmed by 3+ independent data sources. Single-source signals lead to false positives ~60% of the time.</p>
+                    <table class="whitespace-table">
+                        <thead><tr><th>Sources</th><th>Confidence</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr><td>1 source</td><td style="color: #CC3D3D; font-weight: 600;">Low (30-40%)</td><td>Monitor only</td></tr>
+                            <tr><td>2 sources</td><td style="color: #B88600; font-weight: 600;">Medium (50-70%)</td><td>Qualify further</td></tr>
+                            <tr><td>3+ sources</td><td style="color: #15803D; font-weight: 600;">High (80-95%)</td><td>Act immediately</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon purple">2</div>
+                        <div class="card-title">Data sources at Docebo</div>
+                    </div>
+                    <p style="font-size: 13px; margin-bottom: 12px;">Each tool provides a unique signal type. Combining them creates a full picture of account intent and readiness.</p>
+                    <table class="whitespace-table">
+                        <thead><tr><th>Tool</th><th>Signal type</th><th>Best for</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="source-badge gong">Gong</span></td><td>Verbal intent, pain points</td><td>Expansion, budget signals</td></tr>
+                            <tr><td><span class="source-badge sfdc">SFDC</span></td><td>Pipeline, financials, history</td><td>Deal velocity, ARR trends</td></tr>
+                            <tr><td><span class="source-badge totango">Totango</span></td><td>Health, adoption, goals</td><td>Churn risk, usage gaps</td></tr>
+                            <tr><td><span class="source-badge qualtrics">Qualtrics</span></td><td>NPS, satisfaction</td><td>Sentiment, detractor risk</td></tr>
+                            <tr><td><span class="source-badge slack">Slack</span></td><td>Internal discussion, alerts</td><td>Real-time team signals</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="methodology-box">
+                <strong>Triangulation formula applied</strong>
+                <p>Confidence % = (number of confirming sources / 5) x base_weight + recency_bonus + stakeholder_seniority_bonus. Base weight = 40 for 1 source, 60 for 2, 80 for 3, 90 for 4, 95 for 5. Recency bonus = +5 if signal within 14 days. Stakeholder bonus = +5 if VP+ mentioned the signal. This approach follows Forrester's B2B signal triangulation methodology and aligns with Docebo's MEDDPICC qualification framework.</p>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 3: WHITESPACE + CROSS-SELL ==================== -->
+        <div id="whitespace" class="tab-content">
+
+            <div class="section-label">Product whitespace analysis</div>
+            <p style="font-size: 13px; color: var(--neutral-600); margin-bottom: 20px;">Modules and capabilities Google has not purchased vs. their fit. Ordered by expansion potential.</p>
+
+            <div class="card" style="margin-bottom: 24px;">
+                <table class="whitespace-table">
+                    <thead>
+                        <tr>
+                            <th>Module / capability</th>
+                            <th>Status</th>
+                            <th>Fit signal</th>
+                            <th>Est. ARR</th>
+                            <th>Evidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Core LMS</strong></td>
+                            <td><span class="ws-status owned">Owned</span></td>
+                            <td>-</td>
+                            <td class="amount">$2.89M</td>
+                            <td><span class="source-badge sfdc">SFDC</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Skills (PeopleDev)</strong></td>
+                            <td><span class="ws-status opportunity">In pipeline</span></td>
+                            <td>Acute skills taxonomy pain; 365Talents integration interest; Tarun Arora engaged</td>
+                            <td class="amount">$791K</td>
+                            <td><span class="source-badge sfdc">SFDC</span> <span class="source-badge gong">Gong</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Extended Enterprise</strong></td>
+                            <td><span class="ws-status opportunity">Opportunity</span></td>
+                            <td>Microsite consolidation discussion; Google wants to replace custom landing pages</td>
+                            <td class="amount">$200-400K</td>
+                            <td><span class="source-badge gong">Gong</span> <span class="source-badge slack">Slack</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Content marketplace</strong></td>
+                            <td><span class="ws-status opportunity">Opportunity</span></td>
+                            <td>Degreed replacement creates content gap; curation need confirmed</td>
+                            <td class="amount">$100-200K</td>
+                            <td><span class="source-badge gong">Gong</span> <span class="source-badge totango">Totango</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Advanced analytics</strong></td>
+                            <td><span class="ws-status opportunity">Opportunity</span></td>
+                            <td>No signal yet, but large enterprise accounts typically adopt analytics within 18 months</td>
+                            <td class="amount">$80-150K</td>
+                            <td>Industry benchmark</td>
+                        </tr>
+                        <tr>
+                            <td><strong>White-glove development</strong></td>
+                            <td><span class="ws-status opportunity">In pipeline</span></td>
+                            <td>$30K deal in Solution Building for UI/UX work</td>
+                            <td class="amount">$30K</td>
+                            <td><span class="source-badge sfdc">SFDC</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Docebo Shape (AI content)</strong></td>
+                            <td><span class="ws-status not-fit">No signal</span></td>
+                            <td>Google likely builds in-house AI content tools; low external purchase probability</td>
+                            <td>-</td>
+                            <td>Hypothesis</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Cross-Sell: Corporate Family -->
+            <div class="section-label">Corporate family / subsidiary mapping (cross-sell)</div>
+            <p style="font-size: 13px; color: var(--neutral-600); margin-bottom: 20px;">Google's corporate structure includes multiple entities that could independently purchase Docebo, expanding the footprint beyond the current L&D team.</p>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon blue">&#127970;</div>
+                        <div class="card-title">Alphabet family tree</div>
+                    </div>
+                    <div class="family-tree">
+                        <div class="family-entity">
+                            <div class="family-connector"><div class="family-dot parent"></div></div>
+                            <div class="family-info">
+                                <div class="family-name">Alphabet Inc.</div>
+                                <div class="family-detail">Parent company; 182,000+ employees</div>
+                            </div>
+                            <span class="family-status unknown">No direct contract</span>
+                        </div>
+                        <div class="family-entity">
+                            <div class="family-connector"><div class="family-line"></div><div class="family-dot child"></div></div>
+                            <div class="family-info">
+                                <div class="family-name">Google LLC</div>
+                                <div class="family-detail">Current customer; L&D / PeopleDev team</div>
+                            </div>
+                            <span class="family-status customer">Customer ($3.48M)</span>
+                        </div>
+                        <div class="family-entity">
+                            <div class="family-connector"><div class="family-line"></div><div class="family-dot child"></div></div>
+                            <div class="family-info">
+                                <div class="family-name">YouTube</div>
+                                <div class="family-detail">Separate L&D org; 10,000+ employees</div>
+                            </div>
+                            <span class="family-status prospect">Prospect</span>
+                        </div>
+                        <div class="family-entity">
+                            <div class="family-connector"><div class="family-line"></div><div class="family-dot child"></div></div>
+                            <div class="family-info">
+                                <div class="family-name">Google Cloud</div>
+                                <div class="family-detail">Partner training; customer education needs</div>
+                            </div>
+                            <span class="family-status prospect">Prospect</span>
+                        </div>
+                        <div class="family-entity">
+                            <div class="family-connector"><div class="family-line"></div><div class="family-dot child"></div></div>
+                            <div class="family-info">
+                                <div class="family-name">Waymo</div>
+                                <div class="family-detail">Autonomous vehicles; compliance training</div>
+                            </div>
+                            <span class="family-status unknown">Unknown</span>
+                        </div>
+                        <div class="family-entity">
+                            <div class="family-connector"><div class="family-line"></div><div class="family-dot child"></div></div>
+                            <div class="family-info">
+                                <div class="family-name">DeepMind</div>
+                                <div class="family-detail">AI research; onboarding and skills dev</div>
+                            </div>
+                            <span class="family-status unknown">Unknown</span>
+                        </div>
+                        <div class="family-entity">
+                            <div class="family-connector"><div class="family-line"></div><div class="family-dot child"></div></div>
+                            <div class="family-info">
+                                <div class="family-name">Verily (health)</div>
+                                <div class="family-detail">Life sciences; regulated training needs</div>
+                            </div>
+                            <span class="family-status unknown">Unknown</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon purple">&#128200;</div>
+                        <div class="card-title">Cross-sell opportunity sizing</div>
+                    </div>
+                    <table class="whitespace-table">
+                        <thead><tr><th>Entity</th><th>Use case</th><th>Est. ARR</th><th>Priority</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>YouTube</strong></td>
+                                <td>Creator partner education; internal L&D</td>
+                                <td class="amount">$300-500K</td>
+                                <td><span class="ws-status opportunity">High</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Google Cloud</strong></td>
+                                <td>Partner enablement; certification programs</td>
+                                <td class="amount">$400-800K</td>
+                                <td><span class="ws-status opportunity">High</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Waymo</strong></td>
+                                <td>Safety compliance; operator training</td>
+                                <td class="amount">$100-200K</td>
+                                <td><span class="ws-status not-fit">Medium</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>DeepMind</strong></td>
+                                <td>Research onboarding; skills tracking</td>
+                                <td class="amount">$80-150K</td>
+                                <td><span class="ws-status not-fit">Medium</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Verily</strong></td>
+                                <td>Compliance; regulated industry training</td>
+                                <td class="amount">$150-250K</td>
+                                <td><span class="ws-status not-fit">Medium</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 16px; padding: 14px; background: var(--neutral-50); border-radius: var(--radius-sm);">
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--neutral-600); margin-bottom: 4px;">Total cross-sell TAM</div>
+                        <div style="font-family: var(--font-heading); font-size: 24px; font-weight: 700; color: var(--docebo-blue);">$1.0M - $1.9M</div>
+                        <div style="font-size: 12px; color: var(--neutral-600); margin-top: 4px;">On top of existing $3.48M + $800K expansion pipeline</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="methodology-box">
+                <strong>Whitespace methodology</strong>
+                <p>Product whitespace identified by comparing Google's current SKU list (from SFDC) against Docebo's full product catalog. Fit signals sourced from Gong call transcripts (keyword: module name + "interest" / "need" / "evaluate"), Totango strategic goals, and Slack account channel mentions. Cross-sell TAM estimated using industry benchmarks: enterprise LMS spend averages $15-25 per user/year, applied to estimated headcount per Alphabet entity. Priority scored by: (1) existing champion who can introduce, (2) confirmed use case, (3) budget independence from parent contract.</p>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 4: PIPELINE + TEAM ==================== -->
+        <div id="pipeline" class="tab-content">
+
+            <div class="grid grid-2">
+                <!-- Active Pipeline -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon navy">$</div>
+                        <div class="card-title">Active pipeline</div>
+                    </div>
+                    <table class="pipeline-table">
+                        <thead>
+                            <tr>
+                                <th>Opportunity</th>
+                                <th>Amount</th>
+                                <th>Stage</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PeopleDev expansion</td>
+                                <td class="amount">$791K</td>
+                                <td><span class="stage-badge building">Solution Building</span></td>
+                                <td><span class="action-tag upsell" style="background: rgba(0, 87, 255, 0.1); color: var(--docebo-blue);">Upsell</span></td>
+                            </tr>
+                            <tr>
+                                <td>Whitegloves dev</td>
+                                <td class="amount">$30K</td>
+                                <td><span class="stage-badge building">Solution Building</span></td>
+                                <td><span class="action-tag upsell" style="background: rgba(0, 87, 255, 0.1); color: var(--docebo-blue);">Upsell</span></td>
+                            </tr>
+                            <tr>
+                                <td>UI/UX Redesign</td>
+                                <td class="amount">TBD</td>
+                                <td><span class="stage-badge evaluation">AE Evaluation</span></td>
+                                <td><span class="action-tag expansion" style="background: rgba(255, 184, 0, 0.1); color: #B88600;">Expansion</span></td>
+                            </tr>
+                            <tr>
+                                <td>2026 Renewal</td>
+                                <td class="amount">$2.89M</td>
+                                <td><span class="stage-badge won">Closed Won</span></td>
+                                <td><span class="action-tag retention" style="background: rgba(84, 250, 119, 0.15); color: #15803D;">Renewal</span></td>
+                            </tr>
+                            <tr>
+                                <td>Google Shopping</td>
+                                <td class="amount">$88K</td>
+                                <td><span class="stage-badge lost">Closed Lost</span></td>
+                                <td><span class="action-tag upsell" style="background: rgba(255, 77, 77, 0.1); color: #CC3D3D;">Upsell</span></td>
+                            </tr>
+                            <tr>
+                                <td>Google Mastery</td>
+                                <td class="amount">$61K</td>
+                                <td><span class="stage-badge lost">Closed Lost</span></td>
+                                <td><span class="action-tag upsell" style="background: rgba(255, 77, 77, 0.1); color: #CC3D3D;">Upsell</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Account Team -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon purple">&#128101;</div>
+                        <div class="card-title">Docebo account team</div>
+                    </div>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="team-avatar">FH</div>
+                            <div class="team-info">
+                                <div class="team-name">Felipe Hernandez-Rodriguez</div>
+                                <div class="team-role">Sr. Account Manager</div>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar">SA</div>
+                            <div class="team-info">
+                                <div class="team-name">Srishti Arya</div>
+                                <div class="team-role">CSM</div>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar">NP</div>
+                            <div class="team-info">
+                                <div class="team-name">Nick Pothier</div>
+                                <div class="team-role">TAM (3 years)</div>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar">RL</div>
+                            <div class="team-info">
+                                <div class="team-name">Riccardo La Rosa</div>
+                                <div class="team-role">Exec Sponsor (CTO)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <div class="card-header">
+                            <div class="card-icon blue">&#127970;</div>
+                            <div class="card-title">Google stakeholders</div>
+                        </div>
+                    </div>
+                    <div class="team-grid" style="grid-template-columns: 1fr;">
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: #4285F4;">PW</div>
+                            <div class="team-info">
+                                <div class="team-name">Phil West</div>
+                                <div class="team-role">Director, Learning Platform (NEW - relationship needed)</div>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: #4285F4;">DM</div>
+                            <div class="team-info">
+                                <div class="team-name">Daniel Makiyama</div>
+                                <div class="team-role">Budget Owner (at risk - budget pressure)</div>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: #4285F4;">MY</div>
+                            <div class="team-info">
+                                <div class="team-name">Manishka Yadav</div>
+                                <div class="team-role">Product Manager</div>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: #4285F4;">TA</div>
+                            <div class="team-info">
+                                <div class="team-name">Tarun Arora</div>
+                                <div class="team-role">HR Engineering (skills champion)</div>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: #4285F4;">PM</div>
+                            <div class="team-info">
+                                <div class="team-name">Pulkit Malhotra</div>
+                                <div class="team-role">Technical Contact</div>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: #4285F4;">RV</div>
+                            <div class="team-info">
+                                <div class="team-name">Ramkumar Venkataraman</div>
+                                <div class="team-role">Technical Contact</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-box" style="margin-top: 20px;">
+                <div class="quote-text">"If GuyKat pulls off the design work successfully... our next strategy is to push for a multi year renewal."</div>
+                <div class="quote-source">James Yearwood, Sr. CSM <span class="source-badge gong" style="margin-left: 6px;">Gong</span></div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 5: EXPANSION PLAYBOOK ==================== -->
+        <div id="playbook" class="tab-content">
+
+            <div class="section-label">Expansion, upsell, and cross-sell playbook</div>
+            <p style="font-size: 13px; color: var(--neutral-600); margin-bottom: 20px;">Recommended actions organized by play type, aligned to the GTM model's input/output framework. Each action maps to a specific funnel owner.</p>
+
+            <!-- Upsell Plays -->
+            <div class="actions-section" style="margin-top: 0;">
+                <div class="actions-header">Upsell plays (sell more to current buyer)</div>
+                <div class="actions-grid">
+                    <div class="action-column">
+                        <h4>Immediate (this week)</h4>
+                        <div class="action-item">
+                            <span class="action-number">1</span>
+                            <span>Accelerate PeopleDev expansion ($791K); Tarun Arora is the skills champion. AM should schedule joint call with SE to demo skills taxonomy. <span class="action-tag upsell">Upsell</span></span>
+                        </div>
+                        <div class="action-item">
+                            <span class="action-number">2</span>
+                            <span>Post-mortem on Shopping ($88K) and Mastery ($61K) closed lost; extract the "why" from Gong transcripts to prevent repeat losses. <span class="action-tag retention">Retention</span></span>
+                        </div>
+                    </div>
+                    <div class="action-column">
+                        <h4>Short-term (this month)</h4>
+                        <div class="action-item">
+                            <span class="action-number">3</span>
+                            <span>Monitor GuyKat SOW finalization; success unlocks multi-year conversation. CSM should document progress in Totango milestones. <span class="action-tag expansion">Expansion</span></span>
+                        </div>
+                        <div class="action-item">
+                            <span class="action-number">4</span>
+                            <span>Prepare content marketplace proposal; Degreed replacement creates natural content gap Google needs to fill. <span class="action-tag upsell">Upsell</span></span>
+                        </div>
+                    </div>
+                    <div class="action-column">
+                        <h4>Strategic (this quarter)</h4>
+                        <div class="action-item">
+                            <span class="action-number">5</span>
+                            <span>Position microsite consolidation as extended enterprise play; Google wants to replace custom landing pages. Requires SE scoping. <span class="action-tag upsell">Upsell</span></span>
+                        </div>
+                        <div class="action-item">
+                            <span class="action-number">6</span>
+                            <span>Drive multi-year commitment; target 3-year renewal once GuyKat validates and PeopleDev closes. <span class="action-tag expansion">Expansion</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cross-Sell Plays -->
+            <div class="actions-section">
+                <div class="actions-header">Cross-sell plays (sell to family companies)</div>
+                <div class="actions-grid">
+                    <div class="action-column">
+                        <h4>Immediate (this week)</h4>
+                        <div class="action-item">
+                            <span class="action-number">1</span>
+                            <span>Ask Nick Pothier (3-year TAM) if Google Cloud or YouTube L&D teams have separate learning platforms. Identify warm introduction paths. <span class="action-tag cross-sell">Cross-sell</span></span>
+                        </div>
+                    </div>
+                    <div class="action-column">
+                        <h4>Short-term (this month)</h4>
+                        <div class="action-item">
+                            <span class="action-number">2</span>
+                            <span>Map Google Cloud's partner enablement needs; Docebo Extended Enterprise is a strong fit for certification programs. <span class="action-tag cross-sell">Cross-sell</span></span>
+                        </div>
+                        <div class="action-item">
+                            <span class="action-number">3</span>
+                            <span>Explore YouTube creator education use case; separate buying center with own budget. <span class="action-tag cross-sell">Cross-sell</span></span>
+                        </div>
+                    </div>
+                    <div class="action-column">
+                        <h4>Strategic (this quarter)</h4>
+                        <div class="action-item">
+                            <span class="action-number">4</span>
+                            <span>Build Alphabet-wide executive relationship map; use CTO (Riccardo) and Phil West as bridges to sibling entities. <span class="action-tag cross-sell">Cross-sell</span></span>
+                        </div>
+                        <div class="action-item">
+                            <span class="action-number">5</span>
+                            <span>Propose enterprise agreement model: volume discount for multi-entity adoption across Alphabet. <span class="action-tag cross-sell">Cross-sell</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Relationship Plays -->
+            <div class="actions-section">
+                <div class="actions-header">Relationship and retention plays</div>
+                <div class="actions-grid">
+                    <div class="action-column">
+                        <h4>Immediate (this week)</h4>
+                        <div class="action-item">
+                            <span class="action-number">1</span>
+                            <span>Schedule intro meeting with Phil West (new Director); unknown stance on Docebo. Get Riccardo to make the introduction. <span class="action-tag retention">Retention</span></span>
+                        </div>
+                    </div>
+                    <div class="action-column">
+                        <h4>Short-term (this month)</h4>
+                        <div class="action-item">
+                            <span class="action-number">2</span>
+                            <span>De-risk Daniel Makiyama relationship; build ROI narrative showing cost savings vs. alternatives to protect his budget. <span class="action-tag retention">Retention</span></span>
+                        </div>
+                        <div class="action-item">
+                            <span class="action-number">3</span>
+                            <span>CSM delivers QAR (quarterly account review) with adoption metrics, value realization, and REACH score to AM. <span class="action-tag retention">Retention</span></span>
+                        </div>
+                    </div>
+                    <div class="action-column">
+                        <h4>Strategic (this quarter)</h4>
+                        <div class="action-item">
+                            <span class="action-number">4</span>
+                            <span>Execute exec sponsor alignment; Riccardo (CTO) should meet with Phil West + Daniel to reinforce strategic partnership value. <span class="action-tag retention">Retention</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GTM Funnel Owner Mapping -->
+            <div class="section-label">GTM funnel owner mapping</div>
+            <div class="card">
+                <p style="font-size: 13px; color: var(--neutral-600); margin-bottom: 16px;">Each action maps to a specific role in the Docebo GTM model (from the Input/Output framework).</p>
+                <table class="whitespace-table">
+                    <thead><tr><th>Role</th><th>Input they receive</th><th>Output they produce</th><th>Key action for Google</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CSM (Srishti)</strong></td>
+                            <td>Launched customer from PS</td>
+                            <td>REACH-qualified healthy customer to AM</td>
+                            <td>Deliver REACH score of 4+; document adoption metrics; flag expansion signals to AM</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AM (Felipe)</strong></td>
+                            <td>REACH-qualified customer from CSM</td>
+                            <td>Closed-won expansion with handoff</td>
+                            <td>Close PeopleDev ($791K); pursue microsite consolidation; build Phil West relationship</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TAM (Nick)</strong></td>
+                            <td>Technical customer needs</td>
+                            <td>Technical validation + advocacy</td>
+                            <td>Map Alphabet family connections; validate 365Talents integration feasibility</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Exec Sponsor (Riccardo)</strong></td>
+                            <td>Strategic account signals</td>
+                            <td>Executive alignment + air cover</td>
+                            <td>Introduce Felipe to Phil West; support multi-year renewal conversation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="footer-logo">Docebo</span>
+            <span>Generated by AI Ops | Data sources: Salesforce, Gong, Slack, Totango, Qualtrics</span>
+            <span>Confidential</span>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>

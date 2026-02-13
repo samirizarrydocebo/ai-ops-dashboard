@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Intelligence Canvas: The Football Association</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --docebo-blue: #0057FF;
+            --docebo-black: #2A2923;
+            --docebo-white: #FFFFFF;
+            --docebo-dark: #131E29;
+            --docebo-light-blue: #4C8DFF;
+            --docebo-navy: #0033A0;
+            --docebo-pink: #FF5DD8;
+            --docebo-green: #54FA77;
+            --docebo-purple: #7E2EE9;
+            --docebo-yellow-green: #E3FFAB;
+            --docebo-red: #FF4D4D;
+            --docebo-orange: #FF9500;
+            --neutral-50: #F6F5F2;
+            --neutral-100: #EBE6DD;
+            --neutral-200: #E1DBD2;
+            --neutral-400: #807B74;
+            --neutral-600: #56534E;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--neutral-50);
+            color: var(--docebo-black);
+            line-height: 1.6;
+            padding: 32px;
+        }
+
+        .canvas-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .canvas-header {
+            background: linear-gradient(135deg, var(--docebo-blue) 0%, var(--docebo-navy) 100%);
+            color: var(--docebo-white);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 24px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .account-name {
+            font-family: var(--font-heading);
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .header-badges {
+            display: flex;
+            gap: 12px;
+        }
+
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge.risk-low { background: var(--docebo-green); color: var(--docebo-dark); }
+        .badge.risk-medium { background: var(--docebo-orange); color: var(--docebo-dark); }
+        .badge.risk-high { background: var(--docebo-red); color: var(--docebo-white); }
+
+        .header-kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 24px;
+        }
+
+        .kpi {
+            background: rgba(255,255,255,0.1);
+            padding: 16px;
+            border-radius: var(--radius-md);
+        }
+
+        .kpi-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+
+        .kpi-value {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .kpi-source {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 1200px) {
+            .canvas-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 800px) {
+            .canvas-grid { grid-template-columns: 1fr; }
+        }
+
+        .canvas-section {
+            background: var(--docebo-white);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--neutral-200);
+        }
+
+        .canvas-section.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .freshness-badge {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            background: var(--neutral-100);
+            color: var(--neutral-600);
+        }
+
+        .freshness-badge.stale {
+            background: var(--docebo-orange);
+            color: var(--docebo-white);
+        }
+
+        .signal-list {
+            list-style: none;
+        }
+
+        .signal-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+        }
+
+        .signal-item.positive {
+            background: rgba(84, 250, 119, 0.1);
+            border-left: 3px solid var(--docebo-green);
+        }
+
+        .signal-item.risk {
+            background: rgba(255, 77, 77, 0.1);
+            border-left: 3px solid var(--docebo-red);
+        }
+
+        .signal-item.expansion {
+            background: rgba(126, 46, 233, 0.1);
+            border-left: 3px solid var(--docebo-purple);
+        }
+
+        .signal-source {
+            font-size: 11px;
+            color: var(--neutral-400);
+            margin-top: 4px;
+        }
+
+        .signal-confidence {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: var(--neutral-100);
+            margin-left: 8px;
+        }
+
+        .stakeholder-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .stakeholder-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-sm);
+        }
+
+        .stakeholder-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--docebo-blue);
+            color: var(--docebo-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .stakeholder-avatar.champion { background: var(--docebo-green); color: var(--docebo-dark); }
+        .stakeholder-avatar.executive { background: var(--docebo-purple); }
+
+        .stakeholder-info {
+            flex: 1;
+        }
+
+        .stakeholder-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .stakeholder-title {
+            font-size: 12px;
+            color: var(--neutral-600);
+        }
+
+        .stakeholder-role {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: var(--docebo-blue);
+            color: var(--docebo-white);
+        }
+
+        .pipeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+        }
+
+        .pipeline-name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .pipeline-stage {
+            font-size: 11px;
+            color: var(--neutral-600);
+        }
+
+        .pipeline-amount {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--docebo-blue);
+        }
+
+        .canvas-footer {
+            margin-top: 24px;
+            padding: 16px;
+            background: var(--neutral-100);
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            color: var(--neutral-600);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-sources {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .source-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .source-badge.success::before {
+            content: '\2713';
+            color: var(--docebo-green);
+        }
+
+        .source-badge.failed::before {
+            content: '\2717';
+            color: var(--docebo-red);
+        }
+
+        .action-list {
+            list-style: none;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+        }
+
+        .action-priority {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .action-priority.high { background: var(--docebo-red); color: var(--docebo-white); }
+        .action-priority.medium { background: var(--docebo-orange); color: var(--docebo-dark); }
+        .action-priority.low { background: var(--docebo-blue); color: var(--docebo-white); }
+
+        .action-text {
+            font-size: 14px;
+        }
+
+        .health-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .health-indicator.yellow {
+            background: rgba(255, 149, 0, 0.2);
+            color: #b36b00;
+        }
+
+        .health-indicator.green {
+            background: rgba(84, 250, 119, 0.2);
+            color: #0a5c1a;
+        }
+
+        .reach-scores {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .reach-score {
+            text-align: center;
+            padding: 8px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-sm);
+        }
+
+        .reach-label {
+            font-size: 10px;
+            color: var(--neutral-600);
+            text-transform: uppercase;
+        }
+
+        .reach-value {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--docebo-blue);
+        }
+
+        .activity-summary {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .activity-summary strong {
+            color: var(--docebo-blue);
+        }
+
+        .critical-callout {
+            background: rgba(255, 77, 77, 0.1);
+            border: 2px solid var(--docebo-red);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .critical-callout h3 {
+            color: var(--docebo-red);
+            font-family: var(--font-heading);
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas-container">
+        <!-- Header -->
+        <header class="canvas-header">
+            <div class="header-top">
+                <div>
+                    <h1 class="account-name">The Football Association</h1>
+                    <div style="margin-top: 8px; opacity: 0.8; font-size: 14px;">
+                        Sports Governing Body | UK National Team | Customer since 2022
+                    </div>
+                </div>
+                <div class="header-badges">
+                    <span class="badge risk-low">Low Risk</span>
+                    <span class="badge" style="background: var(--docebo-purple); color: white;">Enterprise</span>
+                    <span class="badge" style="background: rgba(255,255,255,0.2); color: white;">Elite Support</span>
+                </div>
+            </div>
+            <div class="header-kpis">
+                <div class="kpi">
+                    <div class="kpi-label">Annual Recurring Revenue</div>
+                    <div class="kpi-value">$578K</div>
+                    <div class="kpi-source">Source: Totango</div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-label">NPS Score</div>
+                    <div class="kpi-value" style="color: var(--neutral-400);">N/A</div>
+                    <div class="kpi-source">No recent survey</div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-label">Health Score</div>
+                    <div class="kpi-value" style="color: var(--docebo-green);">92</div>
+                    <div class="kpi-source">Source: Totango | Was Yellow</div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-label">Days to Renewal</div>
+                    <div class="kpi-value">227</div>
+                    <div class="kpi-source">Renewal: June 27, 2026</div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-label">Account Owner</div>
+                    <div class="kpi-value" style="font-size: 16px;">Robert Embrack</div>
+                    <div class="kpi-source">CSM: Martin Nowak</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Critical Context Callout -->
+        <div class="critical-callout">
+            <h3>Critical context: Safeguarding requirement</h3>
+            <p>The FA has a legal and ethical obligation to implement robust safeguarding measures due to the historical independent inquiry into child sexual abuse in English football. Any content involving under-18s must have moderation capabilities. This is non-negotiable for renewal.</p>
+        </div>
+
+        <!-- REACH Scores -->
+        <div class="canvas-section full-width" style="margin-bottom: 24px;">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="section-icon">📊</span>
+                    REACH Framework scores
+                </h2>
+                <span class="health-indicator green">Health: Green (was Yellow)</span>
+            </div>
+            <div class="reach-scores">
+                <div class="reach-score">
+                    <div class="reach-label">Relationship</div>
+                    <div class="reach-value">4</div>
+                </div>
+                <div class="reach-score">
+                    <div class="reach-label">Engagement</div>
+                    <div class="reach-value">4</div>
+                </div>
+                <div class="reach-score">
+                    <div class="reach-label">Actions</div>
+                    <div class="reach-value">4</div>
+                </div>
+                <div class="reach-score">
+                    <div class="reach-label">Customer Value</div>
+                    <div class="reach-value">4</div>
+                </div>
+                <div class="reach-score">
+                    <div class="reach-label">Horizons</div>
+                    <div class="reach-value">3</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="canvas-grid">
+            <!-- Positive Signals -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">+</span>
+                        Positive signals
+                    </h2>
+                    <span class="freshness-badge">Current</span>
+                </div>
+                <ul class="signal-list">
+                    <li class="signal-item positive">
+                        <strong>Health improved from Yellow to Green</strong> (score: 92)
+                        <div class="signal-source">Source: Totango <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item positive">
+                        <strong>Active onboarding engagement</strong>; dedicated Slack channel with consistent activity
+                        <div class="signal-source">Source: Slack, Gong <span class="signal-confidence">Confirmed</span></div>
+                    </li>
+                    <li class="signal-item positive">
+                        <strong>Executive sponsor engaged</strong>; Scott Peacock active in strategic discussions
+                        <div class="signal-source">Source: Totango, Gong <span class="signal-confidence">Confirmed</span></div>
+                    </li>
+                    <li class="signal-item positive">
+                        <strong>11 products deployed</strong>; high platform utilization
+                        <div class="signal-source">Source: Totango <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item positive">
+                        <strong>Renewal pipeline healthy</strong>; $497K renewal + $155K PS upsell in progress
+                        <div class="signal-source">Source: Salesforce <span class="signal-confidence">Verified</span></div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Risk Signals -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">!</span>
+                        Risk signals
+                    </h2>
+                    <span class="freshness-badge">Current</span>
+                </div>
+                <ul class="signal-list">
+                    <li class="signal-item risk">
+                        <strong>Safeguarding/content moderation gap</strong>; critical legal requirement for under-18 content
+                        <div class="signal-source">Source: Gong, Slack <span class="signal-confidence">Confirmed</span></div>
+                    </li>
+                    <li class="signal-item risk">
+                        <strong>User deduplication challenges</strong>; concerns about duplicate user management
+                        <div class="signal-source">Source: Gong <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item risk">
+                        <strong>ILT functionality limitations</strong>; current platform doesn't fully meet training needs
+                        <div class="signal-source">Source: Gong <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item risk">
+                        <strong>Multi-language requirements</strong>; expanding needs beyond current capabilities
+                        <div class="signal-source">Source: Gong <span class="signal-confidence">Single source</span></div>
+                    </li>
+                    <li class="signal-item risk">
+                        <strong>No recent NPS survey</strong>; lack of direct sentiment data
+                        <div class="signal-source">Source: Qualtrics <span class="signal-confidence">Data gap</span></div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Expansion Opportunities -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">^</span>
+                        Expansion opportunities
+                    </h2>
+                    <span class="freshness-badge">Current</span>
+                </div>
+                <ul class="signal-list">
+                    <li class="signal-item expansion">
+                        <strong>Professional Services upsell</strong>; $155K opportunity in progress
+                        <div class="signal-source">Source: Salesforce <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item expansion">
+                        <strong>ILT expansion</strong>; instructor-led training functionality needed
+                        <div class="signal-source">Source: Gong <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item expansion">
+                        <strong>Multi-language deployment</strong>; internationalization requirements
+                        <div class="signal-source">Source: Gong <span class="signal-confidence">Single source</span></div>
+                    </li>
+                    <li class="signal-item expansion">
+                        <strong>Youth programs expansion</strong>; grassroots football training programs
+                        <div class="signal-source">Source: Gong <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item expansion">
+                        <strong>Content moderation solution</strong>; opportunity to provide safeguarding-compliant features
+                        <div class="signal-source">Source: Gong, Slack <span class="signal-confidence">Confirmed</span></div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Key Stakeholders -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">@</span>
+                        Key stakeholders
+                    </h2>
+                </div>
+                <div class="stakeholder-grid">
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar executive">SP</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Scott Peacock</div>
+                            <div class="stakeholder-title">Executive Sponsor</div>
+                        </div>
+                        <span class="stakeholder-role">Exec Sponsor</span>
+                    </div>
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar champion">NB</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Nick Baker</div>
+                            <div class="stakeholder-title">Senior Lead Learning Design</div>
+                        </div>
+                        <span class="stakeholder-role">Champion</span>
+                    </div>
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar">AB</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Amre Basama</div>
+                            <div class="stakeholder-title">Senior Project Manager</div>
+                        </div>
+                        <span class="stakeholder-role">Technical</span>
+                    </div>
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar">LM</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Lynne McGeady</div>
+                            <div class="stakeholder-title">Stakeholder</div>
+                        </div>
+                        <span class="stakeholder-role">User</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Docebo Team -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">#</span>
+                        Docebo account team
+                    </h2>
+                </div>
+                <div class="stakeholder-grid">
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar" style="background: var(--docebo-navy);">RE</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Robert Embrack</div>
+                            <div class="stakeholder-title">Account Manager</div>
+                        </div>
+                    </div>
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar" style="background: var(--docebo-navy);">MN</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Martin Nowak</div>
+                            <div class="stakeholder-title">Customer Success Manager</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommended Actions -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">*</span>
+                        Recommended actions
+                    </h2>
+                </div>
+                <ul class="action-list">
+                    <li class="action-item">
+                        <div class="action-priority high">1</div>
+                        <div class="action-text">
+                            <strong>Address safeguarding requirements</strong>; present content moderation roadmap before renewal discussions.
+                        </div>
+                    </li>
+                    <li class="action-item">
+                        <div class="action-priority high">2</div>
+                        <div class="action-text">
+                            <strong>Resolve user deduplication concerns</strong>; schedule technical deep-dive with Amre Basama.
+                        </div>
+                    </li>
+                    <li class="action-item">
+                        <div class="action-priority medium">3</div>
+                        <div class="action-text">
+                            <strong>Deploy NPS survey</strong>; no sentiment data available, need baseline before renewal.
+                        </div>
+                    </li>
+                    <li class="action-item">
+                        <div class="action-priority medium">4</div>
+                        <div class="action-text">
+                            <strong>Close PS upsell</strong>; $155K opportunity to advance through pipeline.
+                        </div>
+                    </li>
+                    <li class="action-item">
+                        <div class="action-priority low">5</div>
+                        <div class="action-text">
+                            <strong>Plan ILT expansion</strong>; assess requirements for instructor-led training functionality.
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Pipeline -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">$</span>
+                        Open pipeline
+                    </h2>
+                    <span class="freshness-badge">Current</span>
+                </div>
+                <div class="pipeline-item">
+                    <div>
+                        <div class="pipeline-name">Renewal FY26</div>
+                        <div class="pipeline-stage">Negotiation</div>
+                    </div>
+                    <div class="pipeline-amount">$497,298</div>
+                </div>
+                <div class="pipeline-item">
+                    <div>
+                        <div class="pipeline-name">PS Upsell</div>
+                        <div class="pipeline-stage">Qualification</div>
+                    </div>
+                    <div class="pipeline-amount">$155,000</div>
+                </div>
+                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--neutral-200); text-align: right;">
+                    <strong>Total Pipeline: $652,298</strong>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="canvas-section full-width">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">~</span>
+                        Recent activity summary
+                    </h2>
+                </div>
+                <div class="activity-summary">
+                    <p><strong>Feb 2026:</strong> Active onboarding sessions ongoing. Dedicated Slack channel (#football-association-onboarding) shows consistent engagement with 20 recent messages. Team focused on implementation milestones and addressing technical requirements.</p>
+                    <p style="margin-top: 12px;"><strong>Key themes from Gong (16 calls):</strong> Safeguarding and content moderation consistently raised as critical requirement. User deduplication challenges being discussed. ILT functionality gaps identified. Multi-language support emerging as future need.</p>
+                    <p style="margin-top: 12px;"><strong>Health trend:</strong> Account health improved from Yellow to Green (score: 92), indicating successful resolution of previous concerns and strong engagement trajectory.</p>
+                    <p style="margin-top: 12px;"><strong>Strategic context:</strong> The FA oversees grassroots football programs involving youth participants. Content moderation for safeguarding is not optional; it's a legal and ethical requirement following the independent inquiry into historical abuse. This must be addressed for renewal.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="canvas-footer">
+            <div class="footer-sources">
+                <span class="source-badge success">Salesforce</span>
+                <span class="source-badge success">Slack (20 messages)</span>
+                <span class="source-badge success">Gong (16 calls)</span>
+                <span class="source-badge success">Totango</span>
+                <span class="source-badge failed">Qualtrics (no data)</span>
+            </div>
+            <div class="footer-timestamp">
+                Generated: Feb 12, 2026 | Account ID: 0013s00000zOTSJAA4
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

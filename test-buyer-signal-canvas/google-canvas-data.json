@@ -1,0 +1,308 @@
+{
+  "accountId": "0013s00000xM6t3AAC",
+  "accountName": "Google",
+  "generatedAt": "2026-02-12T19:35:00Z",
+  "lastUpdated": {
+    "salesforce": "2026-02-12T19:32:51Z",
+    "slack": "2026-02-12T19:33:00Z",
+    "gong": "2026-02-12T19:33:00Z",
+    "totango": "2026-01-06T23:32:08Z",
+    "qualtrics": "2025-08-08T17:55:07Z"
+  },
+  "metrics": {
+    "arr": 3882180,
+    "arrFormatted": "$3.88M",
+    "arrChangeYoY": 1179793,
+    "nps": 7,
+    "npsCategory": "Passive",
+    "healthScore": 79.6,
+    "healthRank": "yellow",
+    "previousHealthRank": "green",
+    "productAdoptionScore": 100,
+    "averageAdoption": 0.65422374,
+    "customerEngagementScore": 30,
+    "daysToRenewal": 49,
+    "contractRenewalDate": "2026-12-31",
+    "customerStartDate": "2023-08-01",
+    "premiumSupportLevel": "Elite"
+  },
+  "reachScores": {
+    "relationship": 5,
+    "engagement": 5,
+    "actions": 4,
+    "customerValue": 4,
+    "horizons": 4
+  },
+  "stakeholders": {
+    "google": [
+      {
+        "name": "Riccardo La Rosa",
+        "title": "Executive Sponsor",
+        "role": "Executive Sponsor",
+        "source": "Totango"
+      },
+      {
+        "name": "Manishka Yadav",
+        "email": "manishkay@google.com",
+        "title": "Education & Certification Director, Customer",
+        "role": "Champion",
+        "npsScore": 7,
+        "source": "Qualtrics, Gong"
+      },
+      {
+        "name": "Nick Pothier",
+        "title": "TAM / Release Manager",
+        "role": "Technical",
+        "source": "Gong"
+      },
+      {
+        "name": "Tarun Arora",
+        "title": "Skills Strategy Lead",
+        "role": "User",
+        "source": "Gong"
+      }
+    ],
+    "docebo": [
+      {
+        "name": "Felipe Hernandez-Rodriguez",
+        "title": "Account Manager",
+        "source": "Salesforce, Totango"
+      },
+      {
+        "name": "James Yearwood",
+        "title": "Customer Success Manager",
+        "source": "Totango"
+      },
+      {
+        "name": "Tony Chien",
+        "title": "Project Manager",
+        "source": "Gong"
+      },
+      {
+        "name": "Andrew Contreras",
+        "title": "Support Advisor (Elite)",
+        "source": "Totango"
+      }
+    ]
+  },
+  "signals": {
+    "positive": [
+      {
+        "signal": "Committed to Docebo as primary learning platform",
+        "date": "2025-12",
+        "sources": ["Totango"],
+        "confidence": "high"
+      },
+      {
+        "signal": "ARR increased $1.18M in last 12 months",
+        "sources": ["Totango"],
+        "confidence": "high"
+      },
+      {
+        "signal": "Product adoption score: 100",
+        "sources": ["Totango"],
+        "confidence": "high"
+      },
+      {
+        "signal": "Executive sponsorship active with Riccardo La Rosa",
+        "sources": ["Totango", "Gong"],
+        "confidence": "high"
+      },
+      {
+        "signal": "Excited about AI roadmap: Harmony Copilot, Search, Virtual Coaching",
+        "sources": ["Gong", "Totango"],
+        "confidence": "medium"
+      }
+    ],
+    "risk": [
+      {
+        "signal": "Health dropped from Green to Yellow",
+        "sources": ["Totango"],
+        "confidence": "high",
+        "severity": "medium"
+      },
+      {
+        "signal": "NPS score: 7 (Passive, not Promoter)",
+        "date": "2025-08-08",
+        "sources": ["Qualtrics"],
+        "confidence": "high",
+        "severity": "medium"
+      },
+      {
+        "signal": "Contract term shortened by 2.67 years at last renewal",
+        "sources": ["Totango"],
+        "confidence": "high",
+        "severity": "high"
+      },
+      {
+        "signal": "80% of projects require engineering involvement",
+        "sources": ["Totango"],
+        "confidence": "high",
+        "severity": "medium"
+      },
+      {
+        "signal": "Decision week pressure: potential walkaway threat",
+        "date": "2026-01",
+        "sources": ["Gong"],
+        "confidence": "low",
+        "severity": "high"
+      },
+      {
+        "signal": "Last QBR: Aug 2024 (over 18 months ago)",
+        "sources": ["Totango"],
+        "confidence": "high",
+        "severity": "medium"
+      }
+    ],
+    "expansion": [
+      {
+        "signal": "Google Cloud as separate entity with dedicated infrastructure",
+        "sources": ["Gong", "Salesforce"],
+        "confidence": "high",
+        "potential": "high"
+      },
+      {
+        "signal": "ILT functionality expansion for Google Skills",
+        "sources": ["Gong"],
+        "confidence": "medium",
+        "potential": "medium"
+      },
+      {
+        "signal": "Onboarding + MRC programs expanding to 200K+ users",
+        "sources": ["Gong"],
+        "confidence": "medium",
+        "potential": "high"
+      },
+      {
+        "signal": "AI tools interest: Harmony suite",
+        "sources": ["Totango", "Gong"],
+        "confidence": "high",
+        "potential": "medium"
+      },
+      {
+        "signal": "365Talents skills integration exploration",
+        "sources": ["Gong"],
+        "confidence": "low",
+        "potential": "medium"
+      }
+    ]
+  },
+  "rawData": {
+    "salesforce": {
+      "accountId": "0013s00000xM6t3AAC",
+      "accountName": "Google",
+      "annualRevenue": 136224000000,
+      "industry": "Software and IT Services",
+      "type": "customer",
+      "ownerName": "Felipe Hernandez-Rodriguez"
+    },
+    "totango": {
+      "accountType": "Customer",
+      "customerARR": 3882180,
+      "customerStartDate": "2023-08-01",
+      "contractRenewalDate": "2026-12-31",
+      "daysToContractRenewal": 49,
+      "executiveSponsor": "Riccardo La Rosa",
+      "accountManager": "Felipe Hernandez-Rodriguez",
+      "customerSuccessManager": "James Yearwood",
+      "premiumSupportLevel": "Elite",
+      "supportAdvisor": "Andrew Contreras",
+      "healthRank": "yellow",
+      "previousHealthRank": "green",
+      "multidimensionalHealthAccountScore": 79.6,
+      "productAdoptionScore": 100,
+      "averageAdoptionLast12Months": 0.65422374,
+      "customerNPS": 0,
+      "onboardingCSAT": 100,
+      "numberOfOpenUrgentTickets": 0,
+      "numberOfOpenHighTickets": 0,
+      "averageResolutionTimeHours": 1,
+      "arrChangeLast12Months": 1179793,
+      "changeInTermDuringLastRenewal": -2.67,
+      "lastBusinessReviewDate": "2024-08-06",
+      "numberOfProducts": 10,
+      "useCaseCategory": "Hybrid",
+      "reachScores": {
+        "relationship": 5,
+        "engagement": 5,
+        "actions": 4,
+        "customerValue": 4,
+        "horizons": 4
+      }
+    },
+    "qualtrics": {
+      "npsScore": 7,
+      "responseDate": "2025-08-08T17:55:07Z",
+      "respondent": {
+        "name": "Manishka Yadav",
+        "email": "manishkay@google.com",
+        "title": "Education & Certification Director, Customer"
+      },
+      "customerSegment": "Strategic"
+    },
+    "gong": {
+      "callCount": 16,
+      "recentCalls": [
+        {
+          "title": "Google Quick Alignment",
+          "date": "2026-02-04",
+          "owner": "Felipe Hernandez-Rodriguez"
+        },
+        {
+          "title": "Google Cloud/Docebo: Monthly Onboarding Sessions",
+          "date": "2026-02-05",
+          "owner": "Michael James"
+        },
+        {
+          "title": "Google / Docebo - 365Talents Overview and Demo",
+          "date": "2026-02-06",
+          "owner": "Srishti Arya"
+        }
+      ]
+    },
+    "slack": {
+      "messageCount": 20,
+      "recentActivity": "Sam Irizarry experimenting with Glean MCP for Google account analysis"
+    }
+  },
+  "recommendedActions": [
+    {
+      "priority": 1,
+      "action": "Schedule QBR immediately; Last one was Aug 2024",
+      "owner": "James Yearwood",
+      "dueDate": "2026-02-28"
+    },
+    {
+      "priority": 2,
+      "action": "Address learner experience concerns with GuyKat design engagement",
+      "owner": "Felipe Hernandez-Rodriguez",
+      "dueDate": "2026-02-15"
+    },
+    {
+      "priority": 3,
+      "action": "Follow up on NPS score with Manishka Yadav",
+      "owner": "James Yearwood",
+      "dueDate": "2026-02-20"
+    },
+    {
+      "priority": 4,
+      "action": "Create plan to reduce engineering dependency",
+      "owner": "Tony Chien",
+      "dueDate": "2026-03-15"
+    },
+    {
+      "priority": 5,
+      "action": "Prepare AI roadmap presentation for Google Cloud",
+      "owner": "Felipe Hernandez-Rodriguez",
+      "dueDate": "2026-03-01"
+    }
+  ],
+  "summary": {
+    "overallSentiment": "Mixed",
+    "churnRisk": "Medium",
+    "expansionPotential": "High",
+    "dataFreshness": "Current",
+    "sourcesQueried": 5,
+    "sourcesWithData": 5
+  }
+}

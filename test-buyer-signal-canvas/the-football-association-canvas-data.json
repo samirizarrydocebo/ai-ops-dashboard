@@ -1,0 +1,270 @@
+{
+  "accountId": "0013s00000zOTSJAA4",
+  "accountName": "The Football Association",
+  "generatedAt": "2026-02-12T20:15:00Z",
+  "lastUpdated": {
+    "salesforce": "2026-02-12T20:10:00Z",
+    "slack": "2026-02-12T20:10:00Z",
+    "gong": "2026-02-12T20:10:00Z",
+    "totango": "2026-02-12T20:10:00Z",
+    "qualtrics": null
+  },
+  "metrics": {
+    "arr": 578549.06,
+    "arrFormatted": "$578K",
+    "nps": null,
+    "npsCategory": null,
+    "healthScore": 92,
+    "healthRank": "green",
+    "previousHealthRank": "yellow",
+    "daysToRenewal": 227,
+    "contractRenewalDate": "2026-06-27",
+    "premiumSupportLevel": "Elite",
+    "numberOfProducts": 11
+  },
+  "reachScores": {
+    "relationship": 4,
+    "engagement": 4,
+    "actions": 4,
+    "customerValue": 4,
+    "horizons": 3
+  },
+  "stakeholders": {
+    "theFootballAssociation": [
+      {
+        "name": "Scott Peacock",
+        "title": "Executive Sponsor",
+        "role": "Executive Sponsor",
+        "source": "Totango, Gong"
+      },
+      {
+        "name": "Nick Baker",
+        "title": "Senior Lead Learning Design",
+        "role": "Champion",
+        "source": "Gong"
+      },
+      {
+        "name": "Amre Basama",
+        "title": "Senior Project Manager",
+        "role": "Technical",
+        "source": "Gong"
+      },
+      {
+        "name": "Lynne McGeady",
+        "title": "Stakeholder",
+        "role": "User",
+        "source": "Gong"
+      }
+    ],
+    "docebo": [
+      {
+        "name": "Robert Embrack",
+        "title": "Account Manager",
+        "source": "Salesforce, Totango"
+      },
+      {
+        "name": "Martin Nowak",
+        "title": "Customer Success Manager",
+        "source": "Totango"
+      }
+    ]
+  },
+  "signals": {
+    "positive": [
+      {
+        "signal": "Health improved from Yellow to Green (score: 92)",
+        "sources": ["Totango"],
+        "confidence": "high"
+      },
+      {
+        "signal": "Active onboarding engagement with dedicated Slack channel",
+        "sources": ["Slack", "Gong"],
+        "confidence": "high"
+      },
+      {
+        "signal": "Executive sponsor (Scott Peacock) engaged in strategic discussions",
+        "sources": ["Totango", "Gong"],
+        "confidence": "high"
+      },
+      {
+        "signal": "11 products deployed; high platform utilization",
+        "sources": ["Totango"],
+        "confidence": "high"
+      },
+      {
+        "signal": "Healthy renewal pipeline: $497K renewal + $155K PS upsell",
+        "sources": ["Salesforce"],
+        "confidence": "high"
+      }
+    ],
+    "risk": [
+      {
+        "signal": "Safeguarding/content moderation gap for under-18 content",
+        "sources": ["Gong", "Slack"],
+        "confidence": "high",
+        "severity": "high"
+      },
+      {
+        "signal": "User deduplication challenges",
+        "sources": ["Gong"],
+        "confidence": "high",
+        "severity": "medium"
+      },
+      {
+        "signal": "ILT functionality limitations",
+        "sources": ["Gong"],
+        "confidence": "high",
+        "severity": "medium"
+      },
+      {
+        "signal": "Multi-language requirements exceeding current capabilities",
+        "sources": ["Gong"],
+        "confidence": "medium",
+        "severity": "low"
+      },
+      {
+        "signal": "No recent NPS survey; lack of direct sentiment data",
+        "sources": ["Qualtrics"],
+        "confidence": "high",
+        "severity": "medium"
+      }
+    ],
+    "expansion": [
+      {
+        "signal": "Professional Services upsell ($155K opportunity)",
+        "sources": ["Salesforce"],
+        "confidence": "high",
+        "potential": "high"
+      },
+      {
+        "signal": "ILT expansion for instructor-led training",
+        "sources": ["Gong"],
+        "confidence": "high",
+        "potential": "medium"
+      },
+      {
+        "signal": "Multi-language deployment for internationalization",
+        "sources": ["Gong"],
+        "confidence": "medium",
+        "potential": "medium"
+      },
+      {
+        "signal": "Youth programs expansion for grassroots football",
+        "sources": ["Gong"],
+        "confidence": "high",
+        "potential": "high"
+      },
+      {
+        "signal": "Content moderation solution for safeguarding compliance",
+        "sources": ["Gong", "Slack"],
+        "confidence": "high",
+        "potential": "high"
+      }
+    ]
+  },
+  "pipeline": [
+    {
+      "name": "Renewal FY26",
+      "amount": 497298,
+      "stage": "Negotiation",
+      "type": "Renewal"
+    },
+    {
+      "name": "PS Upsell",
+      "amount": 155000,
+      "stage": "Qualification",
+      "type": "Upsell"
+    }
+  ],
+  "rawData": {
+    "salesforce": {
+      "accountId": "0013s00000zOTSJAA4",
+      "accountName": "The Football Association",
+      "industry": "Sports",
+      "type": "Customer",
+      "ownerName": "Robert Embrack",
+      "opportunityCount": 14
+    },
+    "totango": {
+      "accountType": "Customer",
+      "customerARR": 578549.06,
+      "healthRank": "green",
+      "previousHealthRank": "yellow",
+      "healthScore": 92,
+      "daysToContractRenewal": 227,
+      "contractRenewalDate": "2026-06-27",
+      "executiveSponsor": "Scott Peacock",
+      "accountManager": "Robert Embrack",
+      "customerSuccessManager": "Martin Nowak",
+      "premiumSupportLevel": "Elite",
+      "numberOfProducts": 11,
+      "reachScores": {
+        "relationship": 4,
+        "engagement": 4,
+        "actions": 4,
+        "customerValue": 4,
+        "horizons": 3
+      }
+    },
+    "qualtrics": {
+      "npsScore": null,
+      "responseDate": null,
+      "note": "No NPS survey data found for this account"
+    },
+    "gong": {
+      "callCount": 16,
+      "keyThemes": [
+        "Safeguarding and content moderation requirements",
+        "User deduplication challenges",
+        "ILT functionality gaps",
+        "Multi-language support needs"
+      ]
+    },
+    "slack": {
+      "messageCount": 20,
+      "channel": "#football-association-onboarding",
+      "recentActivity": "Active onboarding discussions and implementation milestone tracking"
+    }
+  },
+  "recommendedActions": [
+    {
+      "priority": 1,
+      "action": "Address safeguarding requirements; present content moderation roadmap before renewal",
+      "owner": "Martin Nowak",
+      "dueDate": "2026-03-15"
+    },
+    {
+      "priority": 2,
+      "action": "Resolve user deduplication concerns; schedule technical deep-dive with Amre Basama",
+      "owner": "Martin Nowak",
+      "dueDate": "2026-02-28"
+    },
+    {
+      "priority": 3,
+      "action": "Deploy NPS survey to establish sentiment baseline before renewal",
+      "owner": "Martin Nowak",
+      "dueDate": "2026-03-01"
+    },
+    {
+      "priority": 4,
+      "action": "Close PS upsell ($155K); advance through pipeline",
+      "owner": "Robert Embrack",
+      "dueDate": "2026-04-01"
+    },
+    {
+      "priority": 5,
+      "action": "Plan ILT expansion; assess requirements for instructor-led training",
+      "owner": "Martin Nowak",
+      "dueDate": "2026-04-15"
+    }
+  ],
+  "summary": {
+    "overallSentiment": "Positive",
+    "churnRisk": "Low",
+    "expansionPotential": "High",
+    "dataFreshness": "Current",
+    "sourcesQueried": 5,
+    "sourcesWithData": 4,
+    "criticalContext": "Safeguarding requirement is non-negotiable due to historical child abuse inquiry in English football"
+  }
+}

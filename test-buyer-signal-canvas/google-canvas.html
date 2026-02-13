@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Intelligence Canvas: Google</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --docebo-blue: #0057FF;
+            --docebo-black: #2A2923;
+            --docebo-white: #FFFFFF;
+            --docebo-dark: #131E29;
+            --docebo-light-blue: #4C8DFF;
+            --docebo-navy: #0033A0;
+            --docebo-pink: #FF5DD8;
+            --docebo-green: #54FA77;
+            --docebo-purple: #7E2EE9;
+            --docebo-yellow-green: #E3FFAB;
+            --docebo-red: #FF4D4D;
+            --docebo-orange: #FF9500;
+            --neutral-50: #F6F5F2;
+            --neutral-100: #EBE6DD;
+            --neutral-200: #E1DBD2;
+            --neutral-400: #807B74;
+            --neutral-600: #56534E;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--neutral-50);
+            color: var(--docebo-black);
+            line-height: 1.6;
+            padding: 32px;
+        }
+
+        .canvas-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .canvas-header {
+            background: linear-gradient(135deg, var(--docebo-blue) 0%, var(--docebo-navy) 100%);
+            color: var(--docebo-white);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 24px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .account-name {
+            font-family: var(--font-heading);
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .header-badges {
+            display: flex;
+            gap: 12px;
+        }
+
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge.risk-low { background: var(--docebo-green); color: var(--docebo-dark); }
+        .badge.risk-medium { background: var(--docebo-orange); color: var(--docebo-dark); }
+        .badge.risk-high { background: var(--docebo-red); color: var(--docebo-white); }
+
+        .header-kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 24px;
+        }
+
+        .kpi {
+            background: rgba(255,255,255,0.1);
+            padding: 16px;
+            border-radius: var(--radius-md);
+        }
+
+        .kpi-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+
+        .kpi-value {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .kpi-source {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 1200px) {
+            .canvas-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 800px) {
+            .canvas-grid { grid-template-columns: 1fr; }
+        }
+
+        .canvas-section {
+            background: var(--docebo-white);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--neutral-200);
+        }
+
+        .canvas-section.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .freshness-badge {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            background: var(--neutral-100);
+            color: var(--neutral-600);
+        }
+
+        .freshness-badge.stale {
+            background: var(--docebo-orange);
+            color: var(--docebo-white);
+        }
+
+        .signal-list {
+            list-style: none;
+        }
+
+        .signal-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+        }
+
+        .signal-item.positive {
+            background: rgba(84, 250, 119, 0.1);
+            border-left: 3px solid var(--docebo-green);
+        }
+
+        .signal-item.risk {
+            background: rgba(255, 77, 77, 0.1);
+            border-left: 3px solid var(--docebo-red);
+        }
+
+        .signal-item.expansion {
+            background: rgba(126, 46, 233, 0.1);
+            border-left: 3px solid var(--docebo-purple);
+        }
+
+        .signal-source {
+            font-size: 11px;
+            color: var(--neutral-400);
+            margin-top: 4px;
+        }
+
+        .signal-confidence {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: var(--neutral-100);
+            margin-left: 8px;
+        }
+
+        .stakeholder-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .stakeholder-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-sm);
+        }
+
+        .stakeholder-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--docebo-blue);
+            color: var(--docebo-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .stakeholder-avatar.champion { background: var(--docebo-green); color: var(--docebo-dark); }
+        .stakeholder-avatar.executive { background: var(--docebo-purple); }
+
+        .stakeholder-info {
+            flex: 1;
+        }
+
+        .stakeholder-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .stakeholder-title {
+            font-size: 12px;
+            color: var(--neutral-600);
+        }
+
+        .stakeholder-role {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: var(--docebo-blue);
+            color: var(--docebo-white);
+        }
+
+        .pipeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+        }
+
+        .pipeline-name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .pipeline-stage {
+            font-size: 11px;
+            color: var(--neutral-600);
+        }
+
+        .pipeline-amount {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--docebo-blue);
+        }
+
+        .canvas-footer {
+            margin-top: 24px;
+            padding: 16px;
+            background: var(--neutral-100);
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            color: var(--neutral-600);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-sources {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .source-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .source-badge.success::before {
+            content: '\2713';
+            color: var(--docebo-green);
+        }
+
+        .source-badge.failed::before {
+            content: '\2717';
+            color: var(--docebo-red);
+        }
+
+        .action-list {
+            list-style: none;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+        }
+
+        .action-priority {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .action-priority.high { background: var(--docebo-red); color: var(--docebo-white); }
+        .action-priority.medium { background: var(--docebo-orange); color: var(--docebo-dark); }
+        .action-priority.low { background: var(--docebo-blue); color: var(--docebo-white); }
+
+        .action-text {
+            font-size: 14px;
+        }
+
+        .health-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .health-indicator.yellow {
+            background: rgba(255, 149, 0, 0.2);
+            color: #b36b00;
+        }
+
+        .health-indicator.green {
+            background: rgba(84, 250, 119, 0.2);
+            color: #0a5c1a;
+        }
+
+        .reach-scores {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .reach-score {
+            text-align: center;
+            padding: 8px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-sm);
+        }
+
+        .reach-label {
+            font-size: 10px;
+            color: var(--neutral-600);
+            text-transform: uppercase;
+        }
+
+        .reach-value {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--docebo-blue);
+        }
+
+        .activity-summary {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .activity-summary strong {
+            color: var(--docebo-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas-container">
+        <!-- Header -->
+        <header class="canvas-header">
+            <div class="header-top">
+                <div>
+                    <h1 class="account-name">Google</h1>
+                    <div style="margin-top: 8px; opacity: 0.8; font-size: 14px;">
+                        Software and IT Services | 300,000 employees | Customer since Aug 2023
+                    </div>
+                </div>
+                <div class="header-badges">
+                    <span class="badge risk-medium">Medium Risk</span>
+                    <span class="badge" style="background: var(--docebo-purple); color: white;">Strategic</span>
+                    <span class="badge" style="background: rgba(255,255,255,0.2); color: white;">Elite Support</span>
+                </div>
+            </div>
+            <div class="header-kpis">
+                <div class="kpi">
+                    <div class="kpi-label">Annual Recurring Revenue</div>
+                    <div class="kpi-value">$3.88M</div>
+                    <div class="kpi-source">Source: Totango | +$1.18M YoY</div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-label">NPS Score</div>
+                    <div class="kpi-value" style="color: var(--docebo-orange);">7</div>
+                    <div class="kpi-source">Source: Qualtrics | Passive</div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-label">Health Score</div>
+                    <div class="kpi-value">79.6</div>
+                    <div class="kpi-source">Source: Totango | Was Green</div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-label">Days to Renewal</div>
+                    <div class="kpi-value" style="color: var(--docebo-orange);">49</div>
+                    <div class="kpi-source">Renewal: Dec 31, 2026</div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-label">Account Owner</div>
+                    <div class="kpi-value" style="font-size: 16px;">Felipe Hernandez-Rodriguez</div>
+                    <div class="kpi-source">CSM: James Yearwood</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- REACH Scores -->
+        <div class="canvas-section full-width" style="margin-bottom: 24px;">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="section-icon">📊</span>
+                    REACH Framework scores
+                </h2>
+                <span class="health-indicator yellow">Health: Yellow (was Green)</span>
+            </div>
+            <div class="reach-scores">
+                <div class="reach-score">
+                    <div class="reach-label">Relationship</div>
+                    <div class="reach-value">5</div>
+                </div>
+                <div class="reach-score">
+                    <div class="reach-label">Engagement</div>
+                    <div class="reach-value">5</div>
+                </div>
+                <div class="reach-score">
+                    <div class="reach-label">Actions</div>
+                    <div class="reach-value">4</div>
+                </div>
+                <div class="reach-score">
+                    <div class="reach-label">Customer Value</div>
+                    <div class="reach-value">4</div>
+                </div>
+                <div class="reach-score">
+                    <div class="reach-label">Horizons</div>
+                    <div class="reach-value">4</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="canvas-grid">
+            <!-- Positive Signals -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">+</span>
+                        Positive signals
+                    </h2>
+                    <span class="freshness-badge">Current</span>
+                </div>
+                <ul class="signal-list">
+                    <li class="signal-item positive">
+                        <strong>Committed to Docebo as primary learning platform</strong> (Dec 2025)
+                        <div class="signal-source">Source: Totango Success Plan <span class="signal-confidence">Confirmed</span></div>
+                    </li>
+                    <li class="signal-item positive">
+                        <strong>ARR increased $1.18M</strong> in last 12 months
+                        <div class="signal-source">Source: Totango <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item positive">
+                        <strong>Product adoption score: 100</strong>; Average adoption 65%
+                        <div class="signal-source">Source: Totango <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item positive">
+                        <strong>Executive sponsorship active</strong> with Riccardo La Rosa
+                        <div class="signal-source">Source: Totango, Gong <span class="signal-confidence">Confirmed</span></div>
+                    </li>
+                    <li class="signal-item positive">
+                        <strong>Excited about AI roadmap</strong>: Harmony Copilot, Search, Virtual Coaching
+                        <div class="signal-source">Source: Gong calls <span class="signal-confidence">Verified</span></div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Risk Signals -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">!</span>
+                        Risk signals
+                    </h2>
+                    <span class="freshness-badge">Current</span>
+                </div>
+                <ul class="signal-list">
+                    <li class="signal-item risk">
+                        <strong>Health dropped from Green to Yellow</strong>
+                        <div class="signal-source">Source: Totango <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item risk">
+                        <strong>NPS score: 7</strong> (Passive, not Promoter)
+                        <div class="signal-source">Source: Qualtrics, Aug 2025 <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item risk">
+                        <strong>Contract term shortened by 2.67 years</strong> at last renewal
+                        <div class="signal-source">Source: Totango <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item risk">
+                        <strong>80% of projects require engineering</strong> due to platform limitations
+                        <div class="signal-source">Source: Totango Success Plan <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item risk">
+                        <strong>Decision week pressure:</strong> "If we can't make this look good, we're going to walk away"
+                        <div class="signal-source">Source: Gong call, Jan 2026 <span class="signal-confidence">Single source</span></div>
+                    </li>
+                    <li class="signal-item risk">
+                        <strong>Last QBR: Aug 2024</strong> (over 18 months ago)
+                        <div class="signal-source">Source: Totango <span class="signal-confidence">Verified</span></div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Expansion Opportunities -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">^</span>
+                        Expansion opportunities
+                    </h2>
+                    <span class="freshness-badge">Current</span>
+                </div>
+                <ul class="signal-list">
+                    <li class="signal-item expansion">
+                        <strong>Google Cloud</strong> as separate entity with dedicated infrastructure
+                        <div class="signal-source">Source: Gong, Salesforce <span class="signal-confidence">Confirmed</span></div>
+                    </li>
+                    <li class="signal-item expansion">
+                        <strong>ILT functionality expansion</strong> for Google Skills platform
+                        <div class="signal-source">Source: Gong calls <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item expansion">
+                        <strong>Onboarding + MRC programs</strong> expanding to all of Google (200K+ users)
+                        <div class="signal-source">Source: Gong <span class="signal-confidence">Verified</span></div>
+                    </li>
+                    <li class="signal-item expansion">
+                        <strong>AI tools interest:</strong> Harmony Copilot, Search, Virtual Coaching
+                        <div class="signal-source">Source: Totango, Gong <span class="signal-confidence">Confirmed</span></div>
+                    </li>
+                    <li class="signal-item expansion">
+                        <strong>365Talents skills integration</strong> being explored
+                        <div class="signal-source">Source: Gong <span class="signal-confidence">Single source</span></div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Key Stakeholders -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">@</span>
+                        Key stakeholders
+                    </h2>
+                </div>
+                <div class="stakeholder-grid">
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar executive">RL</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Riccardo La Rosa</div>
+                            <div class="stakeholder-title">Executive Sponsor</div>
+                        </div>
+                        <span class="stakeholder-role">Exec Sponsor</span>
+                    </div>
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar champion">MY</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Manishka Yadav</div>
+                            <div class="stakeholder-title">Education & Certification Director</div>
+                        </div>
+                        <span class="stakeholder-role">Champion</span>
+                    </div>
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar">NP</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Nick Pothier</div>
+                            <div class="stakeholder-title">TAM / Release Manager</div>
+                        </div>
+                        <span class="stakeholder-role">Technical</span>
+                    </div>
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar">TA</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Tarun Arora</div>
+                            <div class="stakeholder-title">Skills Strategy Lead</div>
+                        </div>
+                        <span class="stakeholder-role">User</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Docebo Team -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">#</span>
+                        Docebo account team
+                    </h2>
+                </div>
+                <div class="stakeholder-grid">
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar" style="background: var(--docebo-navy);">FH</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Felipe Hernandez-Rodriguez</div>
+                            <div class="stakeholder-title">Account Manager</div>
+                        </div>
+                    </div>
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar" style="background: var(--docebo-navy);">JY</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">James Yearwood</div>
+                            <div class="stakeholder-title">Customer Success Manager</div>
+                        </div>
+                    </div>
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar" style="background: var(--docebo-navy);">TC</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Tony Chien</div>
+                            <div class="stakeholder-title">Project Manager</div>
+                        </div>
+                    </div>
+                    <div class="stakeholder-card">
+                        <div class="stakeholder-avatar" style="background: var(--docebo-navy);">AC</div>
+                        <div class="stakeholder-info">
+                            <div class="stakeholder-name">Andrew Contreras</div>
+                            <div class="stakeholder-title">Support Advisor (Elite)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommended Actions -->
+            <section class="canvas-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">*</span>
+                        Recommended actions
+                    </h2>
+                </div>
+                <ul class="action-list">
+                    <li class="action-item">
+                        <div class="action-priority high">1</div>
+                        <div class="action-text">
+                            <strong>Schedule QBR immediately</strong>; Last one was Aug 2024. Critical before renewal discussions.
+                        </div>
+                    </li>
+                    <li class="action-item">
+                        <div class="action-priority high">2</div>
+                        <div class="action-text">
+                            <strong>Address learner experience concerns</strong> with GuyKat design engagement this week.
+                        </div>
+                    </li>
+                    <li class="action-item">
+                        <div class="action-priority medium">3</div>
+                        <div class="action-text">
+                            <strong>Follow up on NPS score</strong>; Manishka gave 7, understand why not higher.
+                        </div>
+                    </li>
+                    <li class="action-item">
+                        <div class="action-priority medium">4</div>
+                        <div class="action-text">
+                            <strong>Reduce engineering dependency</strong>; 80% of projects requiring eng is unsustainable.
+                        </div>
+                    </li>
+                    <li class="action-item">
+                        <div class="action-priority low">5</div>
+                        <div class="action-text">
+                            <strong>Prepare AI roadmap presentation</strong> for Google Cloud expansion discussions.
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="canvas-section full-width">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="section-icon">~</span>
+                        Recent activity summary
+                    </h2>
+                </div>
+                <div class="activity-summary">
+                    <p><strong>Feb 2026:</strong> Decision week for learner experience designs. Google wants GuyKat to present "HGTV style" options. James Yearwood taking over from Srishti Arya as CSM for both Google accounts.</p>
+                    <p style="margin-top: 12px;"><strong>Jan 2026:</strong> 365Talents skills integration demo conducted. Google Cloud monthly onboarding sessions ongoing. Health score dropped from Green to Yellow.</p>
+                    <p style="margin-top: 12px;"><strong>Dec 2025:</strong> Google committed to Docebo as primary learning platform. Google Cloud dedicated infrastructure completed. CSM transition from Srishti to James.</p>
+                    <p style="margin-top: 12px;"><strong>Key themes from Gong:</strong> Headless implementation blockers, skills taxonomy management (14K+ skills), ILT functionality gaps, internal Google politics around budget allocation.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="canvas-footer">
+            <div class="footer-sources">
+                <span class="source-badge success">Salesforce</span>
+                <span class="source-badge success">Slack (20 messages)</span>
+                <span class="source-badge success">Gong (16 calls)</span>
+                <span class="source-badge success">Totango</span>
+                <span class="source-badge success">Qualtrics (1 response)</span>
+            </div>
+            <div class="footer-timestamp">
+                Generated: Feb 12, 2026 | Account ID: 0013s00000xM6t3AAC
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
